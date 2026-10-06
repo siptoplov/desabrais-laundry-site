@@ -11,8 +11,8 @@ Plain HTML + CSS + a little vanilla JS. No build step, no frameworks, no trackin
 ## 1. What's in the folder
 
 ```
-index.html            ← ALL the text, prices, hours, FAQ live here (search for "CONFIRM" and "✏️ EDIT")
-assets/css/styles.css ← colors & fonts are variables at the top (:root)
+index.html            ← ALL the text, prices, hours, FAQ — and the styles — live here (search for "CONFIRM" and "✏️ EDIT")
+                         colors & fonts are variables at the top of the <style> block (:root)
 assets/js/main.js     ← menu, photo viewer, scroll effects (no editing needed)
 assets/img/           ← gallery photos (currently labeled placeholders), logo icons, social-share image
 sitemap.xml, robots.txt, site.webmanifest, favicon.svg/.ico, 404.html
