@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Placeholder illustration of two front-load washing machines. Replace with a real photo.">
+  <defs><linearGradient id="g9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8f6f9"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>
+  <rect width="1200" height="900" fill="url(#g9)"/><rect y="760" width="1200" height="140" fill="#cfe3e8"/><ellipse cx="350" cy="765" rx="250" ry="20" fill="#0b2430" opacity=".1"/><ellipse cx="850" cy="765" rx="250" ry="20" fill="#0b2430" opacity=".1"/>
+  <g>
+    <rect x="130" y="90" width="440" height="680" rx="35" fill="#fff" stroke="#cfdde2" stroke-width="3"/>
+    <rect x="130" y="90" width="440" height="116" rx="35" fill="#f3f9fa"/>
+    <rect x="130" y="172" width="440" height="34" fill="#f3f9fa"/>
+    <circle cx="218" cy="148" r="22" fill="#0a7a95"/>
+    <rect x="280" y="131" width="132" height="34" rx="6" fill="#053f4e"/>
+    <circle cx="473" cy="148" r="11" fill="#ff7f5f"/>
+    <circle cx="350" cy="484" r="174" fill="#cfdde2"/>
+    <circle cx="350" cy="484" r="156" fill="#fff"/>
+    <circle cx="350" cy="484" r="150" fill="#053f4e"/>
+    <clipPath id="w7"><circle cx="350" cy="484" r="138"/></clipPath>
+    <g clip-path="url(#w7)">
+      <circle cx="350" cy="484" r="150" fill="#0f93b3"/>
+      <path d="M200.4 502.4 q37.4 -29.9 74.8 0 t74.8 0 t74.8 0 t74.8 0 V634.0 H200.4 Z" fill="#7fd6e6" opacity=".85"/>
+      <circle cx="305" cy="469" r="15" fill="#fff" opacity=".7"/>
+      <circle cx="387" cy="529" r="10" fill="#fff" opacity=".7"/>
+    </g>
+    <path d="M245 432 A120 120 0 0 1 320 368"
+          fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".55"/>
+  </g>
+  <g>
+    <rect x="630" y="90" width="440" height="680" rx="35" fill="#fff" stroke="#cfdde2" stroke-width="3"/>
+    <rect x="630" y="90" width="440" height="116" rx="35" fill="#f3f9fa"/>
+    <rect x="630" y="172" width="440" height="34" fill="#f3f9fa"/>
+    <circle cx="718" cy="148" r="22" fill="#0a7a95"/>
+    <rect x="780" y="131" width="132" height="34" rx="6" fill="#053f4e"/>
+    <circle cx="973" cy="148" r="11" fill="#ff7f5f"/>
+    <circle cx="850" cy="484" r="174" fill="#cfdde2"/>
+    <circle cx="850" cy="484" r="156" fill="#fff"/>
+    <circle cx="850" cy="484" r="150" fill="#053f4e"/>
+    <clipPath id="w8"><circle cx="850" cy="484" r="138"/></clipPath>
+    <g clip-path="url(#w8)">
+      <circle cx="850" cy="484" r="150" fill="#0f93b3"/>
+      <path d="M700.4 502.4 q37.4 -29.9 74.8 0 t74.8 0 t74.8 0 t74.8 0 V634.0 H700.4 Z" fill="#7fd6e6" opacity=".85"/>
+      <circle cx="805" cy="469" r="15" fill="#fff" opacity=".7"/>
+      <circle cx="887" cy="529" r="10" fill="#fff" opacity=".7"/>
+    </g>
+    <path d="M745 432 A120 120 0 0 1 820 368"
+          fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".55"/>
+  </g><g><rect x="318" y="808" width="565" height="58" rx="29" fill="#fff" opacity=".94"/><rect x="318" y="808" width="565" height="58" rx="29" fill="none" stroke="#ff7f5f" stroke-width="3" stroke-dasharray="9 7"/><text x="600" y="846" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="27" fill="#0b2430">REPLACE: real photo of washers</text></g>
+</svg>

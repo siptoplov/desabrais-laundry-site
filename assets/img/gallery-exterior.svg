@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Placeholder illustration of the laundromat storefront with a large sign and windows. Replace with a real photo.">
+  <defs><linearGradient id="g18" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d5ecf7"/><stop offset="1" stop-color="#eef8fc"/></linearGradient></defs>
+  <rect width="1200" height="900" fill="url(#g18)"/><path d="M0 520 C200 400 330 470 520 430 C760 380 900 470 1200 410 V900 H0Z" fill="#9ed0b4"/><path d="M0 580 C250 480 420 560 640 520 C860 480 1000 560 1200 520 V900 H0Z" fill="#6fb592"/><rect y="720" width="1200" height="180" fill="#8aa0a8"/><rect y="712" width="1200" height="14" fill="#b9c8cd"/><rect x="101" y="643" width="18" height="77" fill="#7a5c45"/><circle cx="110" cy="610" r="64" fill="#4aa37a"/><circle cx="75" cy="643" r="42" fill="#4aa37a"/><circle cx="147" cy="641" r="44" fill="#4aa37a"/><rect x="1080" y="636" width="19" height="84" fill="#7a5c45"/><circle cx="1090" cy="600" r="70" fill="#3f9170"/><circle cx="1052" cy="636" r="46" fill="#3f9170"/><circle cx="1131" cy="634" r="48" fill="#3f9170"/><rect x="200" y="300" width="800" height="420" fill="#fff" stroke="#cfdde2" stroke-width="3"/><rect x="180" y="250" width="840" height="110" rx="14" fill="#0a7a95"/><text x="600" y="322" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="46" letter-spacing="3" fill="#fff">LAUNDRY &amp; DRY CLEANING</text><rect x="250" y="410" width="270" height="230" rx="10" fill="#bfe6ef" stroke="#075b70" stroke-width="8"/><rect x="680" y="410" width="270" height="230" rx="10" fill="#bfe6ef" stroke="#075b70" stroke-width="8"/>
+  <g>
+    <rect x="285" y="470" width="90" height="170" rx="7" fill="#fff" stroke="#cfdde2" stroke-width="3"/>
+    <rect x="285" y="470" width="90" height="29" rx="7" fill="#f3f9fa"/>
+    <rect x="285" y="490" width="90" height="8" fill="#f3f9fa"/>
+    <circle cx="303" cy="484" r="4" fill="#0a7a95"/>
+    <rect x="316" y="480" width="27" height="8" rx="6" fill="#053f4e"/>
+    <circle cx="355" cy="484" r="2" fill="#ff7f5f"/>
+    <circle cx="330" cy="569" r="35" fill="#cfdde2"/>
+    <circle cx="330" cy="569" r="32" fill="#fff"/>
+    <circle cx="330" cy="569" r="31" fill="#053f4e"/>
+    <clipPath id="w14"><circle cx="330" cy="569" r="28"/></clipPath>
+    <g clip-path="url(#w14)">
+      <circle cx="330" cy="569" r="31" fill="#0f93b3"/>
+      <path d="M299.4 572.3 q7.7 -6.1 15.3 0 t15.3 0 t15.3 0 t15.3 0 V599.2 H299.4 Z" fill="#7fd6e6" opacity=".85"/>
+      <circle cx="321" cy="566" r="3" fill="#fff" opacity=".7"/>
+      <circle cx="338" cy="578" r="2" fill="#fff" opacity=".7"/>
+    </g>
+    <path d="M309 558 A24 24 0 0 1 324 545"
+          fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+  </g>
+  <g>
+    <rect x="395" y="470" width="90" height="170" rx="7" fill="#fff" stroke="#cfdde2" stroke-width="3"/>
+    <rect x="395" y="470" width="90" height="29" rx="7" fill="#f3f9fa"/>
+    <rect x="395" y="490" width="90" height="8" fill="#f3f9fa"/>
+    <circle cx="413" cy="484" r="4" fill="#0a7a95"/>
+    <rect x="426" y="480" width="27" height="8" rx="6" fill="#053f4e"/>
+    <circle cx="465" cy="484" r="2" fill="#ff7f5f"/>
+    <circle cx="440" cy="569" r="35" fill="#cfdde2"/>
+    <circle cx="440" cy="569" r="32" fill="#fff"/>
+    <circle cx="440" cy="569" r="31" fill="#053f4e"/>
+    <clipPath id="w15"><circle cx="440" cy="569" r="28"/></clipPath>
+    <g clip-path="url(#w15)">
+      <circle cx="440" cy="569" r="31" fill="#0f93b3"/>
+      <path d="M409.4 572.3 q7.7 -6.1 15.3 0 t15.3 0 t15.3 0 t15.3 0 V599.2 H409.4 Z" fill="#7fd6e6" opacity=".85"/>
+      <circle cx="431" cy="566" r="3" fill="#fff" opacity=".7"/>
+      <circle cx="448" cy="578" r="2" fill="#fff" opacity=".7"/>
+    </g>
+    <path d="M419 558 A24 24 0 0 1 434 545"
+          fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+  </g>
+  <g>
+    <rect x="715" y="470" width="90" height="170" rx="7" fill="#fff" stroke="#cfdde2" stroke-width="3"/>
+    <rect x="715" y="470" width="90" height="29" rx="7" fill="#f3f9fa"/>
+    <rect x="715" y="490" width="90" height="8" fill="#f3f9fa"/>
+    <circle cx="733" cy="484" r="4" fill="#0a7a95"/>
+    <rect x="746" y="480" width="27" height="8" rx="6" fill="#053f4e"/>
+    <circle cx="785" cy="484" r="2" fill="#ff7f5f"/>
+    <circle cx="760" cy="569" r="35" fill="#cfdde2"/>
+    <circle cx="760" cy="569" r="32" fill="#fff"/>
+    <circle cx="760" cy="569" r="31" fill="#053f4e"/>
+    <clipPath id="w16"><circle cx="760" cy="569" r="28"/></clipPath>
+    <g clip-path="url(#w16)">
+      <circle cx="760" cy="569" r="31" fill="#0f93b3"/>
+      <path d="M729.4 572.3 q7.7 -6.1 15.3 0 t15.3 0 t15.3 0 t15.3 0 V599.2 H729.4 Z" fill="#7fd6e6" opacity=".85"/>
+      <circle cx="751" cy="566" r="3" fill="#fff" opacity=".7"/>
+      <circle cx="768" cy="578" r="2" fill="#fff" opacity=".7"/>
+    </g>
+    <path d="M739 558 A24 24 0 0 1 754 545"
+          fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+  </g>
+  <g>
+    <rect x="825" y="470" width="90" height="170" rx="7" fill="#fff" stroke="#cfdde2" stroke-width="3"/>
+    <rect x="825" y="470" width="90" height="29" rx="7" fill="#f3f9fa"/>
+    <rect x="825" y="490" width="90" height="8" fill="#f3f9fa"/>
+    <circle cx="843" cy="484" r="4" fill="#0a7a95"/>
+    <rect x="856" y="480" width="27" height="8" rx="6" fill="#053f4e"/>
+    <circle cx="895" cy="484" r="2" fill="#ff7f5f"/>
+    <circle cx="870" cy="569" r="35" fill="#cfdde2"/>
+    <circle cx="870" cy="569" r="32" fill="#fff"/>
+    <circle cx="870" cy="569" r="31" fill="#053f4e"/>
+    <clipPath id="w17"><circle cx="870" cy="569" r="28"/></clipPath>
+    <g clip-path="url(#w17)">
+      <circle cx="870" cy="569" r="31" fill="#0f93b3"/>
+      <path d="M839.4 572.3 q7.7 -6.1 15.3 0 t15.3 0 t15.3 0 t15.3 0 V599.2 H839.4 Z" fill="#7fd6e6" opacity=".85"/>
+      <circle cx="861" cy="566" r="3" fill="#fff" opacity=".7"/>
+      <circle cx="878" cy="578" r="2" fill="#fff" opacity=".7"/>
+    </g>
+    <path d="M849 558 A24 24 0 0 1 864 545"
+          fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+  </g><rect x="545" y="410" width="110" height="310" rx="8" fill="#bfe6ef" stroke="#075b70" stroke-width="8"/><circle cx="632" cy="580" r="7" fill="#075b70"/><rect x="170" y="740" width="860" height="10" fill="#fff" opacity=".6"/><g><rect x="309" y="808" width="582" height="58" rx="29" fill="#fff" opacity=".94"/><rect x="309" y="808" width="582" height="58" rx="29" fill="none" stroke="#ff7f5f" stroke-width="3" stroke-dasharray="9 7"/><text x="600" y="846" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="27" fill="#0b2430">REPLACE: real photo of exterior</text></g>
+</svg>

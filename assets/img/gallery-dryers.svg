@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Placeholder illustration of three extra-large dryers. Replace with a real photo.">
+  <defs><linearGradient id="g13" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6e0"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>
+  <rect width="1200" height="900" fill="url(#g13)"/><rect y="760" width="1200" height="140" fill="#cfe3e8"/><ellipse cx="215" cy="765" rx="180" ry="18" fill="#0b2430" opacity=".1"/>
+  <g>
+    <rect x="60" y="80" width="310" height="690" rx="22" fill="#fff" stroke="#cfdde2" stroke-width="3"/>
+    <rect x="60" y="80" width="310" height="110" rx="22" fill="#e3f2f5"/>
+    <rect x="60" y="149" width="310" height="41" fill="#e3f2f5"/>
+    <rect x="91" y="118" width="124" height="34" rx="6" fill="#053f4e"/>
+    <rect x="252" y="111" width="87" height="52" rx="12" fill="#ff7f5f"/><text x="296" y="148" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="34" fill="#0b2430">XL</text>
+    <circle cx="215" cy="466" r="127" fill="#cfdde2"/>
+    <circle cx="215" cy="466" r="115" fill="#fff"/>
+    <circle cx="215" cy="466" r="112" fill="#053f4e"/>
+    <clipPath id="d10"><circle cx="215" cy="466" r="103"/></clipPath>
+    <g clip-path="url(#d10)"><circle cx="215" cy="466" r="112" fill="#0f93b3" opacity=".55"/><circle cx="176" cy="494" r="33" fill="#ff7f5f"/><circle cx="237" cy="500" r="38" fill="#ffd166"/><circle cx="209" cy="450" r="31" fill="#fff"/><circle cx="254" cy="444" r="25" fill="#ff7f5f"/></g>
+    <path d="M137 427 A89 89 0 0 1 193 379"
+          fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".5"/>
+  </g><ellipse cx="600" cy="765" rx="180" ry="18" fill="#0b2430" opacity=".1"/>
+  <g>
+    <rect x="445" y="80" width="310" height="690" rx="22" fill="#fff" stroke="#cfdde2" stroke-width="3"/>
+    <rect x="445" y="80" width="310" height="110" rx="22" fill="#e3f2f5"/>
+    <rect x="445" y="149" width="310" height="41" fill="#e3f2f5"/>
+    <rect x="476" y="118" width="124" height="34" rx="6" fill="#053f4e"/>
+    <rect x="637" y="111" width="87" height="52" rx="12" fill="#ff7f5f"/><text x="681" y="148" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="34" fill="#0b2430">XL</text>
+    <circle cx="600" cy="466" r="127" fill="#cfdde2"/>
+    <circle cx="600" cy="466" r="115" fill="#fff"/>
+    <circle cx="600" cy="466" r="112" fill="#053f4e"/>
+    <clipPath id="d11"><circle cx="600" cy="466" r="103"/></clipPath>
+    <g clip-path="url(#d11)"><circle cx="600" cy="466" r="112" fill="#0f93b3" opacity=".55"/><circle cx="561" cy="494" r="33" fill="#ff7f5f"/><circle cx="622" cy="500" r="38" fill="#ffd166"/><circle cx="594" cy="450" r="31" fill="#fff"/><circle cx="639" cy="444" r="25" fill="#ff7f5f"/></g>
+    <path d="M522 427 A89 89 0 0 1 578 379"
+          fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".5"/>
+  </g><ellipse cx="985" cy="765" rx="180" ry="18" fill="#0b2430" opacity=".1"/>
+  <g>
+    <rect x="830" y="80" width="310" height="690" rx="22" fill="#fff" stroke="#cfdde2" stroke-width="3"/>
+    <rect x="830" y="80" width="310" height="110" rx="22" fill="#e3f2f5"/>
+    <rect x="830" y="149" width="310" height="41" fill="#e3f2f5"/>
+    <rect x="861" y="118" width="124" height="34" rx="6" fill="#053f4e"/>
+    <rect x="1022" y="111" width="87" height="52" rx="12" fill="#ff7f5f"/><text x="1066" y="148" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="34" fill="#0b2430">XL</text>
+    <circle cx="985" cy="466" r="127" fill="#cfdde2"/>
+    <circle cx="985" cy="466" r="115" fill="#fff"/>
+    <circle cx="985" cy="466" r="112" fill="#053f4e"/>
+    <clipPath id="d12"><circle cx="985" cy="466" r="103"/></clipPath>
+    <g clip-path="url(#d12)"><circle cx="985" cy="466" r="112" fill="#0f93b3" opacity=".55"/><circle cx="946" cy="494" r="33" fill="#ff7f5f"/><circle cx="1007" cy="500" r="38" fill="#ffd166"/><circle cx="979" cy="450" r="31" fill="#fff"/><circle cx="1024" cy="444" r="25" fill="#ff7f5f"/></g>
+    <path d="M907 427 A89 89 0 0 1 963 379"
+          fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".5"/>
+  </g><g><rect x="221" y="808" width="758" height="58" rx="29" fill="#fff" opacity=".94"/><rect x="221" y="808" width="758" height="58" rx="29" fill="none" stroke="#ff7f5f" stroke-width="3" stroke-dasharray="9 7"/><text x="600" y="846" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="27" fill="#0b2430">REPLACE: real photo of extra-large dryers</text></g>
+</svg>
