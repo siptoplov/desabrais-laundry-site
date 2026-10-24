@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<meta name="description" content="Залипалка — гипнотичный геймплей для нижней половины TikTok-нарезок. Игра идёт сама, есть запись видео.">
-<title>Залипалка</title>
+<meta name="description" content="Кляксомёт — пушка стреляет кляксами и рисует картинку, зритель гадает, что выйдет. Геймплей для нижней половины TikTok-нарезок.">
+<title>Кляксомёт</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@600;700;800;900&display=swap">
 <style>
 /* Layout: a control desk docked on the left (a bottom sheet on phones); the stage takes the rest and letterboxes the canvas to the chosen video format.
-   One deliberate dark arcade look: deep indigo ground, candy-coloured game pieces. */
+   One deliberate dark look: an indigo workshop, a cream paper sheet, candy-coloured paint. */
 :root {
   --ink: #120F26;
   --desk: #1A1636;
@@ -98,38 +98,6 @@ button { cursor: pointer; }
   color: var(--faint);
 }
 .hint { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.4; text-wrap: pretty; }
-
-.modes { display: grid; gap: 8px; }
-.mode {
-  display: grid;
-  grid-template-columns: 36px 1fr;
-  column-gap: 12px;
-  row-gap: 1px;
-  align-items: center;
-  text-align: left;
-  padding: 10px 12px;
-  border-radius: var(--r);
-  border: 1px solid var(--line);
-  background: transparent;
-}
-.mode:hover { background: rgba(255, 255, 255, 0.03); }
-.mode b { font-weight: 600; font-size: 15px; }
-.mode small { grid-column: 2; color: var(--muted); font-size: 13px; line-height: 1.3; }
-.mode[aria-checked="true"] { background: var(--raise); border-color: var(--lemon); box-shadow: inset 0 0 0 1px var(--lemon); }
-.ico { grid-row: span 2; width: 36px; height: 36px; border-radius: 10px; background: var(--well); position: relative; overflow: hidden; }
-.ico-rings::before, .ico-rings::after { content: ""; position: absolute; border-radius: 50%; border: 3px solid; border-right-color: transparent; }
-.ico-rings::before { inset: 5px; border-color: var(--berry); border-right-color: transparent; transform: rotate(-30deg); }
-.ico-rings::after { inset: 12px; border-color: var(--lemon); border-right-color: transparent; transform: rotate(120deg); }
-.ico-wars { background: conic-gradient(var(--berry) 0 25%, var(--sky) 0 50%, var(--berry) 0 75%, var(--sky) 0); }
-.ico-wars::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 8px, var(--well) 8px 9px), repeating-linear-gradient(90deg, transparent 0 8px, var(--well) 8px 9px); }
-.ico-grow::before { content: ""; position: absolute; inset: 4px; border-radius: 50%; border: 2px solid var(--text); }
-.ico-grow::after { content: ""; position: absolute; left: 9px; right: 9px; top: 13px; bottom: 5px; border-radius: 50%; background: var(--mint); }
-.ico-race { background:
-  radial-gradient(circle at 9px 10px, var(--lemon) 0 4px, transparent 4.5px),
-  radial-gradient(circle at 22px 15px, var(--berry) 0 4px, transparent 4.5px),
-  radial-gradient(circle at 13px 25px, var(--mint) 0 4px, transparent 4.5px),
-  radial-gradient(circle at 27px 28px, var(--sky) 0 4px, transparent 4.5px),
-  var(--well); }
 
 .seg {
   display: flex;
@@ -275,6 +243,8 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
   .desk, .fab, .track, .track::after { transition: none; }
   .btn-rec.on .rec-dot { animation: none; }
 }
+.facts { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; }
+.facts li { font-size: 12.5px; font-weight: 600; background: var(--well); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; font-variant-numeric: tabular-nums; }
 </style>
 </head>
 <body>
@@ -282,25 +252,24 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
   <aside class="desk" id="desk" aria-label="Настройки игры">
     <header class="brand">
       <div class="brand-row">
-        <h1 class="logo" aria-label="Залипалка"><span>З</span><span>а</span><span>л</span><span>и</span><span>п</span><span>а</span><span>л</span><span>к</span><span>а</span></h1>
+        <h1 class="logo" aria-label="Кляксомёт"><span>К</span><span>л</span><span>я</span><span>к</span><span>с</span><span>о</span><span>м</span><span>ё</span><span>т</span></h1>
         <button class="sheet-close" id="closeDesk" type="button">Готово</button>
       </div>
-      <p>Гипнотичный геймплей для нижней половины ролика. Игра идёт сама, бесконечно. Просто записывай.</p>
+      <p>Пушка стреляет кляксами и выстрел за выстрелом рисует картинку. Зритель гадает, что выйдет, и досматривает до ответа.</p>
+      <ul class="facts">
+        <li>16 картинок</li>
+        <li>30–45 с на одну</li>
+        <li>до 3 пушек</li>
+      </ul>
     </header>
 
     <section class="block">
-      <h2 class="label" id="modeLabel">Режим</h2>
-      <div class="modes" role="radiogroup" aria-labelledby="modeLabel">
-        <button class="mode" type="button" role="radio" data-mode="rings"><span class="ico ico-rings"></span><b>Побег из колец</b><small>Шар ищет дыру в крутящихся кольцах</small></button>
-        <button class="mode" type="button" role="radio" data-mode="wars"><span class="ico ico-wars"></span><b>Битва цветов</b><small>Шары перекрашивают поле. Кто захватит больше?</small></button>
-        <button class="mode" type="button" role="radio" data-mode="grow"><span class="ico ico-grow"></span><b>Растущий шар</b><small>Каждый удар — шар больше. До 100%</small></button>
-        <button class="mode" type="button" role="radio" data-mode="race"><span class="ico ico-race"></span><b>Гонка шаров</b><small>Одна трасса, один победитель, счёт побед</small></button>
-      </div>
-    </section>
-
-    <section class="block">
-      <label class="label" for="variant" id="variantLabel">Шары</label>
-      <select id="variant"></select>
+      <label class="label" for="order">Порядок выстрелов</label>
+      <select id="order">
+        <option value="mixed">Вперемешку</option>
+        <option value="outline">Сначала контур — угадать легко</option>
+        <option value="tricky">Контур в конце — хитро</option>
+      </select>
     </section>
 
     <section class="block">
@@ -325,14 +294,15 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
 
     <section class="block">
       <div class="switches">
-        <label class="switch"><input type="checkbox" id="sound"><span class="track"></span>Звук ударов</label>
-        <label class="switch"><input type="checkbox" id="hud"><span class="track"></span>Счёт и надписи на поле</label>
+        <label class="switch"><input type="checkbox" id="options"><span class="track"></span>Варианты ответа</label>
+        <label class="switch"><input type="checkbox" id="hud"><span class="track"></span>Прогресс и номер картинки</label>
+        <label class="switch"><input type="checkbox" id="sound"><span class="track"></span>Звук выстрелов</label>
       </div>
     </section>
 
     <section class="block">
       <label class="label" for="caption">Своя надпись сверху</label>
-      <input type="text" id="caption" maxlength="40" placeholder="Например: ЖДИ КОНЦА" autocomplete="off">
+      <input type="text" id="caption" maxlength="40" placeholder="Например: УГАДАЙ ЗА 50%" autocomplete="off">
     </section>
 
     <section class="block">
@@ -354,7 +324,7 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
 
     <section class="block">
       <div class="row">
-        <button class="btn" id="restartBtn" type="button">Новый раунд</button>
+        <button class="btn" id="nextBtn" type="button">Следующая картинка</button>
         <button class="btn" id="pauseBtn" type="button">Пауза</button>
         <button class="btn" id="fsBtn" type="button">Полный экран</button>
         <button class="btn" id="hideBtn" type="button">Скрыть панель</button>
@@ -364,16 +334,16 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
     <section class="block tips">
       <h2 class="label">Как собрать нарезку</h2>
       <ol>
-        <li>Выбери режим и формат «Половина».</li>
-        <li>Запиши 1–2 минуты кнопкой выше или спрячь панель и запиши экран.</li>
-        <li>В CapCut: интервью сверху, игра снизу. Звук бери из интервью.</li>
+        <li>Формат «Половина», запись на 1 минуту — это одна-две картинки целиком.</li>
+        <li>В CapCut: интервью сверху, Кляксомёт снизу. Звук бери из интервью.</li>
+        <li>В подписи спроси: «На каком проценте угадал?» — люди отвечают в комментах.</li>
       </ol>
-      <p class="keys"><span><kbd>H</kbd> панель</span><span><kbd>R</kbd> новый раунд</span><span><kbd>Пробел</kbd> пауза</span></p>
+      <p class="keys"><span><kbd>H</kbd> панель</span><span><kbd>N</kbd> следующая картинка</span><span><kbd>Пробел</kbd> пауза</span></p>
     </section>
   </aside>
 
   <main class="stage" id="stage">
-    <canvas id="game" width="1080" height="960" aria-label="Игровое поле"></canvas>
+    <canvas id="game" width="1080" height="960" aria-label="Игровое поле: пушка рисует картинку кляксами"></canvas>
     <button class="fab" id="fab" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
       Настройки
@@ -388,15 +358,15 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
   /* ================= basics ================= */
   const TAU = Math.PI * 2;
   const rand = (a, b) => a + Math.random() * (b - a);
-  const randi = (a, b) => Math.floor(rand(a, b + 1));
   const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
-  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const fmtTime = (s) => { s = Math.max(0, Math.floor(s)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
   const easeOutBack = (t) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+  const shuffle = (a) => { for (let k = a.length - 1; k > 0; k--) { const m = Math.floor(Math.random() * (k + 1)); [a[k], a[m]] = [a[m], a[k]]; } return a; };
 
   const DISPLAY = '"Unbounded", "Arial Black", Impact, sans-serif';
   const BG = '#120F26';
   const INK = '#0A0817';
+  const PAPER = '#F7F1E3';
   const C = { berry: '#FF4F6D', lemon: '#FFD23F', mint: '#3EE6B4', sky: '#4FB3FF', orange: '#FF9A3C', plum: '#B07CFF', lime: '#9BE15D', snow: '#F4F1FF', muted: '#A7A1CF' };
   const RAINBOW = [C.berry, C.orange, C.lemon, C.lime, C.mint, C.sky, C.plum];
 
@@ -406,47 +376,325 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
   const isTall = () => H >= 1500;
 
   /* ================= settings ================= */
-  const DEFAULTS = {
-    mode: 'rings', format: '98', speed: 1, sound: false, hud: true, caption: '', recLen: 30, quality: 1,
-    variants: { rings: 'multi', wars: '2', grow: 'normal', race: '8' },
-  };
-  const S = JSON.parse(JSON.stringify(DEFAULTS));
+  const DEFAULTS = { format: '98', speed: 1, sound: false, hud: true, options: true, order: 'mixed', caption: '', recLen: 30, quality: 1 };
+  const ALLOWED = { format: Object.keys(HEIGHTS), speed: [0.75, 1, 1.5, 2], order: ['mixed', 'outline', 'tricky'], recLen: [15, 30, 60, 120], quality: [1, 0.6667] };
+  const S = { ...DEFAULTS };
   const NUMERIC = new Set(['speed', 'recLen', 'quality']);
-  const VARIANTS = {
-    rings: { label: 'Шары', options: [['one', 'Один шар'], ['multi', '+1 шар за каждый побег'], ['five', 'Пять шаров сразу']] },
-    wars: { label: 'Команды', options: [['2', '2 цвета'], ['3', '3 цвета'], ['4', '4 цвета']] },
-    grow: { label: 'Скорость роста', options: [['slow', 'Медленно — дольше смотрят'], ['normal', 'Обычно'], ['fast', 'Быстро']] },
-    race: { label: 'Участники', options: [['4', '4 шара'], ['6', '6 шаров'], ['8', '8 шаров']] },
-  };
+  const STORE_KEY = 'klyaksomet:v1';
 
   function merge(o) {
     if (!o || typeof o !== 'object') return;
     for (const k of Object.keys(DEFAULTS)) {
-      if (k === 'variants') {
-        if (o.variants && typeof o.variants === 'object') {
-          for (const m of Object.keys(VARIANTS)) {
-            const v = o.variants[m];
-            if (VARIANTS[m].options.some(([val]) => val === v)) S.variants[m] = v;
-          }
-        }
-      } else if (k in o && typeof o[k] === typeof DEFAULTS[k]) {
-        S[k] = o[k];
-      }
+      if (!(k in o) || typeof o[k] !== typeof DEFAULTS[k]) continue;
+      if (ALLOWED[k] && !ALLOWED[k].includes(o[k])) continue;
+      S[k] = o[k];
     }
-    if (!(S.mode in VARIANTS)) S.mode = DEFAULTS.mode;
-    if (!(S.format in HEIGHTS)) S.format = DEFAULTS.format;
-    S.caption = String(S.caption).slice(0, 40);
+    S.caption = S.caption.slice(0, 40);
   }
-  function loadSaved() { try { const raw = localStorage.getItem('zalipalka:v1'); if (raw) merge(JSON.parse(raw)); } catch (e) { /* storage may be unavailable */ } }
-  function persist() { try { localStorage.setItem('zalipalka:v1', JSON.stringify(S)); } catch (e) { /* ignore */ } }
+  function loadSaved() { try { const raw = localStorage.getItem(STORE_KEY); if (raw) merge(JSON.parse(raw)); } catch (e) { /* storage may be unavailable */ } }
+  function persist() { try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) { /* ignore */ } }
+
+  /* ================= pictures ================= */
+  // Hand-drawn 16×16 pixel art. Spaces only split each row into groups of four for editing.
+  const INKS = { k: '#2A2140', r: '#FF4F6D', o: '#FF9A3C', y: '#FFD23F', l: '#9BE15D', g: '#2FB866', m: '#3EE6B4', b: '#4FB3FF', n: '#3559E0', p: '#B07CFF', P: '#FF8FC7', t: '#A0643C', s: '#FFC9A0', e: '#A6A2BD', W: '#FFFFFF' };
+  // Every paint colour has its own note, so a picture plays a little tune while it is painted.
+  const TONE = { k: 0, t: 1, e: 2, s: 3, r: 4, o: 5, y: 6, l: 7, g: 8, m: 9, b: 10, n: 11, p: 12, P: 13, W: 14 };
+  const PICS = [
+    { name: 'КОТ', decoys: ['ЛИСА', 'ТИГР'], rows: [
+      '.... .... .... ....',
+      '.k.. .... .... ..k.',
+      '.kk. .... .... .kk.',
+      '.kPk .... .... kPk.',
+      '.kPo kkkk kkkk oPk.',
+      '.koo oooo oooo ook.',
+      'kooo oooo oooo oook',
+      'kook kooo oook kook',
+      'kook kooo oook kook',
+      'kooo oooo oooo oook',
+      'koPo oooP Pooo oPok',
+      'kooo oook kooo oook',
+      '.koo ooko okoo ook.',
+      '.koo oooo oooo ook.',
+      '..kk oooo oooo kk..',
+      '.... kkkk kkkk ....',
+    ] },
+    { name: 'ГРИБ', decoys: ['ЗОНТ', 'ЛАМПА'], rows: [
+      '.... .... .... ....',
+      '.... .kkk kkk. ....',
+      '.... krrr rrrk ....',
+      '...k rrWW rrrr k...',
+      '..kr rrWW rrrr rk..',
+      '.krW Wrrr rrWW rrk.',
+      '.krW Wrrr rrWW rrk.',
+      'krrr rrrr rrrr rrrk',
+      'kkkk kkkk kkkk kkkk',
+      '.... .kWW WWk. ....',
+      '.... .kWW WWk. ....',
+      '.... .kWW WWk. ....',
+      '.... kWWW WWWk ....',
+      '.... kWWW WWWk ....',
+      '.... .kkk kkk. ....',
+      '.... .... .... ....',
+    ] },
+    { name: 'РАКЕТА', decoys: ['МАЯК', 'КАРАНДАШ'], rows: [
+      '.... ...k k... ....',
+      '.... ..kr rk.. ....',
+      '.... .krr rrk. ....',
+      '.... .kWW WWk. ....',
+      '.... kWWW WWWk ....',
+      '.... kWkk kkWk ....',
+      '.... kWkb bkWk ....',
+      '.... kWkb bkWk ....',
+      '.... kWWk kWWk ....',
+      '.... kWWW WWWk ....',
+      '...k kWWW WWWk k...',
+      '..kr kWWW WWWk rk..',
+      '.krr kkkk kkkk rrk.',
+      '.kkk ..oy yo.. kkk.',
+      '.... ..oy yo.. ....',
+      '.... ...y y... ....',
+    ] },
+    { name: 'АРБУЗ', decoys: ['ПИЦЦА', 'ЛОДКА'], rows: [
+      '.... .... .... ....',
+      '.... .... .... ....',
+      '.... .... .... ....',
+      'kkkk kkkk kkkk kkkk',
+      'kglr rrrr rrrr rlgk',
+      'kglr krrr rrrk rlgk',
+      '.kgl rrrr krrr lgk.',
+      '.kgl rkrr rrrr lgk.',
+      '..kg lrrr rkrl gk..',
+      '...k glrr rrlg k...',
+      '.... kglr rlgk ....',
+      '.... .kgg ggk. ....',
+      '.... ..kk kk.. ....',
+      '.... .... .... ....',
+      '.... .... .... ....',
+      '.... .... .... ....',
+    ] },
+    { name: 'ЁЛКА', decoys: ['КАКТУС', 'ПИРАМИДА'], rows: [
+      '.... ...y y... ....',
+      '.... ..yy yy.. ....',
+      '.... ...k k... ....',
+      '.... ..kg gk.. ....',
+      '.... .kgg rgk. ....',
+      '.... kggg gggk ....',
+      '.... .kgg ggk. ....',
+      '.... kgbg gggk ....',
+      '...k gggg gygg k...',
+      '..kg rggg gggg gk..',
+      '...k gggg ggrg k...',
+      '..kg gygg gggg gk..',
+      '.kgg gggg gbgg ggk.',
+      'kkkk kkkk kkkk kkkk',
+      '.... ..kt tk.. ....',
+      '.... ..kk kk.. ....',
+    ] },
+    { name: 'МОРОЖЕНОЕ', decoys: ['ФАКЕЛ', 'МИКРОФОН'], rows: [
+      '.... .... .... ....',
+      '.... .kkk kkk. ....',
+      '.... kPWP PPPk ....',
+      '...k PWPP PPPP k...',
+      '...k PPPP PPPP k...',
+      '..kk kkPP PPkk kk..',
+      '..km mmmm mmmm mk..',
+      '.kmW mmmm mmmm mmk.',
+      '.kmm mmmm mmmm mmk.',
+      '.kmm mmmm mmmm mmk.',
+      '..kk kkkk kkkk kk..',
+      '...k oyoy oyoy k...',
+      '.... koyo yoyk ....',
+      '.... .koy oyk. ....',
+      '.... ..ko ok.. ....',
+      '.... ...k k... ....',
+    ] },
+    { name: 'НЛО', decoys: ['ШЛЯПА', 'ЛЮСТРА'], rows: [
+      '.... .... .... ....',
+      '.... .... .... ....',
+      '.... .kkk kkk. ....',
+      '.... kbWb bbbk ....',
+      '...k bbbb bbbb k...',
+      '...k bbbb bbbb k...',
+      '.kkk kkkk kkkk kkk.',
+      'keee eeee eeee eeek',
+      'keye eyee eeye eyek',
+      '.kkk kkkk kkkk kkk.',
+      '.... ..yy yy.. ....',
+      '.... .yyy yyy. ....',
+      '.... yyyy yyyy ....',
+      '...y yyyy yyyy y...',
+      '.... .... .... ....',
+      '.... .... .... ....',
+    ] },
+    { name: 'ДОМИК', decoys: ['СКВОРЕЧНИК', 'ПАЛАТКА'], rows: [
+      '.... .... .... ....',
+      '.... ...k k... ....',
+      '.... ..kr rk.. ....',
+      '.... .krr rrk. ....',
+      '.... krrr rrrk ....',
+      '...k rrrr rrrr k...',
+      '..kr rrrr rrrr rk..',
+      '.kkk kkkk kkkk kkk.',
+      '..ks ssss ssss sk..',
+      '..ks bbbs kkkk sk..',
+      '..ks bkbs kttk sk..',
+      '..ks bbbs kttk sk..',
+      '..ks ssss kytk sk..',
+      '..ks ssss kttk sk..',
+      '..kk kkkk kkkk kk..',
+      'gggg gggg gggg gggg',
+    ] },
+    { name: 'КЛУБНИКА', decoys: ['МАЛИНА', 'РЕДИСКА'], rows: [
+      '.... .... .... ....',
+      '.... .kgk kgk. ....',
+      '.... kggg gggk ....',
+      '..kk gggg gggg kk..',
+      '.krr rrkk kkrr rrk.',
+      'krry rrry rrry rrrk',
+      'krrr ryrr ryrr ryrk',
+      'kyrr rrry rrrr yrrk',
+      '.krr yrrr ryrr rrk.',
+      '.kry rrry rrry rrk.',
+      '..kr rryr rrry rk..',
+      '...k ryrr rryr k...',
+      '.... krry rrrk ....',
+      '.... .krr rrk. ....',
+      '.... ..kk kk.. ....',
+      '.... .... .... ....',
+    ] },
+    { name: 'ПРИВИДЕНИЕ', decoys: ['МЕДУЗА', 'ОБЛАКО'], rows: [
+      '.... .... .... ....',
+      '.... .kkk kkk. ....',
+      '.... kWWW WWWk ....',
+      '...k WWWW WWWW k...',
+      '..kW WWWW WWWW Wk..',
+      '..kW kkWW WWkk Wk..',
+      '..kW kkWW WWkk Wk..',
+      '..kP WWWW WWWW Pk..',
+      '..kW WWWk kWWW Wk..',
+      '..kW WWkk kkWW Wk..',
+      '..kW WWWk kWWW Wk..',
+      '..kW WWWW WWWW Wk..',
+      '..kW WWWW WWWW Wk..',
+      '..kW WWWW WWWW Wk..',
+      '..kk WWkk kkWW kk..',
+      '.... kk.. ..kk ....',
+    ] },
+    { name: 'УТКА', decoys: ['КУРИЦА', 'ЧАЙНИК'], rows: [
+      '.... .... .... ....',
+      '.... kkkk .... ....',
+      '...k yyyy k... ....',
+      '..ky ykyy yk.. ....',
+      '..ky yyyy yk.. ....',
+      'kkkk yyyy yk.. ..k.',
+      'kooo yyyy yk.. .kyk',
+      '.kkk yyyy ykkk kyyk',
+      '...k yyyy yyyy yyyk',
+      '..ky yyyy yyyy yyyk',
+      '..ky yykk kkky yyyk',
+      '..ky ykoo ooky yyk.',
+      '..ky yykk kkyy yyk.',
+      '...k yyyy yyyy kk..',
+      '.... kkkk kkkk ....',
+      'mmmm mmmm mmmm mmmm',
+    ] },
+    { name: 'КАКТУС', decoys: ['ОГУРЕЦ', 'ДЕРЕВО'], rows: [
+      '.... ..kk kk.. ....',
+      '.... .kgg ggk. ....',
+      '.k.. .kgl ggk. ....',
+      'kgk. .kgl ggk. ..k.',
+      'kgk. .kgl ggk. .kgk',
+      'kgk. .kgl ggk. .kgk',
+      'kggg gggl ggk. .kgk',
+      '.kkk kkgl ggk. .kgk',
+      '.... .kgl gggg gggk',
+      '.... .kgl ggkk kkk.',
+      '.kkk kkkk kkkk kkk.',
+      '.koo oooo oooo ook.',
+      '..ko oooo oooo ok..',
+      '..ko oooo oooo ok..',
+      '...k oooo oooo k...',
+      '...k kkkk kkkk k...',
+    ] },
+    { name: 'ЛАМПОЧКА', decoys: ['ГРУША', 'ШАРИК'], rows: [
+      '.... .kkk kkk. ....',
+      '.... kyyy yyyk ....',
+      '...k yyWy yyyy k...',
+      '..ky yWyy yyyy yk..',
+      '..ky yyyy yyyy yk..',
+      '..ky yyyy yyyy yk..',
+      '..ky yyky ykyy yk..',
+      '...k yyyk kyyy k...',
+      '.... kyyk kyyk ....',
+      '.... .kyk kyk. ....',
+      '.... .kkk kkk. ....',
+      '.... .eee eee. ....',
+      '.... .kkk kkk. ....',
+      '.... .eee eee. ....',
+      '.... ..kk kk.. ....',
+      '.... .... .... ....',
+    ] },
+    { name: 'ЧЕРЕП', decoys: ['МАСКА', 'ПРИШЕЛЕЦ'], rows: [
+      '.... .... .... ....',
+      '.... kkkk kkkk ....',
+      '...k WWWW WWWW k...',
+      '..kW WWWW WWWW Wk..',
+      '.kWW WWWW WWWW WWk.',
+      '.kWW WWWW WWWW WWk.',
+      '.kWk kkWW WWkk kWk.',
+      '.kWk kkWW WWkk kWk.',
+      '.kWk kkWW WWkk kWk.',
+      '.kWW WWWk kWWW WWk.',
+      '..kW WWkk kkWW Wk..',
+      '...k WWWW WWWW k...',
+      '...k WkWk WkWk k...',
+      '...k WkWk WkWk k...',
+      '.... kkkk kkkk ....',
+      '.... .... .... ....',
+    ] },
+    { name: 'КОРОНА', decoys: ['ЗАБОР', 'ТОРТ'], rows: [
+      '.... .... .... ....',
+      '.... .... .... ....',
+      '.k.. ...k k... ..k.',
+      'kyk. ..ky yk.. .kyk',
+      'kyyk .kyy yyk. kyyk',
+      'kyyy kyyy yyyk yyyk',
+      'kyyy yyyy yyyy yyyk',
+      'kyyr yyyb byyy ryyk',
+      'kyyy yyyy yyyy yyyk',
+      'kkkk kkkk kkkk kkkk',
+      'kyyb yyyr ryyy byyk',
+      'kkkk kkkk kkkk kkkk',
+      '.... .... .... ....',
+      '.... .... .... ....',
+      '.... .... .... ....',
+      '.... .... .... ....',
+    ] },
+    { name: 'ЯБЛОКО', decoys: ['ПОМИДОР', 'ВИШНЯ'], rows: [
+      '.... ...k .... ....',
+      '.... ...k kkk. ....',
+      '.... ...k gggk ....',
+      '..kk kkkk kkkk kk..',
+      '.krr rWrr rrrr rrk.',
+      'krrW Wrrr rrrr rrrk',
+      'krrW rrrr rrrr rrrk',
+      'krrr rrrr rrrr rrrk',
+      'krrr rrrr rrrr rrrk',
+      'krrr rrrr rrrr rrrk',
+      '.krr rrrr rrrr rrk.',
+      '.krr rrrr rrrr rrk.',
+      '..kr rrrr rrrr rk..',
+      '...k rrrk krrr k...',
+      '.... kkk. .kkk ....',
+      '.... .... .... ....',
+    ] },
+  ];
 
   /* ================= sound ================= */
-  // Soft mallet tones on a pentatonic scale, so any sequence of hits sounds musical.
   const PENTA = [0, 2, 4, 7, 9];
   const penta = (i) => { const o = Math.floor(i / 5), d = ((i % 5) + 5) % 5; return 220 * Math.pow(2, o + PENTA[d] / 12); };
-  const WALK = [0, 1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1];
   const Sound = {
-    ac: null, out: null, dest: null, winStart: 0, inWin: 0,
+    ac: null, out: null, dest: null, noise: null, winStart: 0, inWin: 0,
     ensure() {
       if (this.ac) { if (this.ac.state === 'suspended') this.ac.resume().catch(() => {}); return; }
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -459,39 +707,55 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
         this.out.connect(comp);
         comp.connect(this.ac.destination);
         if (this.ac.createMediaStreamDestination) { this.dest = this.ac.createMediaStreamDestination(); comp.connect(this.dest); }
+        const len = Math.floor(this.ac.sampleRate * 0.25);
+        this.noise = this.ac.createBuffer(1, len, this.ac.sampleRate);
+        const d = this.noise.getChannelData(0);
+        for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
       } catch (e) { this.ac = null; }
     },
-    tone(freq, dur = 0.3, vol = 0.16, type = 'sine') {
-      if (!S.sound || !this.ac || this.ac.state !== 'running') return;
+    ready() { return S.sound && this.ac && this.ac.state === 'running'; },
+    gate() {
       const t = this.ac.currentTime;
       if (t - this.winStart > 0.06) { this.winStart = t; this.inWin = 0; }
-      if (++this.inWin > 4) return;
-      const o = this.ac.createOscillator(), g = this.ac.createGain();
-      o.type = type; o.frequency.setValueAtTime(freq, t);
+      return ++this.inWin <= 5;
+    },
+    osc(type, f0, f1, dur, vol) {
+      const t = this.ac.currentTime, o = this.ac.createOscillator(), g = this.ac.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(f0, t);
+      if (f1 !== f0) o.frequency.exponentialRampToValueAtTime(f1, t + dur);
       g.gain.setValueAtTime(0.0001, t);
       g.gain.exponentialRampToValueAtTime(vol, t + 0.006);
       g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
       o.connect(g); g.connect(this.out); o.start(t); o.stop(t + dur + 0.05);
-      const o2 = this.ac.createOscillator(), g2 = this.ac.createGain();
-      o2.frequency.setValueAtTime(freq * 4.01, t);
-      g2.gain.setValueAtTime(0.0001, t);
-      g2.gain.exponentialRampToValueAtTime(vol * 0.22, t + 0.004);
-      g2.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.35);
-      o2.connect(g2); g2.connect(this.out); o2.start(t); o2.stop(t + dur);
     },
-    note(i, dur = 0.3, vol = 0.16) { this.tone(penta(i), dur, vol); },
-    chord(i) { [0, 2, 4].forEach((k, n) => setTimeout(() => this.note(i + k, 0.55, 0.15), n * 75)); },
+    hiss(dur, vol, freq, type) {
+      const t = this.ac.currentTime, src = this.ac.createBufferSource(), f = this.ac.createBiquadFilter(), g = this.ac.createGain();
+      src.buffer = this.noise; f.type = type; f.frequency.value = freq;
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      src.connect(f); f.connect(g); g.connect(this.out); src.start(t); src.stop(t + dur + 0.02);
+    },
+    note(i, dur = 0.3, vol = 0.14) {
+      if (!this.ready() || !this.gate()) return;
+      const f = penta(i);
+      this.osc('sine', f, f, dur, vol);
+      this.osc('sine', f * 4.01, f * 4.01, dur * 0.35, vol * 0.2);
+    },
+    pop() { if (!this.ready() || !this.gate()) return; this.osc('sine', 240, 70, 0.13, 0.22); this.hiss(0.09, 0.12, 700, 'lowpass'); },
+    splat(deg) { if (!this.ready()) return; this.note(deg + 2, 0.32, 0.12); if (this.gate()) this.hiss(0.05, 0.05, 2500, 'highpass'); },
+    sweep() { if (!this.ready()) return; this.osc('triangle', 300, 900, 0.35, 0.12); },
+    fanfare() { [0, 2, 4, 5, 7, 9].forEach((k, n) => setTimeout(() => this.note(10 + k, 0.5, 0.15), n * 85)); },
   };
 
   /* ================= shared effects ================= */
   let simT = 0, shake = 0;
   const FX = {
     p: [],
-    add(x, y, vx, vy, color, life, size) { if (this.p.length < 1800) this.p.push({ x, y, vx, vy, color, life, size, age: 0 }); },
+    add(x, y, vx, vy, color, life, size, g = 1) { if (this.p.length < 1800) this.p.push({ x, y, vx, vy, color, life, size, g, age: 0 }); },
     burst(x, y, n, colors, speed = 500, life = 1.2, size = 8, up = 0) {
       for (let i = 0; i < n; i++) {
         const a = Math.random() * TAU, s = speed * (0.25 + Math.random() * 0.75);
-        this.add(x, y, Math.cos(a) * s, Math.sin(a) * s - up, Array.isArray(colors) ? pick(colors) : colors, life * (0.6 + Math.random() * 0.4), size * (0.5 + Math.random()));
+        this.add(x, y, Math.cos(a) * s, Math.sin(a) * s - up, Array.isArray(colors) ? colors[i % colors.length] : colors, life * (0.6 + Math.random() * 0.4), size * (0.5 + Math.random()));
       }
     },
     step(dt) {
@@ -499,7 +763,7 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
         const q = this.p[i];
         q.age += dt;
         if (q.age >= q.life) { this.p[i] = this.p[this.p.length - 1]; this.p.pop(); continue; }
-        q.vy += 900 * dt; q.vx *= 0.995; q.x += q.vx * dt; q.y += q.vy * dt;
+        q.vy += 900 * q.g * dt; q.vx *= 0.99; q.vy *= q.g < 0 ? 0.98 : 1; q.x += q.vx * dt; q.y += q.vy * dt;
       }
     },
     draw(ctx) {
@@ -511,7 +775,6 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
     },
     clear() { this.p.length = 0; },
   };
-  const confetti = () => { FX.burst(W * 0.25, H * 0.35, 90, RAINBOW, 900, 1.8, 12, 500); FX.burst(W * 0.75, H * 0.35, 90, RAINBOW, 900, 1.8, 12, 500); };
 
   function drawText(ctx, str, x, y, size, o = {}) {
     ctx.font = `${o.weight || 800} ${size}px ${DISPLAY}`;
@@ -532,7 +795,7 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
     ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
   }
   const hasCaption = () => S.caption.trim().length > 0;
-  // Short formats put the caption above the field, so mode layouts shift down by this much.
+  // Short formats put the caption above the field, so the layout shifts down by this much.
   const topInset = () => (hasCaption() && !isTall() ? 80 : 0);
 
   function drawCaption(ctx) {
@@ -552,742 +815,330 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
     ctx.fillText(text, W / 2, y + size * 0.05);
   }
 
-  const Banner = {
-    title: '', sub: '', color: C.snow, t0: -99, dur: 0,
-    show(title, sub = '', color = C.snow, dur = 2.6) { Object.assign(this, { title, sub, color, t0: simT, dur }); },
-    clear() { this.title = ''; },
-    draw(ctx) {
-      const age = simT - this.t0;
-      if (!this.title || age > this.dur) return;
-      const pop = age < 0.35 ? easeOutBack(age / 0.35) : 1;
-      const size = isTall() ? 120 : 86;
-      ctx.save();
-      ctx.globalAlpha = clamp((this.dur - age) / 0.4, 0, 1);
-      ctx.translate(W / 2, H / 2);
-      ctx.scale(pop, pop);
-      fitText(ctx, this.title, 0, -size * 0.25, size, W - 120, { color: this.color });
-      if (this.sub) drawText(ctx, this.sub, 0, size * 0.7, isTall() ? 42 : 32, { weight: 700 });
-      ctx.restore();
-    },
-  };
-
-  /* ================= physics helpers ================= */
-  function collideBalls(list, e) {
-    for (let i = 0; i < list.length; i++) {
-      const a = list[i];
-      for (let j = i + 1; j < list.length; j++) {
-        const b = list[j];
-        const dx = b.x - a.x, dy = b.y - a.y, min = a.r + b.r, d2 = dx * dx + dy * dy;
-        if (d2 >= min * min || d2 === 0) continue;
-        const d = Math.sqrt(d2), nx = dx / d, ny = dy / d, push = (min - d) / 2;
-        a.x -= nx * push; a.y -= ny * push; b.x += nx * push; b.y += ny * push;
-        const vn = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
-        if (vn < 0) { const k = -(1 + e) * vn / 2; a.vx -= k * nx; a.vy -= k * ny; b.vx += k * nx; b.vy += k * ny; }
-      }
+  /* ================= the game ================= */
+  let picNo = 0, lastPic = -1, bag = [];
+  function nextPicIndex() {
+    if (!bag.length) {
+      bag = shuffle(PICS.map((_, i) => i));
+      if (bag[0] === lastPic && bag.length > 1) bag.push(bag.shift());
     }
-  }
-  // Ball against a capsule segment. w/ox/oy describe a segment spinning around (ox, oy). Returns impact speed.
-  function hitSeg(b, ax, ay, bx, by, rad, e, w = 0, ox = 0, oy = 0) {
-    const abx = bx - ax, aby = by - ay, len2 = abx * abx + aby * aby || 1;
-    const t = clamp(((b.x - ax) * abx + (b.y - ay) * aby) / len2, 0, 1);
-    const qx = ax + abx * t, qy = ay + aby * t;
-    const dx = b.x - qx, dy = b.y - qy, min = b.r + rad, d2 = dx * dx + dy * dy;
-    if (d2 >= min * min) return 0;
-    const d = Math.sqrt(d2);
-    let nx, ny;
-    if (d < 1e-6) { const l = Math.sqrt(len2); nx = aby / l; ny = -abx / l; if (ny > 0) { nx = -nx; ny = -ny; } } else { nx = dx / d; ny = dy / d; }
-    b.x = qx + nx * min; b.y = qy + ny * min;
-    const svx = -w * (qy - oy), svy = w * (qx - ox);
-    const vn = (b.vx - svx) * nx + (b.vy - svy) * ny;
-    if (vn >= 0) return 0;
-    b.vx -= (1 + e) * vn * nx; b.vy -= (1 + e) * vn * ny;
-    const tx = -ny, ty = nx, vt = (b.vx - svx) * tx + (b.vy - svy) * ty;
-    b.vx -= vt * tx * 0.004; b.vy -= vt * ty * 0.004;
-    return -vn;
-  }
-  function hitCircle(b, x, y, r, e) {
-    const dx = b.x - x, dy = b.y - y, min = b.r + r, d2 = dx * dx + dy * dy;
-    if (d2 >= min * min) return 0;
-    const d = Math.sqrt(d2) || 1e-6, nx = dx / d, ny = dy / d;
-    b.x = x + nx * min; b.y = y + ny * min;
-    const vn = b.vx * nx + b.vy * ny;
-    if (vn >= 0) return 0;
-    b.vx -= (1 + e) * vn * nx; b.vy -= (1 + e) * vn * ny;
-    return -vn;
+    lastPic = bag.shift();
+    return lastPic;
   }
 
-  /* ================= mode: escape the rings ================= */
-  function Rings() {
-    const variant = S.variants.rings;
-    let level = 1, cx, cy, R, rings, balls, cur, phase, phaseT, stuckT, ballR, G, bounceN = 0, trailTick = 0;
-
-    function newBall() {
-      const a = Math.random() * TAU, s = rand(700, 900) * (R / 480);
-      return { x: cx + rand(-8, 8), y: cy + rand(-8, 8), vx: Math.cos(a) * s, vy: Math.sin(a) * s, r: ballR, trail: [] };
-    }
-    function build() {
-      const tall = isTall();
-      cx = W / 2;
-      cy = tall ? H * 0.56 : H / 2 + topInset() / 2 + 10;
-      R = tall ? W * 0.46 : Math.min(W * 0.46, (H - topInset()) * 0.45);
-      const n = Math.min(9 + level * 3, 27);
-      const inner = R * 0.2, gapStep = (R - inner) / (n - 1);
-      ballR = clamp(gapStep * 0.36, 8, 17);
-      G = 1250 * (R / 480);
-      const spin = 0.75 + level * 0.12;
-      rings = [];
-      for (let i = 0; i < n; i++) {
-        const r = inner + gapStep * i;
-        rings.push({
-          r, a: Math.random() * TAU, w: (i % 2 ? 1 : -1) * spin * rand(0.8, 1.3),
-          gap: clamp((ballR * 6.2) / r, 0.24, 1.1), width: clamp(gapStep * 0.34, 4, 14),
-          color: RAINBOW[i % RAINBOW.length], flash: 0,
-        });
-      }
-      cur = 0; phase = 'play'; phaseT = 0; stuckT = 0;
-      balls = [];
-      for (let i = 0, n0 = variant === 'five' ? 5 : 1; i < n0; i++) balls.push(newBall());
-    }
-    function hitRing(b, g) {
-      const dx = b.x - cx, dy = b.y - cy, d = Math.hypot(dx, dy) || 1;
-      const inner = g.r - g.width / 2, outer = g.r + g.width / 2;
-      if (d + b.r <= inner || d - b.r >= outer) return;
-      let rel = (Math.atan2(dy, dx) - g.a) % TAU;
-      if (rel < 0) rel += TAU;
-      const half = Math.asin(Math.min(1, b.r / d));
-      if (rel > half && rel < g.gap - half) return; // slipping through the gap
-      const nx = dx / d, ny = dy / d;
-      const vn = b.vx * nx + b.vy * ny;
-      if (d < g.r) {
-        b.x = cx + nx * (inner - b.r); b.y = cy + ny * (inner - b.r);
-        if (vn <= 0) return;
-      } else {
-        b.x = cx + nx * (outer + b.r); b.y = cy + ny * (outer + b.r);
-        if (vn >= 0) return;
-      }
-      b.vx -= 2 * vn * nx; b.vy -= 2 * vn * ny;
-      const s = Math.hypot(b.vx, b.vy), vmin = 620 * (R / 480), vmax = 1500 * (R / 480);
-      if (s < vmin) { b.vx *= vmin / s; b.vy *= vmin / s; } else if (s > vmax) { b.vx *= vmax / s; b.vy *= vmax / s; }
-      g.flash = 1;
-      Sound.note(WALK[bounceN++ % WALK.length] + 5, 0.3, 0.13);
-    }
-    function breakRing() {
-      const g = rings[cur];
-      const pieces = Math.round(40 + g.r * 0.12);
-      for (let k = 0; k < pieces; k++) {
-        const a = g.a + g.gap + Math.random() * (TAU - g.gap), s = rand(120, 520);
-        FX.add(cx + Math.cos(a) * g.r, cy + Math.sin(a) * g.r, Math.cos(a) * s, Math.sin(a) * s - 120, g.color, rand(0.7, 1.4), rand(6, 13));
-      }
-      cur++; stuckT = 0; shake = Math.min(18, shake + 7);
-      Sound.chord(5 + (cur % 5));
-      if (variant === 'multi' && balls.length < 40) balls.push(newBall());
-      if (cur >= rings.length) {
-        phase = 'done'; phaseT = 0;
-        Banner.show('СВОБОДА!', `Уровень ${level} пройден`, C.lemon, 2.8);
-        confetti();
-      }
-    }
-    function hud(ctx) {
-      const left = rings.length - cur;
-      const col = rings[cur] ? rings[cur].color : C.lemon;
-      if (isTall()) {
-        drawText(ctx, 'КОЛЕЦ ОСТАЛОСЬ', W / 2, 235, 34, { weight: 700 });
-        drawText(ctx, String(left), W / 2, 350, 170, { weight: 900, color: col });
-        drawText(ctx, `УРОВЕНЬ ${level}` + (balls.length > 1 ? `  ·  ШАРОВ ${balls.length}` : ''), W / 2, 470, 30, { weight: 700, color: C.muted });
-      } else {
-        const y = 78 + topInset();
-        drawText(ctx, String(left), 56, y, 92, { align: 'left', weight: 900, color: col });
-        drawText(ctx, 'КОЛЕЦ', 60, y + 74, 24, { align: 'left', weight: 700 });
-        drawText(ctx, `УР. ${level}`, W - 56, y - 6, 40, { align: 'right', weight: 800, color: C.lemon });
-        if (balls.length > 1) drawText(ctx, `ШАРОВ ${balls.length}`, W - 56, y + 46, 24, { align: 'right', weight: 700 });
-      }
-    }
-
-    build();
-    return {
-      step(dt) {
-        phaseT += dt;
-        for (const g of rings) { g.a += g.w * dt; g.flash = Math.max(0, g.flash - dt * 4); }
-        const ring = rings[cur];
-        const keepTrail = (trailTick = (trailTick + 1) % 2) === 0;
-        for (const b of balls) {
-          b.vy += G * dt; b.x += b.vx * dt; b.y += b.vy * dt;
-          if (ring) hitRing(b, ring);
-          if (keepTrail) { b.trail.push(b.x, b.y); if (b.trail.length > 28) b.trail.splice(0, 2); }
-        }
-        if (balls.length > 1) collideBalls(balls, 0.95);
-        if (phase === 'play') {
-          stuckT += dt;
-          // A gentle mercy rule: a gap that nobody finds slowly widens.
-          if (stuckT > 14) ring.gap = Math.min(ring.gap + dt * 0.03, 1.6);
-          for (const b of balls) {
-            if (Math.hypot(b.x - cx, b.y - cy) - b.r > ring.r + ring.width / 2) { breakRing(); break; }
-          }
-        } else {
-          balls = balls.filter((b) => b.y < H + 200);
-          if (phaseT > 3) { level++; FX.clear(); build(); }
-        }
-      },
-      draw(ctx) {
-        ctx.fillStyle = 'rgba(255,255,255,0.03)';
-        ctx.beginPath(); ctx.arc(cx, cy, R + 24, 0, TAU); ctx.fill();
-        ctx.lineCap = 'round';
-        for (let i = rings.length - 1; i >= cur; i--) {
-          const g = rings[i], cap = (g.width / 2) / g.r;
-          ctx.globalAlpha = i === cur ? 1 : 0.62;
-          ctx.strokeStyle = g.color; ctx.lineWidth = g.width;
-          ctx.beginPath(); ctx.arc(cx, cy, g.r, g.a + g.gap + cap, g.a + TAU - cap); ctx.stroke();
-          if (g.flash > 0) { ctx.globalAlpha = g.flash * 0.9; ctx.strokeStyle = '#fff'; ctx.stroke(); }
-        }
-        ctx.globalAlpha = 1;
-        const trailCol = rings[cur] ? rings[cur].color : C.lemon;
-        for (const b of balls) {
-          const t = b.trail;
-          ctx.fillStyle = trailCol;
-          for (let k = 0; k < t.length; k += 2) {
-            const f = k / t.length;
-            ctx.globalAlpha = f * 0.45;
-            ctx.beginPath(); ctx.arc(t[k], t[k + 1], b.r * (0.3 + 0.7 * f), 0, TAU); ctx.fill();
-          }
-          ctx.globalAlpha = 1;
-          ctx.fillStyle = C.snow;
-          ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, TAU); ctx.fill();
-        }
-        FX.draw(ctx);
-        if (S.hud) hud(ctx);
-      },
-    };
-  }
-
-  /* ================= mode: colour wars ================= */
-  function Wars() {
-    const n = clamp(+S.variants.wars || 2, 2, 4);
-    const TEAMS = [
-      { name: 'МАЛИНА', c: C.berry, deep: '#8C1230' },
-      { name: 'НЕБО', c: C.sky, deep: '#0F4C86' },
-      { name: 'ЛИМОН', c: C.lemon, deep: '#8A6400' },
-      { name: 'МЯТА', c: C.mint, deep: '#0C6B50' },
-    ].slice(0, n);
+  function Klyaksomet() {
     const tall = isTall();
-    const hudH = S.hud ? (tall ? 470 : 132 + topInset()) : (hasCaption() ? (tall ? 190 : topInset()) : 0);
-    const cell = 36, cols = Math.floor(W / cell);
-    const areaH = H - hudH, rows = Math.floor(areaH / cell);
-    const gx = (W - cols * cell) / 2, gy = hudH + (areaH - rows * cell) / 2;
-    const gw = cols * cell, gh = rows * cell;
-    const grid = new Uint8Array(cols * rows);
-    const counts = new Array(n).fill(0);
-    const V = 560;
-    const flashes = [];
-    let elapsed = 0, leader = 0, leadPulse = 0;
+    let L;
+    if (tall) {
+      const cell = Math.floor(W * 0.82 / 16), side = cell * 16;
+      L = { cell, side, x0: (W - side) / 2, y0: 340, railY: H - 150, G: 3000 };
+      L.optY = L.y0 + side + 80;
+    } else {
+      const avail = H - 40 - topInset() - 250;
+      const cell = Math.floor(Math.min(W * 0.6, avail) / 16), side = cell * 16;
+      L = { cell, side, x0: (W - side) / 2, y0: 40 + topInset() + Math.max(0, (avail - side) * 0.4), railY: H - 70, G: 2400 };
+    }
+    const colW = L.x0 - 36;
+    const BAR = tall ? 136 : 88, BW = tall ? 60 : 40, WR = tall ? 31 : 21;
+    const pivotY = L.railY - (tall ? 74 : 50);
 
-    const byRows = rows >= cols;
-    for (let j = 0; j < rows; j++) {
-      for (let i = 0; i < cols; i++) {
-        let t;
-        if (n === 4) t = (j < rows / 2 ? 0 : 2) + (i < cols / 2 ? 0 : 1);
-        else t = Math.min(n - 1, Math.floor((byRows ? j / rows : i / cols) * n));
-        grid[j * cols + i] = t; counts[t]++;
-      }
-    }
-    const balls = TEAMS.map((_, t) => {
-      let sx = 0, sy = 0, c = 0;
-      for (let k = 0; k < grid.length; k++) if (grid[k] === t) { sx += k % cols; sy += Math.floor(k / cols); c++; }
-      const a = rand(0.35, 1.2) + randi(0, 3) * Math.PI / 2;
-      return { team: t, x: gx + (sx / c + 0.5) * cell, y: gy + (sy / c + 0.5) * cell, vx: Math.cos(a) * V, vy: Math.sin(a) * V, r: cell * 0.42, lastNote: 0 };
-    });
-    leader = counts.indexOf(Math.max(...counts));
+    // Paint that splashes past a cell stays on the paper; filled cells are drawn over it.
+    const paper = document.createElement('canvas');
+    paper.width = Math.round(L.side * Q); paper.height = Math.round(L.side * Q);
+    const pctx = paper.getContext('2d');
+    pctx.setTransform(Q, 0, 0, Q, 0, 0);
 
-    function nudge(b) {
-      const a = Math.atan2(b.vy, b.vx) + rand(-0.06, 0.06);
-      let vx = Math.cos(a), vy = Math.sin(a);
-      // never let a ball settle into a straight horizontal or vertical shuttle
-      if (Math.abs(vx) < 0.2) vx = Math.sign(vx || 1) * 0.2;
-      if (Math.abs(vy) < 0.2) vy = Math.sign(vy || 1) * 0.2;
-      const l = Math.hypot(vx, vy);
-      b.vx = vx / l * V; b.vy = vy / l * V;
-    }
-    function hud(ctx) {
-      const total = cols * rows;
-      const lead = TEAMS[leader];
-      const pulse = 1 + leadPulse * 0.25;
-      const barX = 56, barW = W - 112;
-      const drawBar = (y, h, labels) => {
-        ctx.save();
-        roundRect(ctx, barX, y, barW, h, h / 2); ctx.clip();
-        let x = barX;
-        for (let t = 0; t < n; t++) {
-          const w = barW * counts[t] / total;
-          ctx.fillStyle = TEAMS[t].c; ctx.fillRect(x, y, w + 0.5, h);
-          if (labels && w > 90) drawText(ctx, Math.round(counts[t] / total * 100) + '%', x + w / 2, y + h / 2 + 1, h * 0.55, { stroke: false, color: INK, weight: 800 });
-          x += w;
-        }
-        ctx.restore();
-      };
-      if (tall) {
-        drawText(ctx, 'БИТВА ЦВЕТОВ', W / 2, 200, 32, { weight: 700, color: C.muted });
-        if (n === 2) {
-          drawText(ctx, String(counts[0]), W * 0.28, 295, 118, { weight: 900, color: TEAMS[0].c });
-          drawText(ctx, ':', W / 2, 290, 90, { weight: 900 });
-          drawText(ctx, String(counts[1]), W * 0.72, 295, 118, { weight: 900, color: TEAMS[1].c });
-        } else {
-          for (let t = 0; t < n; t++) drawText(ctx, String(counts[t]), W * (t + 0.5) / n, 295, n === 3 ? 92 : 76, { weight: 900, color: TEAMS[t].c });
-        }
-        drawBar(370, 38, true);
-        ctx.save(); ctx.translate(W / 2, 440); ctx.scale(pulse, pulse);
-        drawText(ctx, `ВПЕРЕДИ: ${lead.name}`, 0, 0, 30, { weight: 800, color: lead.c });
-        ctx.restore();
-      } else {
-        const y = 44 + topInset();
-        ctx.save(); ctx.translate(56, y); ctx.scale(pulse, pulse);
-        drawText(ctx, `ВПЕРЕДИ: ${lead.name}`, 0, 0, 28, { align: 'left', weight: 800, color: lead.c });
-        ctx.restore();
-        drawText(ctx, fmtTime(elapsed), W - 56, y, 28, { align: 'right', weight: 700 });
-        drawBar(y + 34, 36, true);
-      }
-    }
+    // Where each cannon parks, by how many are in play. Cannon 1 rolls in from the right, cannon 2 from the left.
+    const HOME = { 1: [0.5], 2: [0.33, 0.67], 3: [0.5, 0.83, 0.17] };
+    const cannons = [0, 1, 2].map((id) => ({ id, active: false, x: id === 0 ? W / 2 : id === 1 ? W + 160 : -160, angle: -Math.PI / 2, recoil: 0, cool: 0.6, target: null, lift: 0, spin: 0 }));
 
-    return {
-      step(dt) {
-        elapsed += dt;
-        leadPulse = Math.max(0, leadPulse - dt * 2.5);
-        for (const b of balls) {
-          let fx = false, fy = false;
-          for (let k = 0; k < 8; k++) {
-            const a = k * TAU / 8, ca = Math.cos(a), sa = Math.sin(a);
-            const i = Math.floor((b.x + ca * b.r - gx) / cell), j = Math.floor((b.y + sa * b.r - gy) / cell);
-            if (i < 0 || j < 0 || i >= cols || j >= rows) continue;
-            const idx = j * cols + i, owner = grid[idx];
-            if (owner === b.team) continue;
-            grid[idx] = b.team; counts[owner]--; counts[b.team]++;
-            flashes.push({ idx, t: elapsed });
-            if (Math.abs(ca) > Math.abs(sa) + 0.01) { if (!fx) { b.vx = -b.vx; fx = true; } } else if (!fy) { b.vy = -b.vy; fy = true; }
-            if (elapsed - b.lastNote > 0.09) { b.lastNote = elapsed; Sound.note(b.team * 2 + randi(4, 8), 0.22, 0.09); }
-          }
-          if (fx || fy) nudge(b);
-          b.x += b.vx * dt; b.y += b.vy * dt;
-          if (b.x < gx + b.r) { b.x = gx + b.r; b.vx = Math.abs(b.vx); } else if (b.x > gx + gw - b.r) { b.x = gx + gw - b.r; b.vx = -Math.abs(b.vx); }
-          if (b.y < gy + b.r) { b.y = gy + b.r; b.vy = Math.abs(b.vy); } else if (b.y > gy + gh - b.r) { b.y = gy + gh - b.r; b.vy = -Math.abs(b.vy); }
-        }
-        while (flashes.length && elapsed - flashes[0].t > 0.45) flashes.shift();
-        let best = 0;
-        for (let t = 1; t < n; t++) if (counts[t] > counts[best]) best = t;
-        if (best !== leader && counts[best] > counts[leader]) { leader = best; leadPulse = 1; }
-      },
-      draw(ctx) {
-        for (let t = 0; t < n; t++) {
-          ctx.fillStyle = TEAMS[t].c;
-          ctx.beginPath();
-          for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) if (grid[j * cols + i] === t) ctx.rect(gx + i * cell + 1.5, gy + j * cell + 1.5, cell - 3, cell - 3);
-          ctx.fill();
-        }
-        ctx.fillStyle = '#fff';
-        for (const f of flashes) {
-          ctx.globalAlpha = Math.max(0, 1 - (elapsed - f.t) / 0.45) * 0.85;
-          const i = f.idx % cols, j = (f.idx / cols) | 0;
-          ctx.fillRect(gx + i * cell + 1.5, gy + j * cell + 1.5, cell - 3, cell - 3);
-        }
-        ctx.globalAlpha = 1;
-        for (const b of balls) {
-          ctx.fillStyle = TEAMS[b.team].deep;
-          ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, TAU); ctx.fill();
-          ctx.lineWidth = 4; ctx.strokeStyle = '#fff'; ctx.stroke();
-        }
-        if (S.hud) hud(ctx);
-      },
-    };
-  }
+    let pic, cells, queue, total, filled, blots, phase, phaseT, shots, options, sheetDY = 0;
+    let toast = { text: '', t: -99 };
 
-  /* ================= mode: the growing ball ================= */
-  function Grow() {
-    const rate = { slow: 1.6, normal: 3, fast: 5 }[S.variants.grow] || 3;
-    const G = 1500;
-    const trail = document.createElement('canvas');
-    trail.width = Math.round(W * Q); trail.height = Math.round(H * Q);
-    const tctx = trail.getContext('2d');
-    tctx.setTransform(Q, 0, 0, Q, 0, 0);
-    let cx, cy, R, ball, phase, phaseT, bounces, elapsed, hue, stampT, walk = 0;
+    const cellX = (c) => L.x0 + (c.i + 0.5) * L.cell;
+    const cellY = (c) => L.y0 + sheetDY + (c.j + 0.5) * L.cell;
+    const activeCount = () => cannons.filter((k) => k.active).length;
+    const home = (c) => W * (HOME[activeCount()][c.id] ?? 0.5);
 
-    function build() {
-      const tall = isTall();
-      cx = W / 2;
-      cy = tall ? H * 0.57 : H / 2 + topInset() / 2 + 10;
-      R = tall ? W * 0.45 : Math.min(W * 0.45, (H - topInset()) * 0.45);
-      const a = rand(-0.7, 0.7);
-      ball = { x: cx, y: cy - R * 0.35, vx: Math.sin(a) * 700, vy: 0, r: 16 };
-      phase = 'play'; phaseT = 0; bounces = 0; elapsed = 0; hue = Math.random() * 360; stampT = 0;
-      tctx.clearRect(0, 0, W, H);
-    }
-    function finish() {
-      phase = 'done'; phaseT = 0;
-      FX.burst(cx, cy, 240, RAINBOW, 1000, 1.7, 11, 200);
-      Banner.show('100%', `${bounces} ударов · ${fmtTime(elapsed)}`, `hsl(${hue} 95% 65%)`, 3);
-      shake = 22;
-      Sound.chord(10);
-    }
-    const percent = () => (phase === 'done' ? 100 : Math.floor(Math.pow(ball.r / R, 2) * 100));
-    function hud(ctx) {
-      const col = `hsl(${hue} 95% 65%)`;
-      if (isTall()) {
-        drawText(ctx, 'ЗАПОЛНЕНО', W / 2, 235, 34, { weight: 700 });
-        drawText(ctx, percent() + '%', W / 2, 350, 170, { weight: 900, color: col });
-        drawText(ctx, `УДАРОВ ${bounces}  ·  ${fmtTime(elapsed)}`, W / 2, 470, 30, { weight: 700, color: C.muted });
-      } else {
-        const y = 78 + topInset();
-        drawText(ctx, percent() + '%', 56, y, 84, { align: 'left', weight: 900, color: col });
-        drawText(ctx, 'ЗАПОЛНЕНО', 60, y + 72, 22, { align: 'left', weight: 700 });
-        drawText(ctx, String(bounces), W - 56, y - 6, 56, { align: 'right', weight: 900, color: C.lemon });
-        drawText(ctx, 'УДАРОВ', W - 56, y + 50, 22, { align: 'right', weight: 700 });
-      }
-    }
-
-    build();
-    return {
-      step(dt) {
-        phaseT += dt;
-        if (phase === 'play') {
-          elapsed += dt;
-          ball.vy += G * dt; ball.x += ball.vx * dt; ball.y += ball.vy * dt;
-          const dx = ball.x - cx, dy = ball.y - cy, d = Math.hypot(dx, dy) || 1;
-          if (d + ball.r > R) {
-            const nx = dx / d, ny = dy / d;
-            ball.x = cx + nx * (R - ball.r); ball.y = cy + ny * (R - ball.r);
-            const vn = ball.vx * nx + ball.vy * ny;
-            if (vn > 0) {
-              ball.vx -= 2 * vn * nx; ball.vy -= 2 * vn * ny;
-              ball.r = Math.min(R, ball.r + rate);
-              bounces++;
-              hue = (hue + 9) % 360;
-              const s = Math.hypot(ball.vx, ball.vy);
-              if (s < 950) { ball.vx *= 950 / s; ball.vy *= 950 / s; }
-              Sound.note(WALK[walk++ % WALK.length] + 5, 0.35, 0.15);
-              FX.burst(cx + nx * R, cy + ny * R, 8, `hsl(${hue} 95% 65%)`, 380, 0.6, 7);
-              if (ball.r >= R - 4) finish();
-            }
-          }
-          stampT += dt;
-          if (phase === 'play' && stampT > 1 / 60) {
-            stampT = 0;
-            tctx.lineWidth = 3;
-            tctx.strokeStyle = `hsl(${hue} 95% 62%)`;
-            tctx.beginPath(); tctx.arc(ball.x, ball.y, ball.r, 0, TAU); tctx.stroke();
-          }
-        } else if (phaseT > 3.2) {
-          FX.clear(); build();
-        }
-      },
-      draw(ctx) {
-        ctx.drawImage(trail, 0, 0, W, H);
-        ctx.lineWidth = 10; ctx.strokeStyle = C.snow;
-        ctx.beginPath(); ctx.arc(cx, cy, R + 5, 0, TAU); ctx.stroke();
-        if (phase === 'play') {
-          ctx.fillStyle = `hsl(${hue} 95% 62%)`;
-          ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, TAU); ctx.fill();
-          ctx.lineWidth = Math.max(3, ball.r * 0.06); ctx.strokeStyle = '#fff'; ctx.stroke();
-          ctx.globalAlpha = 0.35; ctx.fillStyle = '#fff';
-          ctx.beginPath(); ctx.arc(ball.x - ball.r * 0.35, ball.y - ball.r * 0.35, ball.r * 0.2, 0, TAU); ctx.fill();
-          ctx.globalAlpha = 1;
-        }
-        FX.draw(ctx);
-        if (S.hud) hud(ctx);
-      },
-    };
-  }
-
-  /* ================= mode: marble race ================= */
-  const RACERS = [
-    { name: 'ЛИМОН', c: C.lemon }, { name: 'МАЛИНА', c: C.berry }, { name: 'МЯТА', c: C.mint }, { name: 'НЕБО', c: C.sky },
-    { name: 'АПЕЛЬСИН', c: C.orange }, { name: 'СЛИВА', c: C.plum }, { name: 'ЛАЙМ', c: C.lime }, { name: 'СНЕГ', c: C.snow },
-  ];
-  const raceWins = {};
-  let raceNo = 0;
-  const PX_PER_M = 100; // course length is shown in metres: 100 px = 1 m
-
-  function Race() {
-    const N = clamp(+S.variants.race || 8, 2, 8);
-    const M = 46, XL = M, XR = W - M, BR = 22, G = 1700, BUCKET = 300;
-    let segs, pegs, bumps, spins, buckets, gate, balls, finishY, L, camY, phase, phaseT, order, leader, beep;
-
-    const seg = (ax, ay, bx, by, e = 0.3) => ({ type: 'seg', ax, ay, bx, by, e, y0: Math.min(ay, by), y1: Math.max(ay, by) });
-    function section(kind, y) {
-      if (kind === 'pegs') {
-        const rows = randi(5, 7), dy = 96, dx = 128;
-        for (let r = 0; r < rows; r++) {
-          const cnt = r % 2 ? 6 : 7;
-          for (let k = 0; k < cnt; k++) pegs.push({ type: 'peg', x: W / 2 + (k - (cnt - 1) / 2) * dx, y: y + r * dy, r: 11, flash: 0 });
-        }
-        return y + (rows - 1) * dy;
-      }
-      if (kind === 'zig') {
-        const n = randi(3, 4), gap = 150, drop = 150, sp = 240, startLeft = Math.random() < 0.5;
-        for (let k = 0; k < n; k++) {
-          const yy = y + k * sp;
-          segs.push((k % 2 === 0) === startLeft ? seg(XL, yy, XR - gap, yy + drop) : seg(XR, yy, XL + gap, yy + drop));
-        }
-        return y + (n - 1) * sp + drop;
-      }
-      if (kind === 'funnel') {
-        const gw = 150, h = 240;
-        segs.push(seg(XL, y, W / 2 - gw / 2, y + h), seg(XR, y, W / 2 + gw / 2, y + h));
-        return y + h;
-      }
-      if (kind === 'spin') {
-        const n = randi(2, 3), flip = Math.random() < 0.5;
-        let yy = y + 130;
-        for (let k = 0; k < n; k++) {
-          const left = (k % 2 === 0) !== flip;
-          spins.push({ type: 'spin', x: left ? W * 0.33 : W * 0.67, y: yy, len: 170, a: Math.random() * TAU, w: (left ? 1 : -1) * rand(1.8, 2.6), r: 9 });
-          yy += 250;
-        }
-        return yy - 100;
-      }
-      // bumpers, plus small wedges so nobody slides straight down a wall
-      bumps.push({ type: 'bump', x: W * 0.28, y: y + 90, r: 52, flash: 0 }, { type: 'bump', x: W * 0.72, y: y + 90, r: 52, flash: 0 }, { type: 'bump', x: W / 2, y: y + 285, r: 60, flash: 0 });
-      segs.push(seg(XL, y + 390, XL + 120, y + 450), seg(XR, y + 390, XR - 120, y + 450));
-      return y + 460;
-    }
-    function gen() {
-      segs = []; pegs = []; bumps = []; spins = [];
-      gate = seg(XL, 300, XR, 300, 0.1);
-      segs.push(gate);
-      const kinds = ['pegs', 'zig', 'funnel', 'spin', 'bump'];
-      let y = section('pegs', 380) + 90, prev = 'pegs';
-      while (y < 8200) {
-        let k;
-        do k = pick(kinds); while (k === prev);
-        prev = k;
-        y = section(k, y) + 90;
-      }
-      finishY = y + 120;
-      segs.push(seg(XL, finishY + 260, W / 2, finishY + 330, 0.2), seg(XR, finishY + 260, W / 2, finishY + 330, 0.2));
-      L = finishY + 380;
-      buckets = [];
-      const add = (o, y0, y1) => { for (let b = Math.floor((y0 - 60) / BUCKET); b <= Math.floor((y1 + 60) / BUCKET); b++) if (b >= 0) (buckets[b] || (buckets[b] = [])).push(o); };
-      segs.forEach((o) => add(o, o.y0, o.y1));
-      pegs.forEach((o) => add(o, o.y - o.r, o.y + o.r));
-      bumps.forEach((o) => add(o, o.y - o.r, o.y + o.r));
-      spins.forEach((o) => add(o, o.y - o.len, o.y + o.len));
-    }
-    function build() {
-      gen();
-      raceNo++;
-      const lineup = RACERS.slice(0, N).sort(() => Math.random() - 0.5);
-      const spacing = (XR - XL) / N;
-      balls = lineup.map((rc, k) => ({ ...rc, x: XL + spacing * (k + 0.5), y: 300 - 6 - BR - 1, vx: 0, vy: 0, r: BR, done: false, place: 0, best: 0, stuck: 0, spin: 0 }));
-      order = []; camY = 0; phase = 'count'; phaseT = 0; leader = null; beep = 4;
-    }
-    function moveBall(b, dt) {
-      b.vy += G * dt;
-      const sp = Math.hypot(b.vx, b.vy);
-      if (sp > 1500) { b.vx *= 1500 / sp; b.vy *= 1500 / sp; }
-      b.x += b.vx * dt; b.y += b.vy * dt;
-      const list = buckets[Math.floor(b.y / BUCKET)];
-      if (list) {
-        for (const o of list) {
-          if (o.type === 'seg') {
-            if (!o.off && b.y + b.r + 8 > o.y0 && b.y - b.r - 8 < o.y1) hitSeg(b, o.ax, o.ay, o.bx, o.by, 6, o.e);
-          } else if (o.type === 'peg') {
-            const imp = hitCircle(b, o.x, o.y, o.r, 0.45);
-            if (imp) { o.flash = 1; b.vx += rand(-14, 14); if (imp > 260) Sound.note(randi(6, 12), 0.18, 0.07); }
-          } else if (o.type === 'bump') {
-            const imp = hitCircle(b, o.x, o.y, o.r, 0.9);
-            if (imp) {
-              const dx = b.x - o.x, dy = b.y - o.y, d = Math.hypot(dx, dy) || 1, out = (b.vx * dx + b.vy * dy) / d;
-              if (out < 720) { b.vx += (720 - out) * dx / d; b.vy += (720 - out) * dy / d; }
-              o.flash = 1;
-              if (imp > 120) Sound.note(randi(10, 13), 0.3, 0.12);
-            }
-          } else {
-            const ex = Math.cos(o.a) * o.len, ey = Math.sin(o.a) * o.len;
-            hitSeg(b, o.x - ex, o.y - ey, o.x + ex, o.y + ey, o.r, 0.5, o.w, o.x, o.y);
-          }
-        }
-      }
-      if (b.x < XL + 3 + b.r) { b.x = XL + 3 + b.r; if (b.vx < 0) b.vx = -b.vx * 0.5; }
-      if (b.x > XR - 3 - b.r) { b.x = XR - 3 - b.r; if (b.vx > 0) b.vx = -b.vx * 0.5; }
-      if (b.y > L - b.r) { b.y = L - b.r; b.vy = -Math.abs(b.vy) * 0.3; }
-      // Watchdog: a marble that stops making progress gets a hop.
-      if (b.y > b.best + 25) { b.best = b.y; b.stuck = 0; }
-      else if (!b.done && phase !== 'count') {
-        b.stuck += dt;
-        if (b.stuck > 2.2) { b.stuck = 0; b.vy = -rand(450, 650); b.vx = rand(-350, 350); }
-      }
-      b.spin += (b.vx / b.r) * dt;
-    }
-    function win(b) {
-      phase = 'finish'; phaseT = 0;
-      raceWins[b.name] = (raceWins[b.name] || 0) + 1;
-      Banner.show(b.name, 'ПОБЕЖДАЕТ!', b.c, 3.2);
-      FX.burst(b.x, finishY, 160, RAINBOW, 900, 1.8, 11, 420);
-      shake = 16;
-      Sound.chord(7); setTimeout(() => Sound.chord(10), 240);
-    }
-    function drawRacer(ctx, b) {
-      ctx.fillStyle = b.c;
-      ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, TAU); ctx.fill();
-      ctx.lineWidth = 4; ctx.strokeStyle = INK; ctx.stroke();
-      ctx.fillStyle = 'rgba(10,8,23,0.35)';
-      ctx.beginPath(); ctx.arc(b.x + Math.cos(b.spin) * b.r * 0.5, b.y + Math.sin(b.spin) * b.r * 0.5, b.r * 0.22, 0, TAU); ctx.fill();
-      ctx.fillStyle = 'rgba(255,255,255,0.6)';
-      ctx.beginPath(); ctx.arc(b.x - b.r * 0.35, b.y - b.r * 0.4, b.r * 0.2, 0, TAU); ctx.fill();
-      if (b.done) drawText(ctx, String(b.place), b.x, b.y - b.r - 22, 26, { weight: 800 });
-    }
-    function hud(ctx) {
-      const tall = isTall();
-      const y0 = (tall ? 80 : 56) + (hasCaption() ? (tall ? 120 : 80) : 0);
-      const g = ctx.createLinearGradient(0, 0, 0, y0 + 90);
-      g.addColorStop(0, 'rgba(18,15,38,0.92)'); g.addColorStop(1, 'rgba(18,15,38,0)');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, W, y0 + 90);
-      drawText(ctx, `ГОНКА №${raceNo}`, 70, y0, 34, { align: 'left', weight: 900, color: C.lemon });
-      const lead = leader || balls[0];
-      const leftM = Math.max(0, Math.ceil((finishY - lead.y) / PX_PER_M));
-      drawText(ctx, phase === 'run' || phase === 'count' ? `ДО ФИНИША ${leftM} М` : 'ФИНИШ', 70, y0 + 44, 22, { align: 'left', weight: 700 });
-      // win tally, right-aligned
-      let x = W - 70;
-      for (let k = N - 1; k >= 0; k--) {
-        const rc = RACERS[k];
-        const txt = String(raceWins[rc.name] || 0);
-        drawText(ctx, txt, x, y0, 26, { align: 'right', weight: 800 });
-        ctx.font = `800 26px ${DISPLAY}`;
-        const tw = ctx.measureText(txt).width;
-        ctx.fillStyle = rc.c; ctx.beginPath(); ctx.arc(x - tw - 20, y0, 12, 0, TAU); ctx.fill();
-        ctx.lineWidth = 3; ctx.strokeStyle = INK; ctx.stroke();
-        x -= tw + 50;
-      }
-      drawText(ctx, 'ПОБЕДЫ', W - 70, y0 + 44, 20, { align: 'right', weight: 700, color: C.muted });
-      // progress rail in the right margin
-      const ya = y0 + 100, yb = H - 50, rx = W - M / 2;
-      ctx.lineCap = 'round'; ctx.lineWidth = 6; ctx.strokeStyle = 'rgba(244,241,255,0.18)';
-      ctx.beginPath(); ctx.moveTo(rx, ya); ctx.lineTo(rx, yb); ctx.stroke();
-      ctx.fillStyle = C.snow; ctx.fillRect(rx - 12, yb - 3, 24, 6);
-      const sorted = balls.slice().sort((a, b) => a.y - b.y);
-      for (const b of sorted) {
-        const yy = ya + clamp(b.y / finishY, 0, 1) * (yb - ya);
-        ctx.fillStyle = b.c; ctx.beginPath(); ctx.arc(rx, yy, 11, 0, TAU); ctx.fill();
-        ctx.lineWidth = 3; ctx.strokeStyle = INK; ctx.stroke();
-      }
-    }
-    function drawResults(ctx) {
-      const rowH = isTall() ? 70 : 54, w = 640, h = 120 + order.length * rowH;
-      const x = (W - w) / 2, y = (H - h) / 2;
-      ctx.globalAlpha = Math.min(1, phaseT * 3);
-      ctx.fillStyle = 'rgba(18,15,38,0.94)'; roundRect(ctx, x, y, w, h, 28); ctx.fill();
-      ctx.lineWidth = 3; ctx.strokeStyle = C.lemon; ctx.stroke();
-      drawText(ctx, `ИТОГИ ГОНКИ №${raceNo}`, W / 2, y + 60, 34, { weight: 900, color: C.lemon, stroke: false });
-      order.forEach((b, k) => {
-        const yy = y + 120 + k * rowH + rowH / 2 - 10;
-        drawText(ctx, `${k + 1}`, x + 70, yy, 30, { weight: 900, stroke: false, color: k === 0 ? C.lemon : C.snow });
-        ctx.fillStyle = b.c; ctx.beginPath(); ctx.arc(x + 140, yy, 16, 0, TAU); ctx.fill();
-        drawText(ctx, b.name, x + 176, yy, 28, { align: 'left', weight: 800, stroke: false });
-        drawText(ctx, `${raceWins[b.name] || 0} поб.`, x + w - 50, yy, 22, { align: 'right', weight: 700, stroke: false, color: C.muted });
+    function start() {
+      pic = PICS[nextPicIndex()];
+      picNo++;
+      cells = [];
+      pic.rows.forEach((row, j) => {
+        const s = row.replace(/ /g, '');
+        for (let i = 0; i < 16; i++) if (s[i] && s[i] !== '.') cells.push({ i, j, ch: s[i], color: INKS[s[i]], hitT: -1 });
       });
-      ctx.globalAlpha = 1;
+      total = cells.length; filled = 0; shots = 0; blots = [];
+      const outline = shuffle(cells.filter((c) => c.ch === 'k')), fill = shuffle(cells.filter((c) => c.ch !== 'k'));
+      queue = S.order === 'outline' ? outline.concat(fill) : S.order === 'tricky' ? fill.concat(outline) : shuffle(cells.slice());
+      options = shuffle([pic.name, ...pic.decoys]);
+      pctx.clearRect(0, 0, L.side, L.side);
+      for (const c of cannons) { c.active = c.id === 0; c.target = null; c.cool = 0.6; }
+      phase = 'enter'; phaseT = 0;
+      sheetDY = -(L.y0 + L.side + 80);
+    }
+    // Launch so the arc peaks a little above the target, then drops onto it.
+    function solve(px, py, tx, ty, lift) {
+      const apex = Math.min(py, ty) - lift;
+      const vy = -Math.sqrt(2 * L.G * (py - apex));
+      const T = -vy / L.G + Math.sqrt(2 * (ty - apex) / L.G);
+      return { vx: (tx - px) / T, vy, T };
+    }
+    function takeTarget(c) {
+      // mostly keep the queue's order, but let each cannon prefer cells on its side
+      const hx = home(c);
+      let best = 0, bd = Infinity;
+      for (let k = 0; k < Math.min(6, queue.length); k++) {
+        const d = Math.abs(cellX(queue[k]) - hx);
+        if (d < bd) { bd = d; best = k; }
+      }
+      return queue.splice(best, 1)[0];
+    }
+    function fire(c) {
+      const t = c.target, dx = Math.cos(c.angle), dy = Math.sin(c.angle);
+      const px = c.x + dx * BAR, py = pivotY + dy * BAR;
+      const s = solve(px, py, cellX(t), cellY(t), c.lift);
+      blots.push({ x0: px, y0: py, x: px, y: py, vx: s.vx, vy0: s.vy, T: s.T, t: 0, cell: t, wob: Math.random() * TAU });
+      c.recoil = 1; c.target = null; shots++;
+      c.cool = (0.46 - 0.22 * (filled / total)) * rand(0.85, 1.15);
+      for (let k = 0; k < 7; k++) FX.add(px + rand(-6, 6), py + rand(-6, 6), dx * rand(60, 220) + rand(-60, 60), dy * rand(60, 220) + rand(-60, 60), '#E9E4FF', rand(0.35, 0.7), rand(8, 16), -0.2);
+      FX.burst(px, py, 4, t.color, 260, 0.4, 6);
+      Sound.pop();
+    }
+    function splat(b) {
+      const c = b.cell, x = cellX(c), y = cellY(c);
+      c.hitT = 0; filled++;
+      FX.burst(x, y, 9, c.color, 420, 0.5, L.cell * 0.16);
+      const lx = (c.i + 0.5) * L.cell, ly = (c.j + 0.5) * L.cell;
+      pctx.fillStyle = c.color;
+      for (let k = 0; k < 6; k++) {
+        const a = Math.random() * TAU, d = L.cell * rand(0.6, 1.35);
+        pctx.globalAlpha = rand(0.3, 0.65);
+        pctx.beginPath(); pctx.arc(lx + Math.cos(a) * d, ly + Math.sin(a) * d, rand(1.5, L.cell * 0.12), 0, TAU); pctx.fill();
+      }
+      pctx.globalAlpha = 1;
+      Sound.splat(TONE[c.ch]);
+      shake = Math.min(6, shake + 1.2);
+    }
+    function activate(id, text) {
+      const c = cannons[id];
+      if (c.active) return;
+      c.active = true; c.cool = 0.9;
+      toast = { text, t: simT };
+      Sound.sweep();
+    }
+    function reveal() {
+      FX.burst(L.x0, L.y0, 80, RAINBOW, 900, 1.6, 11, 300);
+      FX.burst(L.x0 + L.side, L.y0, 80, RAINBOW, 900, 1.6, 11, 300);
+      shake = 10;
+      Sound.fanfare();
     }
 
-    build();
-    return {
-      step(dt) {
-        phaseT += dt;
-        if (phase === 'count') {
-          const sec = Math.ceil(3 - phaseT);
-          if (sec < beep && sec > 0) { beep = sec; Sound.tone(440, 0.22, 0.18, 'triangle'); }
-          if (phaseT >= 3) { phase = 'run'; phaseT = 0; gate.off = true; Sound.tone(880, 0.5, 0.2, 'triangle'); Banner.show('ПОЕХАЛИ!', '', C.lemon, 1.1); }
-        }
-        for (const s of spins) s.a += s.w * dt;
-        for (const p of pegs) p.flash = Math.max(0, p.flash - dt * 5);
-        for (const p of bumps) p.flash = Math.max(0, p.flash - dt * 4);
-        for (const b of balls) moveBall(b, dt);
-        collideBalls(balls, 0.6);
-        let lead = null;
-        for (const b of balls) if (!b.done && (!lead || b.y > lead.y)) lead = b;
-        if (lead) leader = lead;
-        for (const b of balls) {
-          if (!b.done && b.y > finishY) {
-            b.done = true; order.push(b); b.place = order.length;
-            if (order.length === 1) win(b); else Sound.note(order.length + 4, 0.3, 0.12);
-          }
-        }
-        if (phase === 'finish' && (order.length === balls.length || phaseT > 7)) {
-          for (const b of balls) if (!b.done) { b.done = true; order.push(b); b.place = order.length; }
-          phase = 'results'; phaseT = 0;
-        }
-        if (phase === 'results' && phaseT > 4.5) { FX.clear(); build(); return; }
-        let target = 0;
-        if (phase === 'run') target = (leader ? leader.y : 0) - H * 0.42;
-        else if (phase !== 'count') target = finishY - H * 0.45;
-        target = clamp(target, 0, Math.max(0, L - H));
-        camY += (target - camY) * Math.min(1, dt * 4);
-      },
-      draw(ctx) {
-        ctx.save();
-        ctx.translate(0, -camY);
-        const band = 240;
-        ctx.fillStyle = 'rgba(255,255,255,0.025)';
-        for (let y = Math.floor(camY / band) * band; y < camY + H; y += band) if (Math.floor(y / band) % 2 === 0) ctx.fillRect(XL, y, XR - XL, band);
-        // metre marks on the left wall
-        for (let m = Math.ceil(camY / 1000) * 1000; m < camY + H; m += 1000) {
-          if (m <= 300 || m >= finishY) continue;
-          drawText(ctx, `${Math.round((finishY - m) / PX_PER_M)} м`, XL + 14, m, 20, { align: 'left', weight: 700, color: C.muted });
-        }
-        const sq = 26;
-        for (let i = 0; XL + i * sq < XR; i++) for (let r = 0; r < 2; r++) {
-          ctx.fillStyle = (i + r) % 2 ? C.snow : INK;
-          ctx.fillRect(XL + i * sq, finishY - sq * 2 + r * sq, Math.min(sq, XR - XL - i * sq), sq);
-        }
-        drawText(ctx, 'ФИНИШ', W / 2, finishY - sq * 2 - 34, 40, { weight: 900, color: C.lemon });
-        ctx.fillStyle = '#231E47';
-        ctx.fillRect(0, camY, XL, H); ctx.fillRect(XR, camY, W - XR, H);
-        ctx.lineCap = 'round'; ctx.lineWidth = 12; ctx.strokeStyle = '#E4DEFF';
-        ctx.beginPath();
-        for (const s of segs) {
-          if (s === gate || s.y1 < camY - 40 || s.y0 > camY + H + 40) continue;
-          ctx.moveTo(s.ax, s.ay); ctx.lineTo(s.bx, s.by);
+    function tape(ctx, x, y, a) {
+      ctx.save(); ctx.translate(x, y); ctx.rotate(a);
+      ctx.fillStyle = 'rgba(255,210,63,0.78)'; ctx.fillRect(-38, -12, 76, 24);
+      ctx.restore();
+    }
+    function drawCannon(ctx, c) {
+      ctx.lineJoin = 'round';
+      ctx.save(); ctx.translate(c.x, pivotY); ctx.rotate(c.angle);
+      const back = -c.recoil * BW * 0.4;
+      ctx.fillStyle = C.snow; ctx.strokeStyle = INK; ctx.lineWidth = 4;
+      roundRect(ctx, back - BW * 0.35, -BW / 2, BAR + BW * 0.35, BW, BW * 0.32); ctx.fill(); ctx.stroke();
+      // the band at the muzzle shows the paint that is loaded
+      ctx.fillStyle = c.target ? c.target.color : '#6E6899';
+      roundRect(ctx, back + BAR - BW * 0.6, -BW / 2 - 4, BW * 0.6, BW + 8, 7); ctx.fill(); ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = '#4A3F8C'; ctx.strokeStyle = INK; ctx.lineWidth = 4;
+      roundRect(ctx, c.x - BW * 1.25, pivotY - BW * 0.15, BW * 2.5, L.railY - WR - pivotY + BW * 0.4, 12); ctx.fill(); ctx.stroke();
+      for (const s of [-1, 1]) {
+        const wx = c.x + s * BW * 0.8, wy = L.railY - WR;
+        ctx.fillStyle = '#2B2550'; ctx.strokeStyle = INK; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.arc(wx, wy, WR, 0, TAU); ctx.fill(); ctx.stroke();
+        ctx.strokeStyle = '#8A82C8'; ctx.lineWidth = 3; ctx.beginPath();
+        for (let k = 0; k < 3; k++) {
+          const a = c.spin + k * Math.PI / 3, ex = Math.cos(a) * WR * 0.72, ey = Math.sin(a) * WR * 0.72;
+          ctx.moveTo(wx + ex, wy + ey); ctx.lineTo(wx - ex, wy - ey);
         }
         ctx.stroke();
-        if (!gate.off) {
-          ctx.strokeStyle = C.berry; ctx.beginPath(); ctx.moveTo(gate.ax, gate.ay); ctx.lineTo(gate.bx, gate.by); ctx.stroke();
+      }
+    }
+    function pill(ctx, x, y, w, h, text, state, size) {
+      ctx.save();
+      if (state === 'wrong') ctx.globalAlpha = 0.35;
+      ctx.fillStyle = state === 'right' ? C.mint : '#241F48';
+      roundRect(ctx, x - w / 2, y - h / 2, w, h, h * 0.32); ctx.fill();
+      ctx.lineWidth = 3; ctx.strokeStyle = state === 'right' ? INK : '#4A4385'; ctx.stroke();
+      fitText(ctx, text, x, y + 1, size, w - 28, { stroke: false, color: state === 'right' ? INK : C.snow, weight: 800 });
+      ctx.restore();
+    }
+    function hud(ctx, prog) {
+      const pct = Math.floor(prog * 100);
+      const revealed = phase === 'reveal' || phase === 'exit';
+      const stateOf = (name) => (revealed ? (name === pic.name ? 'right' : 'wrong') : 'idle');
+      if (tall) {
+        if (S.hud) {
+          drawText(ctx, 'ЧТО РИСУЕТ ПУШКА?', W / 2, 212, 46, { weight: 900, color: C.lemon });
+          const bx = 100, bw = W - 200, by = 258, bh = 38;
+          ctx.fillStyle = '#241F48'; roundRect(ctx, bx, by, bw, bh, bh / 2); ctx.fill();
+          if (prog > 0) { ctx.save(); roundRect(ctx, bx, by, bw, bh, bh / 2); ctx.clip(); ctx.fillStyle = C.lemon; ctx.fillRect(bx, by, bw * prog, bh); ctx.restore(); }
+          drawText(ctx, `${pct}%`, W / 2, by + bh / 2 + 1, 24, { weight: 900 });
+          drawText(ctx, `КАРТИНКА №${picNo}  ·  ВЫСТРЕЛ ${shots} ИЗ ${total}`, W / 2, L.optY + (S.options ? 82 : 0), 24, { weight: 700, color: C.muted });
         }
-        for (const p of pegs) {
-          if (p.y < camY - 20 || p.y > camY + H + 20) continue;
-          ctx.fillStyle = p.flash > 0 ? C.lemon : '#B9B2E6';
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.r + p.flash * 4, 0, TAU); ctx.fill();
-        }
-        for (const p of bumps) {
-          if (p.y < camY - 80 || p.y > camY + H + 80) continue;
-          const r = p.r + p.flash * 8;
-          ctx.fillStyle = C.plum; ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, TAU); ctx.fill();
-          ctx.lineWidth = 6; ctx.strokeStyle = p.flash > 0.3 ? '#fff' : '#E4DEFF'; ctx.stroke();
-          ctx.fillStyle = '#E4DEFF'; ctx.beginPath(); ctx.arc(p.x, p.y, r * 0.35, 0, TAU); ctx.fill();
-        }
-        for (const s of spins) {
-          if (s.y < camY - 200 || s.y > camY + H + 200) continue;
-          const ex = Math.cos(s.a) * s.len, ey = Math.sin(s.a) * s.len;
-          ctx.lineWidth = s.r * 2; ctx.strokeStyle = C.lemon;
-          ctx.beginPath(); ctx.moveTo(s.x - ex, s.y - ey); ctx.lineTo(s.x + ex, s.y + ey); ctx.stroke();
-          ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(s.x, s.y, 9, 0, TAU); ctx.fill();
-        }
-        for (const b of balls) drawRacer(ctx, b);
-        if (leader && phase === 'run') {
-          const b = leader, y = b.y - b.r - 18;
-          ctx.fillStyle = b.c;
-          ctx.beginPath(); ctx.moveTo(b.x - 14, y - 14); ctx.lineTo(b.x + 14, y - 14); ctx.lineTo(b.x, y + 2); ctx.closePath(); ctx.fill();
-          ctx.lineWidth = 3; ctx.strokeStyle = INK; ctx.stroke();
-        }
-        FX.draw(ctx);
-        ctx.restore();
-        if (S.hud) hud(ctx);
-        if (phase === 'count') {
-          const n = Math.max(1, Math.ceil(3 - phaseT)), f = phaseT % 1;
-          ctx.save(); ctx.translate(W / 2, H * 0.55); ctx.scale(1.3 - f * 0.3, 1.3 - f * 0.3);
-          drawText(ctx, String(n), 0, 0, isTall() ? 300 : 220, { weight: 900, color: C.lemon });
+        if (S.options) options.forEach((name, k) => pill(ctx, W / 2 + (k - 1) * 300, L.optY, 280, 84, name, stateOf(name), 30));
+        return;
+      }
+      const lx = L.x0 / 2, rx = W - L.x0 / 2, y = L.y0;
+      if (S.hud) {
+        drawText(ctx, 'КАРТИНКА', lx, y + 22, 18, { weight: 700, color: C.muted });
+        drawText(ctx, `№${picNo}`, lx, y + 60, 40, { weight: 900, color: C.lemon });
+        fitText(ctx, `${pct}%`, lx, y + 140, 70, colW);
+        drawText(ctx, 'ГОТОВО', lx, y + 190, 18, { weight: 700, color: C.muted });
+        const bt = y + 225, bb = y + L.side - 70, bw = 26;
+        ctx.fillStyle = '#241F48'; roundRect(ctx, lx - bw / 2, bt, bw, bb - bt, bw / 2); ctx.fill();
+        if (prog > 0) {
+          ctx.save(); roundRect(ctx, lx - bw / 2, bt, bw, bb - bt, bw / 2); ctx.clip();
+          const fh = (bb - bt) * prog;
+          ctx.fillStyle = C.lemon; ctx.fillRect(lx - bw / 2, bb - fh, bw, fh);
           ctx.restore();
         }
-        if (phase === 'results') drawResults(ctx);
+        drawText(ctx, `${shots}/${total}`, lx, y + L.side - 34, 22, { weight: 800 });
+        drawText(ctx, 'ВЫСТРЕЛОВ', lx, y + L.side - 8, 14, { weight: 700, color: C.muted });
+      }
+      if (S.options) {
+        drawText(ctx, 'ЧТО ЭТО?', rx, y + 30, 28, { weight: 900, color: C.lemon });
+        const pw = Math.min(200, colW);
+        options.forEach((name, k) => pill(ctx, rx, y + 100 + k * 84, pw, 64, name, stateOf(name), 22));
+        drawText(ctx, revealed ? 'УГАДАЛ?' : 'ОТВЕТ В КОНЦЕ', rx, y + 106 + 3 * 84, 16, { weight: 700, color: C.muted });
+      }
+    }
+    function drawLabel(ctx, top) {
+      const s = easeOutBack(Math.min(1, phaseT / 0.35));
+      const text = `ЭТО ${pic.name}!`;
+      let fs = tall ? 64 : 46;
+      ctx.font = `900 ${fs}px ${DISPLAY}`;
+      let w = ctx.measureText(text).width;
+      if (w > W - 200) { fs *= (W - 200) / w; ctx.font = `900 ${fs}px ${DISPLAY}`; w = ctx.measureText(text).width; }
+      const ph = fs * 1.7, pw = w + fs * 1.4;
+      ctx.save(); ctx.translate(W / 2, top + L.side + 12); ctx.scale(s, s);
+      ctx.fillStyle = C.mint; roundRect(ctx, -pw / 2, -ph / 2, pw, ph, ph * 0.3); ctx.fill();
+      ctx.lineWidth = 5; ctx.strokeStyle = INK; ctx.stroke();
+      ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 0, fs * 0.05);
+      ctx.restore();
+    }
+    function drawToast(ctx, top) {
+      const age = simT - toast.t;
+      if (!toast.text || age > 1.6) return;
+      const y = tall ? (L.optY + 60 + pivotY - BAR) / 2 : (top + L.side + 12 + pivotY - BAR * 0.6) / 2;
+      const s = age < 0.3 ? easeOutBack(age / 0.3) : 1;
+      ctx.save();
+      ctx.globalAlpha = clamp((1.6 - age) / 0.4, 0, 1);
+      ctx.translate(W / 2, y); ctx.scale(s, s);
+      drawText(ctx, toast.text, 0, 0, tall ? 60 : 44, { weight: 900, color: C.lemon });
+      ctx.restore();
+    }
+
+    start();
+    return {
+      next() { if (phase === 'enter' || phase === 'paint') { phase = 'exit'; phaseT = 0; blots = []; for (const c of cannons) c.target = null; } },
+      step(dt) {
+        phaseT += dt;
+        const off = L.y0 + L.side + 80;
+        if (phase === 'enter') {
+          const k = Math.min(1, phaseT / 0.8);
+          sheetDY = -off * (1 - easeOutBack(k));
+          if (k >= 1) { phase = 'paint'; phaseT = 0; sheetDY = 0; }
+        } else if (phase === 'exit') {
+          const k = Math.min(1, phaseT / 0.6);
+          sheetDY = -off * k * k * k;
+          if (k >= 1) start();
+        }
+        const prog = filled / total;
+        if (phase === 'paint') {
+          if (prog >= 0.35) activate(1, '+1 ПУШКА!');
+          if (prog >= 0.7) activate(2, 'ТУРБО!');
+        }
+        for (const c of cannons) {
+          c.recoil = Math.max(0, c.recoil - dt * 5);
+          let want;
+          if (!c.active) want = c.id === 2 ? -160 : W + 160;
+          else {
+            if (!c.target && phase === 'paint' && queue.length) { c.target = takeTarget(c); c.lift = L.cell * rand(1.2, 2.6); }
+            want = c.target ? clamp(home(c) * 0.55 + cellX(c.target) * 0.45, 80, W - 80) : home(c);
+          }
+          const before = c.x;
+          c.x += (want - c.x) * Math.min(1, dt * 5);
+          c.spin += (c.x - before) / WR;
+          let aim = -Math.PI / 2;
+          if (c.target) { const s = solve(c.x, pivotY, cellX(c.target), cellY(c.target), c.lift); aim = Math.atan2(s.vy, s.vx); }
+          c.angle += (aim - c.angle) * Math.min(1, dt * 14);
+          if (c.active && c.target && phase === 'paint') {
+            c.cool -= dt;
+            if (c.cool <= 0 && (Math.abs(aim - c.angle) < 0.06 || c.cool < -0.4)) fire(c);
+          }
+        }
+        for (let k = blots.length - 1; k >= 0; k--) {
+          const b = blots[k];
+          b.t += dt;
+          if (b.t >= b.T) { splat(b); blots.splice(k, 1); continue; }
+          b.x = b.x0 + b.vx * b.t;
+          b.y = b.y0 + b.vy0 * b.t + 0.5 * L.G * b.t * b.t;
+        }
+        for (const c of cells) if (c.hitT >= 0) c.hitT += dt;
+        if (phase === 'paint' && filled >= total) { phase = 'reveal'; phaseT = 0; reveal(); }
+        else if (phase === 'reveal' && phaseT > 3.8) { phase = 'exit'; phaseT = 0; }
+      },
+      draw(ctx) {
+        const top = L.y0 + sheetDY;
+        ctx.fillStyle = '#1A1538'; ctx.fillRect(0, L.railY, W, H - L.railY);
+        ctx.fillStyle = '#3A3370'; ctx.fillRect(0, L.railY - 3, W, 6);
+        // the paper sheet
+        ctx.fillStyle = 'rgba(5,3,15,0.45)'; roundRect(ctx, L.x0 - 2, top + 4, L.side + 24, L.side + 24, 10); ctx.fill();
+        ctx.fillStyle = PAPER; roundRect(ctx, L.x0 - 12, top - 12, L.side + 24, L.side + 24, 8); ctx.fill();
+        ctx.fillStyle = 'rgba(42,33,64,0.16)';
+        for (let j = 1; j < 16; j++) for (let i = 1; i < 16; i++) ctx.fillRect(L.x0 + i * L.cell - 1.5, top + j * L.cell - 1.5, 3, 3);
+        const prog = filled / total;
+        if (prog < 0.6 && phase !== 'reveal') {
+          ctx.globalAlpha = 0.1 * (1 - prog / 0.6);
+          drawText(ctx, '?', W / 2, top + L.side * 0.52, L.side * 0.72, { stroke: false, color: '#2A2140', weight: 900 });
+          ctx.globalAlpha = 1;
+        }
+        ctx.drawImage(paper, L.x0, top, L.side, L.side);
+        const wave = phase === 'reveal' ? Math.max(0, 1 - phaseT / 2.6) : 0;
+        for (const c of cells) {
+          if (c.hitT < 0) continue;
+          let s = c.hitT < 0.3 ? 1 + 0.45 * (1 - easeOutBack(c.hitT / 0.3)) : 1;
+          if (wave) s *= 1 + 0.16 * wave * Math.sin(phaseT * 9 - (c.i + c.j) * 0.55);
+          const h = L.cell * 0.48 * s;
+          ctx.fillStyle = c.color;
+          roundRect(ctx, L.x0 + (c.i + 0.5) * L.cell - h, top + (c.j + 0.5) * L.cell - h, h * 2, h * 2, L.cell * 0.14);
+          ctx.fill();
+          // white paint needs an edge to read on cream paper
+          if (c.ch === 'W') { ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(42,33,64,0.22)'; ctx.stroke(); }
+        }
+        tape(ctx, L.x0 + 22, top - 8, -0.45);
+        tape(ctx, L.x0 + L.side - 22, top - 8, 0.45);
+        // paint in flight: it shrinks as it travels toward the sheet and stretches with speed
+        for (const b of blots) {
+          const k = b.t / b.T, d = L.cell * (1.1 - 0.55 * k);
+          const vy = b.vy0 + L.G * b.t, sp = Math.hypot(b.vx, vy);
+          const st = 1 + Math.min(0.7, sp / 3000), wob = 1 + 0.08 * Math.sin(b.t * 30 + b.wob);
+          ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(Math.atan2(vy, b.vx)); ctx.scale(st * wob, 1 / st);
+          ctx.beginPath(); ctx.arc(0, 0, d / 2, 0, TAU);
+          ctx.fillStyle = b.cell.color; ctx.fill();
+          ctx.lineWidth = 3; ctx.strokeStyle = '#fff'; ctx.stroke();
+          ctx.restore();
+        }
+        for (const c of cannons) if (c.x > -150 && c.x < W + 150) drawCannon(ctx, c);
+        FX.draw(ctx);
+        if (phase === 'reveal') drawLabel(ctx, top);
+        hud(ctx, prog);
+        drawToast(ctx, top);
       },
     };
   }
 
   /* ================= engine ================= */
-  const MODES = { rings: Rings, wars: Wars, grow: Grow, race: Race };
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
   const stage = document.getElementById('stage');
@@ -1296,8 +1147,8 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
   let game = null, paused = false;
 
   function resetGame() {
-    FX.clear(); Banner.clear(); shake = 0;
-    game = MODES[S.mode]();
+    FX.clear(); shake = 0;
+    game = Klyaksomet();
   }
   function resizeCanvas() {
     H = HEIGHTS[S.format] || 960;
@@ -1319,8 +1170,8 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
     ctx.setTransform(Q, 0, 0, Q, 0, 0);
     if (bgFor !== W + 'x' + H) {
       bgFor = W + 'x' + H;
-      bgGrad = ctx.createRadialGradient(W / 2, H * 0.55, 0, W / 2, H * 0.55, Math.max(W, H) * 0.75);
-      bgGrad.addColorStop(0, '#1D1840'); bgGrad.addColorStop(1, BG);
+      bgGrad = ctx.createRadialGradient(W / 2, H * 0.4, 0, W / 2, H * 0.4, Math.max(W, H) * 0.75);
+      bgGrad.addColorStop(0, '#221C4A'); bgGrad.addColorStop(1, BG);
     }
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
@@ -1328,7 +1179,6 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
     if (shake > 0.5) ctx.translate(rand(-shake, shake), rand(-shake, shake));
     game.draw(ctx);
     ctx.restore();
-    Banner.draw(ctx);
     drawCaption(ctx);
   }
 
@@ -1433,7 +1283,7 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
   async function saveVideo() {
     if (!Rec.blob) return;
     const d = new Date(), pad = (v) => String(v).padStart(2, '0');
-    const name = `zalipalka-${S.mode}-${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}.${Rec.ext}`;
+    const name = `klyaksomet-${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}.${Rec.ext}`;
     if (!downloads) { fallbackDownload(name); return; }
     try {
       await downloads.save({ filename: name, data: Rec.blob });
@@ -1457,36 +1307,29 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
   saveBtn.addEventListener('click', saveVideo);
 
   /* ================= controls ================= */
-  const variantSel = document.getElementById('variant');
-  const variantLabel = document.getElementById('variantLabel');
+  const orderSel = document.getElementById('order');
   const soundEl = document.getElementById('sound');
   const hudEl = document.getElementById('hud');
+  const optionsEl = document.getElementById('options');
   const captionEl = document.getElementById('caption');
   const pauseBtn = document.getElementById('pauseBtn');
   const fab = document.getElementById('fab');
 
   function syncUI() {
-    document.querySelectorAll('.mode').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.mode === S.mode)));
     document.querySelectorAll('.seg').forEach((g) => {
       const key = g.dataset.key;
       g.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(String(S[key]) === b.dataset.v)));
     });
-    const v = VARIANTS[S.mode];
-    variantLabel.textContent = v.label;
-    variantSel.innerHTML = '';
-    for (const [val, txt] of v.options) { const o = document.createElement('option'); o.value = val; o.textContent = txt; variantSel.appendChild(o); }
-    variantSel.value = S.variants[S.mode];
+    orderSel.value = S.order;
     soundEl.checked = S.sound;
     hudEl.checked = S.hud;
+    optionsEl.checked = S.options;
     if (document.activeElement !== captionEl) captionEl.value = S.caption;
     if (!Rec.mr && !Rec.blob) recText.textContent = LEN_TEXT[S.recLen] || 'Записать';
     pauseBtn.textContent = paused ? 'Продолжить' : 'Пауза';
   }
 
-  document.querySelectorAll('.mode').forEach((b) => b.addEventListener('click', () => {
-    S.mode = b.dataset.mode; resetGame(); syncUI(); persist();
-  }));
-  variantSel.addEventListener('change', () => { S.variants[S.mode] = variantSel.value; resetGame(); persist(); });
+  orderSel.addEventListener('change', () => { S.order = orderSel.value; resetGame(); persist(); });
   document.querySelectorAll('.seg').forEach((g) => g.addEventListener('click', (e) => {
     const b = e.target.closest('button');
     if (!b || b.disabled) return;
@@ -1497,14 +1340,15 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
     syncUI(); persist();
   }));
   soundEl.addEventListener('change', () => { S.sound = soundEl.checked; if (S.sound) Sound.ensure(); persist(); });
-  hudEl.addEventListener('change', () => { S.hud = hudEl.checked; if (S.mode === 'wars') resetGame(); persist(); });
+  hudEl.addEventListener('change', () => { S.hud = hudEl.checked; persist(); });
+  optionsEl.addEventListener('change', () => { S.options = optionsEl.checked; persist(); });
   captionEl.addEventListener('input', () => {
     const had = hasCaption();
     S.caption = captionEl.value.slice(0, 40);
     if (had !== hasCaption()) resetGame();
     persist();
   });
-  document.getElementById('restartBtn').addEventListener('click', resetGame);
+  document.getElementById('nextBtn').addEventListener('click', () => game.next());
   pauseBtn.addEventListener('click', () => { paused = !paused; syncUI(); });
 
   const fsBtn = document.getElementById('fsBtn');
@@ -1539,7 +1383,7 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
     if (e.target.closest('input, select, textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
     const k = e.key.toLowerCase();
     if (k === 'h' || k === 'р') setDesk(!app.classList.contains('desk-open'));
-    else if (k === 'r' || k === 'к') resetGame();
+    else if (k === 'n' || k === 'т') game.next();
     else if (e.code === 'Space') { e.preventDefault(); paused = !paused; syncUI(); }
   });
 
@@ -1557,11 +1401,11 @@ kbd { font: 600 12px var(--ui); padding: 2px 7px; border-radius: 6px; border: 1p
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') keepAwake(); });
 
   new ResizeObserver(fitCanvas).observe(stage);
-  if (document.fonts && document.fonts.load) document.fonts.load(`900 40px "Unbounded"`).catch(() => {});
+  if (document.fonts && document.fonts.load) document.fonts.load('900 40px "Unbounded"').catch(() => {});
 
   /* ================= boot ================= */
   const hot = window.claude && window.claude.hot;
-  if (hot && typeof hot.snapshot === 'function') hot.snapshot(() => ({ settings: JSON.parse(JSON.stringify(S)) }));
+  if (hot && typeof hot.snapshot === 'function') hot.snapshot(() => ({ settings: { ...S } }));
   function start(data) {
     loadSaved();
     if (data && data.settings) merge(data.settings);
