@@ -1,0 +1,37 @@
+import type { ru } from './ru';
+
+export const en: typeof ru = {
+  skip: 'Skip to content',
+  menu: 'Menu',
+  close: 'Close',
+  tickets: 'Tickets',
+  buyTickets: 'Buy tickets',
+  watch: 'Watch live',
+  watchFights: 'Watch fights',
+  fighters: 'Fighters',
+  allFighters: 'All fighters',
+  events: 'Events',
+  more: 'More',
+  soundOn: 'Sound on',
+  soundOff: 'Sound off',
+  fightNight: 'Fight Night',
+  countdown: { title: 'Until the bell', days: 'd', hours: 'h', minutes: 'm', seconds: 's', since: 'Since the last bell', tba: 'Date TBA' },
+  stats: { height: 'Height', weight: 'Weight', age: 'Age', record: 'Record', winRate: 'Win rate', reach: 'Reach', fights: 'Fights' },
+  units: { cm: 'cm', kg: 'kg', years: 'y.o.' },
+  subscribe: {
+    title: 'Be the first',
+    text: 'Date, fight card and ticket sales — before anyone else. Fights only, no spam.',
+    email: 'E-mail',
+    cta: 'Subscribe',
+    ok: 'Got it. The deep will reach you first.',
+  },
+  forms: {
+    required: 'Required',
+    email: 'Looks like a typo in the address',
+    phone: 'Use international format',
+    url: 'Link must start with http',
+    sending: 'Sending…',
+    error: 'Could not send. Try again or DM us.',
+  },
+  notFound: { title: 'The page was dragged into the deep', text: 'The tentacle was faster. Swim back to the surface.', cta: 'Home' },
+};

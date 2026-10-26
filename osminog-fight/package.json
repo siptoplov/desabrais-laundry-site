@@ -1,0 +1,34 @@
+{
+  "name": "osminog-fight",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ОСЬМИНОГ — Octopus Fight Promotion. Официальный сайт лиги.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx serve@14 out -l 3000",
+    "typecheck": "tsc --noEmit",
+    "og": "node --experimental-strip-types --no-warnings scripts/og-data.mts && node scripts/og.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.2.0",
+    "@fontsource-variable/manrope": "^5.2.0",
+    "@fontsource-variable/sofia-sans-extra-condensed": "^5.2.0",
+    "@react-three/fiber": "^9.3.0",
+    "lenis": "^1.3.0",
+    "next": "^16.0.0",
+    "qrcode-generator": "^1.4.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/three": "^0.180.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.8.0"
+  }
+}
