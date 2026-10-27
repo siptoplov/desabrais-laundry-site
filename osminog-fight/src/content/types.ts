@@ -6,7 +6,8 @@
 
 export type Discipline = 'k1' | 'muaythai' | 'boxing' | 'mma' | 'eurothai';
 
-export type CountryCode = 'BY' | 'RU' | 'IR' | 'KZ' | 'UA' | 'PL' | 'LT' | 'MD' | 'RO' | 'UZ' | 'KG' | 'AF';
+/** XX — страна не указана (старые турниры, где в источнике её нет) */
+export type CountryCode = 'BY' | 'RU' | 'IR' | 'KZ' | 'UA' | 'PL' | 'LT' | 'MD' | 'RO' | 'UZ' | 'KG' | 'AF' | 'TJ' | 'TR' | 'XX';
 
 export type FighterStatus = 'active' | 'retired';
 
@@ -21,6 +22,8 @@ export interface Fighter {
   /** Весовая категория, кг (верхняя граница). Нет данных — не заполняем. */
   weightKg?: number;
   record?: { w: number; l: number; d?: number };
+  /** Дата, на которую актуален рекорд (ISO), — рекорд из описания боя или постера */
+  recordAsOf?: string;
   /** Доля побед, % — как на официальных постерах */
   winRate?: number;
   age?: number;
@@ -112,6 +115,8 @@ export interface FightEvent {
   story?: string[];
   schedule?: ScheduleItem[];
   bouts: Bout[];
+  /** Учебно-боевые спарринги — итоги не идут в статистику бойцов */
+  exhibition?: boolean;
   tickets?: EventTickets;
   guest?: { name: string; role: string };
   host?: string;

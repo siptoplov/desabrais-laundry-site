@@ -8,9 +8,10 @@ import { FighterCard, Silhouette } from '@/components/ui/Cards';
 import { Flag, SplitTitle } from '@/components/ui/Primitives';
 import { VideoCard } from '@/components/ui/VideoCard';
 import { Gallery } from '@/components/ui/Gallery';
-import { fullName, getFighter, getFighterBouts, getFighterVideos, getFighters, getUpcoming, positionLabel, recordStr, resolveCorner, totalFights } from '@/lib/cms';
+import { BoutHistory, StatsGrid } from '@/components/ui/BoutHistory';
+import { fullName, getFighter, getFighterBouts, getFighterStats, getFighterVideos, getFighters, getUpcoming, recordStr, resolveCorner, totalFights } from '@/lib/cms';
 import { asset, photoSrcSet } from '@/lib/asset';
-import { fmtDate } from '@/lib/format';
+import { fmtShort, plural } from '@/lib/format';
 import { breadcrumbs, JsonLd, personJsonLd } from '@/lib/seo';
 import { countries, disciplines, site } from '@/content/site';
 
@@ -52,6 +53,7 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
   if (!f) notFound();
   const name = fullName(f);
   const bouts = getFighterBouts(f.slug);
+  const st = getFighterStats(f.slug);
   const vids = getFighterVideos(f.slug);
   const dna = fighterDna(f);
   const all = getFighters();
@@ -116,6 +118,7 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
               </div>
             ))}
           </dl>
+          {f.record && f.recordAsOf && <p className="mono mt-3 text-[11px] uppercase tracking-[0.14em] text-faint">Рекорд на {fmtShort(f.recordAsOf)}</p>}
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <FavButton slug={f.slug} name={name} />
             <ShareButton title={`${name} — ${site.name}`} path={`/fighters/${f.slug}/`} />
@@ -129,7 +132,18 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
           <div className="flex flex-col gap-10">
             <div>
               <p className="eyebrow mb-6">О бойце</p>
-              <div className="prose-osm max-w-2xl">{f.bio?.map((p) => <p key={p}>{p}</p>) ?? <p>Профиль бойца пополняется.</p>}</div>
+              <div className="prose-osm max-w-2xl">{f.bio?.map((p) => <p key={p}>{p}</p>) ?? (
+                  <>
+                    {st.appearances > 0 && (
+                      <p>
+                        В «Осьминоге» — {st.fights || st.appearances} {plural(st.fights || st.appearances, ['бой', 'боя', 'боёв'])}
+                        {st.first && st.last ? (st.first.slice(0, 4) === st.last.slice(0, 4) ? ` в ${st.first.slice(0, 4)} году` : ` с ${st.first.slice(0, 4)} по ${st.last.slice(0, 4)} год`) : ''}
+                        {f.disciplines.length ? `: ${f.disciplines.map((d) => disciplines[d].label).join(', ')}` : ''}. Все бои и записи — ниже.
+                      </p>
+                    )}
+                    <p>Профиль бойца пополняется.</p>
+                  </>
+                )}</div>
             </div>
             {f.titles && (
               <div>
@@ -148,7 +162,7 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
               <div>
                 <p className="eyebrow mb-6">Разбивка рекорда</p>
                 <RecordBar f={f} />
-                <p className="mt-4 text-[13px] text-faint">Профессиональный рекорд — по данным официальных постеров лиги. Способы побед (KO / решение) добавляются по протоколам.</p>
+                <p className="mt-4 text-[13px] text-faint">Рекорд в карьере — по последнему официальному постеру лиги или описанию боя на её канале{f.recordAsOf ? ` (на ${fmtShort(f.recordAsOf)})` : ''}. Способы побед (KO / решение) добавляются по протоколам.</p>
               </div>
             )}
           </div>
@@ -180,41 +194,12 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
         <section className="section-tight" aria-labelledby="league-title">
           <div className="wrap">
             <h2 id="league-title" className="display t-2 mb-10">
-              Бои в «Осьминоге»
+              Бои в «Осьминоге» · {bouts.length}
             </h2>
-            <ol className="flex flex-col border-t border-line">
-              {bouts.map(({ event, bout, corner }) => {
-                const opp = resolveCorner(corner === 'red' ? bout.blue : bout.red);
-                const won = bout.result && bout.result.winner === corner;
-                const lost = bout.result && bout.result.winner !== corner && bout.result.winner !== 'draw';
-                return (
-                  <li key={bout.id} className="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-line py-5 md:grid-cols-[160px_1fr_auto_auto]">
-                    <span className="mono text-[12px] uppercase tracking-[0.14em] text-faint">{event.date ? fmtDate(event.date, { day: '2-digit', month: 'short', year: 'numeric' }) : 'Скоро'}</span>
-                    <span className="flex flex-col">
-                      <span className="display-upright text-[28px] leading-tight">
-                        vs{' '}
-                        {opp.fighter ? (
-                          <Link href={`/fighters/${opp.fighter.slug}/`} className="hover:text-accent">
-                            {opp.name}
-                          </Link>
-                        ) : (
-                          opp.name
-                        )}
-                      </span>
-                      <Link href={`/events/${event.slug}/`} className="mono text-[11px] uppercase tracking-[0.14em] text-mute hover:text-ice">
-                        {event.title} {event.collab} · {positionLabel[bout.position]} · {disciplines[bout.discipline].label}
-                      </Link>
-                    </span>
-                    <span className={`chip ${won ? 'chip-cyan' : lost ? 'chip-blood' : ''}`}>{won ? 'Победа' : lost ? 'Поражение' : event.status === 'upcoming' ? 'Скоро' : 'Итог уточняется'}</span>
-                    {bout.video && (
-                      <a href="#videos" className="link-arrow hidden md:inline-flex">
-                        Видео
-                      </a>
-                    )}
-                  </li>
-                );
-              })}
-            </ol>
+            <StatsGrid f={f} bouts={bouts} st={st} />
+            <div className="mt-10">
+              <BoutHistory bouts={bouts} />
+            </div>
           </div>
         </section>
       )}
@@ -223,7 +208,7 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
         <section id="videos" className="section-tight scroll-mt-24" aria-labelledby="hl-title">
           <div className="wrap">
             <h2 id="hl-title" className="display t-2 mb-10">
-              Хайлайты
+              Записи боёв
             </h2>
             <div className="grid gap-5 md:grid-cols-2">
               {vids.map((v) => (

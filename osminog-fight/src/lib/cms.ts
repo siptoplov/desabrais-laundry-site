@@ -8,7 +8,8 @@ import { events, chronicle } from '@/content/events';
 import { fighters, legends } from '@/content/fighters';
 import { videos } from '@/content/videos';
 import { news } from '@/content/news';
-import type { Bout, Corner, FightEvent, Fighter } from '@/content/types';
+import type { Bout, Corner, Fighter } from '@/content/types';
+import { boutsOf, statsOf } from '@/lib/stats';
 
 export { chronicle, legends };
 
@@ -19,8 +20,13 @@ export const getPastEvents = () => events.filter((e) => e.status === 'past');
 /** Последний прошедший турнир с главным боем — для блока «Лицом к лицу» */
 export const getLatestPast = () => events.find((e) => e.status === 'past' && e.bouts.some((b) => b.position === 'main' && getFighter(b.red)?.photo));
 
-export const getFighters = () => fighters;
-export const getFighter = (slug?: string) => (slug ? fighters.find((f) => f.slug === slug) : undefined);
+/** У бойцов из архива дисциплины не заполнены вручную — берём их из боёв */
+const allFighters: Fighter[] = fighters.map((f) =>
+  f.disciplines.length ? f : { ...f, disciplines: Array.from(new Set(boutsOf(events, f.slug).map((b) => b.bout.discipline))) },
+);
+
+export const getFighters = () => allFighters;
+export const getFighter = (slug?: string) => (slug ? allFighters.find((f) => f.slug === slug) : undefined);
 
 export const getVideos = () => videos;
 export const getNews = () => [...news].sort((a, b) => b.date.localeCompare(a.date));
@@ -45,17 +51,11 @@ export const recordStr = (f?: Fighter) => (f?.record ? `${f.record.w}-${f.record
 
 export const totalFights = (f: Fighter) => (f.record ? f.record.w + f.record.l + (f.record.d ?? 0) : 0);
 
-/** Все бои бойца в лиге (по slug) */
-export function getFighterBouts(slug: string): { event: FightEvent; bout: Bout; corner: 'red' | 'blue' }[] {
-  const out: { event: FightEvent; bout: Bout; corner: 'red' | 'blue' }[] = [];
-  for (const event of events) {
-    for (const bout of event.bouts) {
-      if (bout.red === slug) out.push({ event, bout, corner: 'red' });
-      else if (bout.blue === slug) out.push({ event, bout, corner: 'blue' });
-    }
-  }
-  return out;
-}
+/** Все бои бойца в лиге (по slug), от новых к старым */
+export const getFighterBouts = (slug: string) => boutsOf(events, slug);
+
+/** Статистика бойца по боям лиги */
+export const getFighterStats = (slug: string) => statsOf(boutsOf(events, slug), videos);
 
 /** Видео бойца: по боям в лиге */
 export function getFighterVideos(slug: string) {

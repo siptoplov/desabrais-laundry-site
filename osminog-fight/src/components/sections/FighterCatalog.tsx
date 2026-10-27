@@ -52,21 +52,22 @@ export function FighterCatalog({ fighters }: { fighters: Fighter[] }) {
   }, [q, d, c, w, s, sort]);
 
   const usedDisc = useMemo(() => Array.from(new Set(fighters.flatMap((f) => f.disciplines))), [fighters]);
-  const usedCountries = useMemo(() => Array.from(new Set(fighters.map((f) => f.country))), [fighters]);
+  const usedCountries = useMemo(() => Array.from(new Set(fighters.map((f) => f.country))).filter((x) => x !== 'XX'), [fighters]);
   const usedWeights = useMemo(() => Array.from(new Set(fighters.map((f) => f.weightKg).filter(Boolean) as number[])).sort((a, b) => a - b), [fighters]);
 
   const list = useMemo(() => {
-    const needle = q.trim().toLowerCase();
+    const norm = (x: string) => x.toLowerCase().replace(/ё/g, 'е');
+    const needle = norm(q.trim());
     const out = fighters.filter(
       (f) =>
-        (!needle || `${fullName(f)} ${f.nickname ?? ''} ${f.city ?? ''}`.toLowerCase().includes(needle)) &&
+        (!needle || norm(`${fullName(f)} ${f.nickname ?? ''} ${f.city ?? ''}`).includes(needle)) &&
         (!d || f.disciplines.includes(d)) &&
         (!c || f.country === c) &&
         (!w || String(f.weightKg) === w) &&
         (!s || f.status === s),
     );
     const by: Record<Sort, (a: Fighter, b: Fighter) => number> = {
-      featured: (a, b) => Number(!!b.featured) - Number(!!a.featured) || Number(!!b.photo) - Number(!!a.photo),
+      featured: (a, b) => Number(!!b.featured) - Number(!!a.featured) || Number(!!b.photo) - Number(!!a.photo) || (b.record?.w ?? -1) - (a.record?.w ?? -1) || a.lastName.localeCompare(b.lastName, 'ru'),
       name: (a, b) => a.lastName.localeCompare(b.lastName, 'ru'),
       wins: (a, b) => (b.record?.w ?? -1) - (a.record?.w ?? -1),
       winrate: (a, b) => (b.winRate ?? -1) - (a.winRate ?? -1),

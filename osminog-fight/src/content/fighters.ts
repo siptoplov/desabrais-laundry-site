@@ -1,4 +1,5 @@
 import type { Fighter } from './types';
+import { archiveFighters } from './archive';
 
 /**
  * Ростер лиги.
@@ -7,7 +8,8 @@ import type { Fighter } from './types';
  * Чтобы добавить бойца — скопируйте любой объект и поменяйте поля.
  * Фото: public/img/fighters/<slug>.webp (960×1200) и <slug>-480.webp (480×600).
  */
-export const fighters: Fighter[] = [
+/** Бойцы с полным профилем (фото, биография, титулы) */
+const profiles: Fighter[] = [
   {
     slug: 'mamedov',
     firstName: 'Эльмар',
@@ -17,6 +19,7 @@ export const fighters: Fighter[] = [
     disciplines: ['k1', 'muaythai'],
     weightKg: 75,
     record: { w: 10, l: 2 },
+    recordAsOf: '2026-10-09',
     winRate: 83,
     age: 21,
     heightCm: 182,
@@ -46,6 +49,7 @@ export const fighters: Fighter[] = [
     disciplines: ['k1', 'muaythai', 'boxing'],
     weightKg: 75,
     record: { w: 12, l: 5 },
+    recordAsOf: '2026-10-09',
     winRate: 71,
     age: 32,
     heightCm: 178,
@@ -71,6 +75,7 @@ export const fighters: Fighter[] = [
     disciplines: ['k1', 'muaythai'],
     weightKg: 73.5,
     record: { w: 7, l: 1 },
+    recordAsOf: '2026-10-09',
     winRate: 88,
     age: 19,
     heightCm: 187,
@@ -93,6 +98,7 @@ export const fighters: Fighter[] = [
     disciplines: ['k1'],
     weightKg: 73.5,
     record: { w: 23, l: 3 },
+    recordAsOf: '2026-10-09',
     winRate: 88,
     age: 28,
     heightCm: 175,
@@ -116,6 +122,7 @@ export const fighters: Fighter[] = [
     disciplines: ['k1', 'muaythai'],
     weightKg: 63.5,
     record: { w: 9, l: 1, d: 1 },
+    recordAsOf: '2026-10-09',
     winRate: 82,
     age: 24,
     heightCm: 172,
@@ -137,6 +144,7 @@ export const fighters: Fighter[] = [
     disciplines: ['k1'],
     weightKg: 63.5,
     record: { w: 15, l: 5 },
+    recordAsOf: '2026-10-09',
     winRate: 75,
     age: 27,
     heightCm: 173,
@@ -158,6 +166,7 @@ export const fighters: Fighter[] = [
     disciplines: ['k1', 'mma'],
     weightKg: 91,
     record: { w: 19, l: 11, d: 2 },
+    recordAsOf: '2026-10-09',
     winRate: 59,
     age: 33,
     heightCm: 189,
@@ -179,6 +188,7 @@ export const fighters: Fighter[] = [
     disciplines: ['k1', 'mma'],
     weightKg: 91,
     record: { w: 5, l: 0 },
+    recordAsOf: '2026-10-09',
     winRate: 100,
     age: 42,
     heightCm: 184,
@@ -199,6 +209,10 @@ export const fighters: Fighter[] = [
     country: 'BY',
     city: 'Гродно',
     disciplines: ['k1'],
+    heightCm: 181,
+    // 13-3-1 перед боем на «Осьминоге-9» + победа над Ибрагимовым
+    record: { w: 14, l: 3, d: 1 },
+    recordAsOf: '2026-05-08',
     bio: [
       'Около двадцати лет в ринге. На «Осьминоге-9» вышел против нокаутёра из России Ислама Ибрагимова, получил травму в начале боя — и всё равно победил.',
       'Признан лучшим бойцом вечера. После боя положил перчатки в центр ринга и завершил карьеру.',
@@ -216,8 +230,14 @@ export const fighters: Fighter[] = [
     slug: 'ibragimov',
     firstName: 'Ислам',
     lastName: 'Ибрагимов',
+    nickname: 'Шейх',
     country: 'RU',
+    city: 'Владикавказ',
     disciplines: ['k1', 'muaythai'],
+    heightCm: 173,
+    // 12-2 перед боем на «Осьминоге-9» + поражение от Быбочкина
+    record: { w: 12, l: 3 },
+    recordAsOf: '2026-05-08',
     bio: ['Нокаутёр и жёсткий боец, который идёт только вперёд. Соперник Быбочкина в самом зрелищном бою «Осьминога-9».'],
     titles: ['Мастер спорта России по тайскому боксу', 'Чемпион мира среди профессионалов', 'Чемпион лиги «Наше дело»'],
     status: 'active',
@@ -240,6 +260,9 @@ export const fighters: Fighter[] = [
 ];
 
 /** Легенды, выходившие в ринг «Осьминога» (по фотоотчёту mensby.com) */
+/** Весь ростер лиги: профили + бойцы из архива турниров (src/content/archive.ts) */
+export const fighters: Fighter[] = [...profiles, ...archiveFighters];
+
 export const legends = [
   'Сергей Рабченко',
   'Сергей Хомицкий',

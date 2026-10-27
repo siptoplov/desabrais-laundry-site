@@ -1,11 +1,12 @@
 import type { Video } from './types';
+import { archiveVideos } from './archive';
 
 /**
  * Видеоархив — официальный YouTube-канал Chinuk Gym (@chinukgym).
  * Добавить видео: возьмите ID из ссылки youtube.com/watch?v=<ID>.
  * Просмотры — на 26.10.2026, обновляются вручную (или из YouTube Data API).
  */
-export const videos: Video[] = [
+const base: Video[] = [
   // ОСЬМИНОГ-9 × UralFC
   { id: 'XFMdcpi639k', title: 'Серпитовский — Сайдуло', red: 'Серпитовский', blue: 'Сайдуло', event: 'osminog-9', discipline: 'k1', kind: 'fight', views: 7200, published: '2026-06-10' },
   { id: 'VzgDubq30xA', title: 'Быбочкин — Ибрагимов', red: 'Быбочкин', blue: 'Ибрагимов', event: 'osminog-9', discipline: 'k1', kind: 'fight', views: 7100, published: '2026-06-09' },
@@ -51,3 +52,6 @@ export const channel = {
   url: 'https://www.youtube.com/@chinukgym',
   videos: 'https://www.youtube.com/@chinukgym/videos',
 };
+
+/** Все видео: подборка выше + бои из архива турниров (без повторов) */
+export const videos: Video[] = [...base, ...archiveVideos.filter((v) => !base.some((b) => b.id === v.id))];
