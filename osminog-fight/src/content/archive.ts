@@ -4,7 +4,8 @@ import type { Bout, Fighter, Video } from './types';
  * Архив боёв лиги: «Проект «Осьминог»» (23.03.2024), ОСЬМИНОГ-2 … ОСЬМИНОГ-9 и вечер боёв в декабре 2016 года.
  * Источник — названия и описания видео на YouTube-канале Chinuk Gym (@chinukgym), сверено 27.10.2026.
  * Рекорд бойца — последний опубликованный (на дату recordAsOf). Результат боя указан только там,
- * где он прямо назван в описании видео или следует из описания следующего боя.
+ * где он прямо назван в описании видео, следует из описания следующего боя или опубликован в СМИ
+ * и базах боёв (ссылки — в sources турнира в events.ts).
  * Чтобы добавить бой: допишите его в archiveBouts нужного турнира и, если бойца ещё нет, — в archiveFighters.
  */
 
@@ -140,26 +141,26 @@ export const archiveBouts: Record<string, Bout[]> = {
     { id: 'o9-ser-sai', red: 'serpitovskiy', blue: 'saadulo', discipline: 'k1', position: 'main-card', video: 'XFMdcpi639k', weightKg: 66, headline: 'Реванш', note: 'Первый бой на «Осьминоге-6» закончился ничьей после экстра-раунда.' },
     { id: 'o9-kok-mam', red: 'kokosh', blue: 'mamedov-ahliman', discipline: 'k1', position: 'main-card', video: 'cJ1XCkEgR3o', weightKg: 86, headline: 'Реванш', note: 'Первый бой в Москве (ФКР ПРО 10) решением выиграл Кокош.' },
     { id: 'o9-lap-mam', red: 'lapanik', blue: 'mamedov-nariman', discipline: 'k1', position: 'main-card', video: 'riRlX6I-SCA', weightKg: 78 },
-    { id: 'o9-kuv-tat', red: 'kuvakina', blue: 'tataru', discipline: 'k1', position: 'undercard', video: 'pN6g3AR1UU4', weightKg: 58, headline: 'Женский бой' },
+    { id: 'o9-kuv-tat', red: 'kuvakina', blue: 'tataru', discipline: 'k1', position: 'undercard', video: 'pN6g3AR1UU4', weightKg: 58, headline: 'Женский бой', result: { winner: 'red', method: 'UD', round: 3 } },
     { id: 'o9-zin-sar', red: 'zinovev', blue: 'sari', discipline: 'k1', position: 'undercard', video: 'tvqGd_gay8w', weightKg: 88 },
     { id: 'o9-ste-ver', red: 'stepanenko', blue: 'verbin', discipline: 'k1', position: 'undercard', video: 'zDU3FGei81E', weightKg: 95 },
     { id: 'o9-gav-tsy', red: 'gavrish', blue: 'tsyakallo', discipline: 'eurothai', position: 'undercard', video: 'zMbwyXq771w' },
   ],
   'osminog-8': [
-    { id: 'o8-mam-mag', red: 'mamedov', blue: 'magomedov', discipline: 'k1', position: 'main-card', video: 'cZEZGQr10-s', weightKg: 75 },
-    { id: 'o8-sul-kok', red: 'kokosh', blue: 'suleymanov', discipline: 'k1', position: 'main-card', video: '69gN0FBu100', weightKg: 86 },
-    { id: 'o8-fed-var', red: 'fedorinchik', blue: 'varnavskiy', discipline: 'k1', position: 'main-card', video: 'tTYP6pYX49A' },
-    { id: 'o8-nec-pes', red: 'nechitaylo', blue: 'peseckiy', discipline: 'k1', position: 'main-card', video: 'a2LnbOobxog' },
-    { id: 'o8-fok-sht', red: 'fokin', blue: 'shtyrkov', discipline: 'k1', position: 'undercard', video: '1esZ2oWW7V8', weightKg: 67 },
+    { id: 'o8-mam-mag', red: 'mamedov', blue: 'magomedov', discipline: 'k1', position: 'main-card', video: 'cZEZGQr10-s', weightKg: 75, result: { winner: 'red', method: 'TKO', round: 2 } },
+    { id: 'o8-sul-kok', red: 'kokosh', blue: 'suleymanov', discipline: 'k1', position: 'main-card', video: '69gN0FBu100', weightKg: 86, result: { winner: 'red', method: 'TKO', round: 3 } },
+    { id: 'o8-fed-var', red: 'fedorinchik', blue: 'varnavskiy', discipline: 'k1', position: 'main-card', video: 'tTYP6pYX49A', result: { winner: 'red', method: 'DEC', round: 4, note: 'После экстра-раунда. Лучший бой вечера' } },
+    { id: 'o8-nec-pes', red: 'nechitaylo', blue: 'peseckiy', discipline: 'k1', position: 'main-card', video: 'a2LnbOobxog', result: { winner: 'red', method: 'DEC', round: 4, note: 'После экстра-раунда' } },
+    { id: 'o8-fok-sht', red: 'fokin', blue: 'shtyrkov', discipline: 'k1', position: 'undercard', video: '1esZ2oWW7V8', weightKg: 67, result: { winner: 'red', method: 'DEC', round: 4, note: 'После экстра-раунда. Федерация кикбоксинга России опротестовала решение' } },
     { id: 'o8-kol-mil', red: 'milyakov', blue: 'kolontaevskiy', discipline: 'k1', position: 'undercard', video: 'lWPmY2g-S-Q' },
-    { id: 'o8-spa-mad', red: 'spodarenko', blue: 'madaev', discipline: 'k1', position: 'undercard', video: 'nPiBQ6Qswgg', weightKg: 75 },
+    { id: 'o8-spa-mad', red: 'spodarenko', blue: 'madaev', discipline: 'k1', position: 'undercard', video: 'nPiBQ6Qswgg', weightKg: 75, result: { winner: 'blue', method: 'DEC', note: 'Лучший боец вечера' } },
     { id: 'o8-mat-yuz', red: 'yuzefovich', blue: 'matveev', discipline: 'mma', position: 'main-card', video: 'NROK36qwinI', weightKg: 66 },
     { id: 'o8-dzh-kul', red: 'kulichkov', blue: 'dzhumaboev', discipline: 'mma', position: 'undercard', video: 'eGO42KcYi4o', weightKg: 62 },
     { id: 'o8-ras-sil', red: 'silos', blue: 'raspopov', discipline: 'mma', position: 'undercard', video: 'NovC_5h7xsQ', weightKg: 75 },
     { id: 'o8-gad-lit', red: 'litvin', blue: 'gadzhiev', discipline: 'mma', position: 'undercard', video: 'S-5LYZs2WFI', weightKg: 93 },
   ],
   'osminog-7': [
-    { id: 'o7-title', red: 'parhugadzhiev', blue: 'hotak', discipline: 'mma', position: 'title', video: 'vA7yhoPt41w', weightKg: 70, titleFight: 'Титул чемпиона мира среди профессионалов WTKF', headline: 'Бой за пояс чемпиона мира', rules: 'ММА · 3 × 5 мин' },
+    { id: 'o7-title', red: 'parhugadzhiev', blue: 'hotak', discipline: 'mma', position: 'title', video: 'vA7yhoPt41w', weightKg: 70, titleFight: 'Титул чемпиона мира среди профессионалов WTKF', headline: 'Бой за пояс чемпиона мира', rules: 'ММА · 3 × 5 мин', result: { winner: 'blue', method: 'SUB', round: 1, time: '2:50', note: 'Удушение гильотиной' } },
     { id: 'o7-kol-kok', red: 'kokosh', blue: 'kolesnikov', discipline: 'k1', position: 'main-card', video: '72F_cxHgPoA', weightKg: 86 },
     { id: 'o7-tak-ban', red: 'bangura', blue: 'takallu', discipline: 'k1', position: 'main-card', video: 'Eeg1wiHaX3Y', weightKg: 91, headline: 'Реванш' },
     { id: 'o7-che-mam', red: 'mamedov', blue: 'cherkas', discipline: 'k1', position: 'main-card', video: '_SP5WVso1dg', weightKg: 75 },

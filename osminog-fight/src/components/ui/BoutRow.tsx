@@ -16,7 +16,7 @@ import { Flag } from './Primitives';
 import { VideoCard } from './VideoCard';
 import { getVideos } from '@/lib/cms';
 
-const methodLabel: Record<string, string> = { KO: 'Нокаут', TKO: 'Технический нокаут', UD: 'Единогласное решение', SD: 'Раздельное решение', MD: 'Решение большинства', DEC: 'Решение судей', DQ: 'Дисквалификация', NC: 'Бой признан несостоявшимся', DRAW: 'Ничья' };
+const methodLabel: Record<string, string> = { KO: 'Нокаут', TKO: 'Технический нокаут', SUB: 'Болевой или удушающий приём', UD: 'Единогласное решение', SD: 'Раздельное решение', MD: 'Решение большинства', DEC: 'Решение судей', DQ: 'Дисквалификация', NC: 'Бой признан несостоявшимся', DRAW: 'Ничья' };
 
 function Avatar({ c, side }: { c: ResolvedCorner; side: 'red' | 'blue' }) {
   const f = c.fighter;

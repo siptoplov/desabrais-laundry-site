@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/results/' },
 };
 
-const methodShort: Record<string, string> = { KO: 'KO', TKO: 'TKO', UD: 'Решение (ед.)', SD: 'Решение (разд.)', MD: 'Решение (больш.)', DEC: 'Решение', DQ: 'Дисквал.', NC: 'Не сост.', DRAW: 'Ничья' };
+const methodShort: Record<string, string> = { KO: 'KO', TKO: 'TKO', SUB: 'Сдача', UD: 'Решение (ед.)', SD: 'Решение (разд.)', MD: 'Решение (больш.)', DEC: 'Решение', DQ: 'Дисквал.', NC: 'Не сост.', DRAW: 'Ничья' };
 
 export default function ResultsPage() {
   const events = getPastEvents().filter((e) => e.bouts.length);

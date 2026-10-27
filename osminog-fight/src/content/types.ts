@@ -44,7 +44,7 @@ export interface Fighter {
 /** Участник боя: slug бойца из каталога или просто фамилия (если профиля ещё нет) */
 export type Corner = string;
 
-export type ResultMethod = 'KO' | 'TKO' | 'UD' | 'SD' | 'MD' | 'DEC' | 'DQ' | 'NC' | 'DRAW';
+export type ResultMethod = 'KO' | 'TKO' | 'SUB' | 'UD' | 'SD' | 'MD' | 'DEC' | 'DQ' | 'NC' | 'DRAW';
 
 export interface BoutResult {
   winner: 'red' | 'blue' | 'draw';

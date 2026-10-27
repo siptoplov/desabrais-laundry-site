@@ -167,6 +167,7 @@ export const events: FightEvent[] = [
     watchUrl: 'https://www.youtube.com/@chinukgym/videos',
     sources: [
       { label: 'Вечерний Гродно', url: 'https://vgr.by/2026/05/18/pobedil-i-ushel-iz-bolshogo-sporta-krasivaya-istoriya-bojcza-iz-grodno-yuriya-bybochkina/' },
+      { label: 'Википедия · Дарья Кувакина', url: 'https://en.wikipedia.org/wiki/Daria_Kuvakina' },
       { label: 'YouTube · Chinuk Gym', url: 'https://www.youtube.com/@chinukgym/videos' },
     ],
   },
@@ -186,11 +187,13 @@ export const events: FightEvent[] = [
     story: [
       'Две лиги — один ринг. Двенадцать поединков: шесть по правилам К-1 и шесть по ММА, двадцать четыре бойца из стран Европы и Азии.',
       'Вечер силы и эмоций под живой звук рок-группы KORBUT.',
+      'Лучшим бойцом вечера признан Эльдар Мадаев, лучшим боем — Евгений Федоринчик против Ростислава Варнавского. Федерация кикбоксинга России опротестовала два решения судей, в том числе в бою Георгия Фокина и Артёма Штыркова.',
     ],
     guest: { name: 'KORBUT', role: 'Рок-группа, живой звук' },
     bouts: archiveBouts['osminog-8'],
     tickets: { status: 'closed', vendor: 'TicketPro', from: 35, to: 150, currency: 'BYN' },
     sources: [
+      { label: 'Рейтинг Букмекеров · итоги', url: 'https://bookmaker-ratings.ru/news/v-minske-zavershilsya-sovmestny-j-turnir-promoushenov-os-minog-i-bfc-po-k-1/' },
       { label: 'TicketPro', url: 'https://www.ticketpro.by/novosti/mezhdunarodnyj-turnir-osminog-8--bfc-86-projdyot-v-minske/' },
       { label: 'YouTube · Chinuk Gym', url: 'https://www.youtube.com/@chinukgym/videos' },
     ],
@@ -209,7 +212,10 @@ export const events: FightEvent[] = [
     ],
     bouts: archiveBouts['osminog-7'],
     tickets: { status: 'closed', currency: 'BYN' },
-    sources: [{ label: 'YouTube · Chinuk Gym', url: 'https://www.youtube.com/@chinukgym/videos' }],
+    sources: [
+      { label: 'Sherdog · Ахмад Вали Хотак', url: 'https://www.sherdog.com/fighter/Ahmad-Wali-Hotak-157679' },
+      { label: 'YouTube · Chinuk Gym', url: 'https://www.youtube.com/@chinukgym/videos' },
+    ],
   },
   {
     slug: 'osminog-6',

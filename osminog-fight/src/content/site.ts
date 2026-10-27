@@ -1,4 +1,5 @@
 import type { CountryCode, Discipline } from './types';
+import { sponsorsReady } from './sponsors';
 
 /** Глобальные настройки бренда. Менять здесь — изменится по всему сайту. */
 export const site = {
@@ -62,6 +63,8 @@ export const navSecondary = [
   { href: '/results/', label: 'Результаты' },
   { href: '/rubaha-paren/', label: 'Рубаха-парень' },
   { href: '/join/', label: 'Бойцам и партнёрам' },
+  // страница спонсоров появляется в меню, когда в content/sponsors.ts есть хотя бы один спонсор
+  ...(sponsorsReady ? [{ href: '/sponsors/', label: 'Спонсоры' }] : []),
   { href: '/shop/', label: 'Мерч' },
   { href: '/faq/', label: 'FAQ' },
   { href: '/contacts/', label: 'Контакты' },
