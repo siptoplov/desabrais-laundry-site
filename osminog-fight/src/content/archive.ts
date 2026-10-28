@@ -106,7 +106,7 @@ export const archiveFighters: Fighter[] = [
   a('ershov', 'Женя', 'Ершов', 'RU', { heightCm: 190, record: { w: 1, l: 1 }, recordAsOf: '2024-12-14' }),
   a('maksimets', 'Никита', 'Максимец', 'RU', { city: 'Нижний Новгород', heightCm: 184, record: { w: 10, l: 3 }, recordAsOf: '2024-12-14' }),
   a('klim', 'Георгий', 'Клим', 'RU', { city: 'Москва', heightCm: 179 }),
-  a('topor', 'Макс', 'Топор', 'RU', { city: 'Москва' }),
+  a('topor', 'Максим', 'Щербаков', 'RU', { nickname: 'Топор', city: 'Москва' }),
   a('chubrevich', 'Давид', 'Чубревич', 'BY', { city: 'Минск' }),
   a('guseynov', 'Агбер', 'Гусейнов', 'BY', { city: 'Минск' }),
   a('korsakov', 'Виталий', 'Корсаков', 'RU', { city: 'Москва' }),
