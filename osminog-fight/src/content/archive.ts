@@ -9,8 +9,24 @@ import type { Bout, Fighter, Video } from './types';
  * Чтобы добавить бой: допишите его в archiveBouts нужного турнира и, если бойца ещё нет, — в archiveFighters.
  */
 
+/**
+ * Портреты из постеров боёв на YouTube-канале лиги (public/img/heads/<slug>.webp).
+ * Кто есть кто — сверено по именам, напечатанным на постерах. Бойцы с боёв, где обложка —
+ * кадр из трансляции, пока без фото.
+ */
+const heads = new Set([
+  'artyushchenko', 'balkov', 'borovkov', 'busygin', 'changeliya', 'cherkas', 'dzhumaboev', 'ershov', 'fedorinchik',
+  'fokin', 'gadzhiev', 'gavrish', 'gordeev', 'grek', 'hasanhonov', 'hmarik', 'hotak', 'ibragimov-yahya', 'kalinkin',
+  'kokosh', 'kolesnikov', 'kolontaevskiy', 'kopytov', 'kosarev', 'kromm', 'kulichkov', 'kuvakina', 'kyamalov',
+  'lapanik', 'litvin', 'lyatos', 'madaev', 'magomedov', 'maksimets', 'mamedov-ahliman', 'mamedov-nariman', 'masalskiy',
+  'matveev', 'mencha', 'milyakov', 'monson', 'nechitaylo', 'parhugadzhiev', 'peseckiy', 'radzhabov', 'raspopov',
+  'roga', 'rogolevich', 'rolich', 'saadulo', 'sari', 'savin', 'serpitovskiy', 'shcheglov', 'shtyrkov', 'silos',
+  'solovey', 'spodarenko', 'stepanenko', 'suleymanov', 'takallu', 'tarasov', 'tataru', 'tsyakallo', 'vaduev', 'vafaye',
+  'valent', 'varaksa', 'varnavskiy', 'verbin', 'volkovich', 'yuzefovich', 'zhovner', 'zinovev',
+]);
+
 const a = (slug: string, firstName: string | undefined, lastName: string, country: Fighter['country'], extra: Partial<Fighter> = {}): Fighter => ({
-  slug, firstName, lastName, country, disciplines: [], status: 'active', ...extra,
+  slug, firstName, lastName, country, disciplines: [], status: 'active', ...(heads.has(slug) ? { headshot: `/img/heads/${slug}.webp` } : {}), ...extra,
 });
 
 export const archiveFighters: Fighter[] = [

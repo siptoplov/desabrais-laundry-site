@@ -208,6 +208,7 @@ const profiles: Fighter[] = [
     lastName: 'Быбочкин',
     country: 'BY',
     city: 'Гродно',
+    headshot: '/img/heads/bybochkin.webp',
     disciplines: ['k1'],
     heightCm: 181,
     // 13-3-1 перед боем на «Осьминоге-9» + победа над Ибрагимовым
@@ -233,6 +234,7 @@ const profiles: Fighter[] = [
     nickname: 'Шейх',
     country: 'RU',
     city: 'Владикавказ',
+    headshot: '/img/heads/ibragimov.webp',
     disciplines: ['k1', 'muaythai'],
     heightCm: 173,
     // 12-2 перед боем на «Осьминоге-9» + поражение от Быбочкина
