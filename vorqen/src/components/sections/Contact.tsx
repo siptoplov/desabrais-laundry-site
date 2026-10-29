@@ -6,7 +6,7 @@ import { contact, site } from "@/lib/content";
 import { EASE, gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/device";
 import { Emblem, EMBLEM_RATIO, Tagline, Wordmark } from "@/components/ui/Brand";
-import { ScrollSequence } from "@/components/ui/ScrollSequence";
+import { CinematicStill } from "@/components/ui/CinematicStill";
 import { Clouds } from "@/components/ui/Clouds";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { useRevealGroup } from "@/components/ui/Reveal";
@@ -43,11 +43,16 @@ export function Contact() {
     const el = valley.current;
     if (!el || prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
-      gsap.fromTo("[data-valley]", { scale: 1.3, yPercent: -6 }, { scale: 1, yPercent: 0, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom bottom", scrub: true } });
+      const enter = { trigger: el, start: "top bottom", end: "top top", scrub: true };
+      gsap.fromTo("[data-valley]", { scale: 1.25, yPercent: -5 }, { scale: 1, yPercent: 0, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom bottom", scrub: true } });
+      // the emblem rises over the far ridge like the sun at dawn
+      gsap.fromTo("[data-sunrise]", { yPercent: 105, scale: 0.92 }, { yPercent: 0, scale: 1, ease: "power2.out", scrollTrigger: enter });
+      gsap.fromTo("[data-dawn]", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, ease: "power1.out", scrollTrigger: enter });
+      gsap.fromTo("[data-rays]", { opacity: 0, rotate: -12 }, { opacity: 1, rotate: 0, ease: "none", scrollTrigger: enter });
       gsap.fromTo(
         "[data-valley-copy] > *",
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, stagger: 0.12, duration: 1.6, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 45%", once: true } },
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, stagger: 0.12, duration: 1.6, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 40%", once: true } },
       );
     }, el);
     return () => ctx.revert();
@@ -85,25 +90,57 @@ export function Contact() {
       {/* the closing frame: valley at dawn */}
       <div ref={valley} className="relative h-[100svh] min-h-[660px] overflow-hidden">
         <div data-valley className="absolute inset-0 origin-[50%_35%] will-change-transform">
-          <ScrollSequence name="valley" frames={81} focus={[0.5, 0.4]} />
+          <CinematicStill name="valley" focus={[0.5, 0.4]} glints={["flow"]} />
         </div>
         <Clouds />
         <div
           aria-hidden
           className="absolute inset-0"
-          style={{ background: "linear-gradient(180deg, rgba(5,5,6,0.88) 0%, rgba(5,5,6,0.35) 30%, rgba(5,5,6,0.05) 52%, rgba(5,5,6,0.55) 78%, #050506 100%)" }}
+          style={{ background: "linear-gradient(180deg, rgba(5,5,6,0.92) 0%, rgba(5,5,6,0.55) 26%, rgba(5,5,6,0.1) 40%, rgba(5,5,6,0.12) 55%, rgba(5,5,6,0.6) 78%, #050506 100%)" }}
         />
-        <div data-valley-copy className="shell relative flex h-full flex-col items-center pt-[15vh] text-center">
-          <div className="relative w-[clamp(84px,8vw,120px)]" style={{ aspectRatio: `${EMBLEM_RATIO}` }}>
-            <div className="animate-[float_7s_ease-in-out_infinite]">
-              <Emblem className="h-full w-full drop-shadow-[0_0_30px_rgba(232,240,255,0.35)]" />
-            </div>
+
+        {/* dawn: light pooling on the horizon behind the rising emblem */}
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[37%] h-0">
+          <div
+            data-dawn
+            className="absolute left-1/2 top-0 h-[70vh] w-[110vw] -translate-x-1/2 -translate-y-1/2 opacity-0"
+            style={{ background: "radial-gradient(50% 50% at 50% 50%, rgba(232,240,255,0.32), rgba(232,240,255,0.08) 40%, transparent 70%)" }}
+          />
+          <div
+            data-rays
+            className="absolute left-1/2 top-0 h-[150vmin] w-[150vmin] -translate-x-1/2 -translate-y-1/2 opacity-0"
+            style={{
+              background: "repeating-conic-gradient(from 180deg at 50% 50%, rgba(232,240,255,0.08) 0deg 1.5deg, transparent 1.5deg 9deg)",
+              WebkitMaskImage: "radial-gradient(closest-side, #000 8%, rgba(0,0,0,0.5) 35%, transparent 70%)",
+              maskImage: "radial-gradient(closest-side, #000 8%, rgba(0,0,0,0.5) 35%, transparent 70%)",
+            }}
+          />
+        </div>
+
+        {/* the emblem rises from behind the horizon (window bottom = horizon line) */}
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[15%] h-[22.5%] overflow-hidden [mask-image:linear-gradient(180deg,#000_78%,transparent)]">
+          <div data-sunrise className="absolute bottom-0 left-1/2 h-full -translate-x-1/2" style={{ aspectRatio: `${EMBLEM_RATIO}` }}>
+            <Emblem className="h-full w-full" />
+            <div
+              className="absolute inset-0 animate-[emblem-sweep_5s_var(--ease-soft)_infinite]"
+              style={{
+                background: "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.85) 50%, transparent 65%) no-repeat",
+                backgroundSize: "60% 100%",
+                WebkitMaskImage: "url(/brand/emblem.webp)",
+                maskImage: "url(/brand/emblem.webp)",
+                WebkitMaskSize: "100% 100%",
+                maskSize: "100% 100%",
+              }}
+            />
           </div>
-          <div className="mt-8 w-[clamp(220px,30vw,440px)]">
+        </div>
+
+        <div data-valley-copy className="shell relative flex h-full flex-col items-center pt-[5.5vh] text-center">
+          <div className="w-[clamp(240px,32vw,500px)]">
             <Wordmark alt="VORQEN" className="h-auto w-full" />
           </div>
-          <Tagline className="mt-7" />
-          <h2 className="t-label-lg mt-auto mb-[18vh] leading-[2.1] text-fg [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
+          <Tagline className="mt-5 text-fg [&_span]:opacity-90" />
+          <h2 className="mt-auto mb-[16vh] text-[clamp(13px,1.15vw,17px)] font-[family-name:var(--font-display)] uppercase leading-[2.1] tracking-[0.45em] text-fg [text-shadow:0_2px_30px_rgba(0,0,0,0.9)]">
             {contact.titleLines[0]}
             <br />
             {contact.titleLines[1]}
@@ -220,7 +257,7 @@ export function Contact() {
           </ul>
         </div>
       </div>
-      <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes nudge{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(8px);opacity:1}}`}</style>
+      <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes nudge{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(8px);opacity:1}}@keyframes emblem-sweep{0%,55%{background-position:-150% 0}100%{background-position:250% 0}}`}</style>
     </section>
   );
 }

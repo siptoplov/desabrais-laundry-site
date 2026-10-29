@@ -1,10 +1,3 @@
-/** Pick the lighter encode on small or low-DPR screens. */
-export function videoSrc(name: string) {
-  if (typeof window === "undefined") return `/media/${name}-1920.mp4`;
-  const w = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
-  return `/media/${name}-${w > 1500 ? 1920 : 1280}.mp4`;
-}
-
 /** Seeded PRNG (mulberry32) — deterministic "random" for choreography. */
 export function rng(seed: number) {
   let a = seed >>> 0;

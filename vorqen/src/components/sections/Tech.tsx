@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { mountains as copy } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/device";
-import { ScrollSequence } from "@/components/ui/ScrollSequence";
+import { CinematicStill } from "@/components/ui/CinematicStill";
 import { LaptopFx } from "./LaptopFx";
 import { SplitWordmark } from "@/components/ui/Brand";
 import { SplitReveal } from "@/components/ui/Reveal";
@@ -48,7 +48,7 @@ export function Tech() {
     <section ref={section} id="tech" aria-label="Технологии" className="relative z-10 h-[110svh] min-h-[720px] overflow-hidden bg-ink-0 [perspective:1600px]">
       <div data-device className="absolute inset-0 origin-[70%_40%] will-change-transform">
         <div ref={tilt} className="absolute inset-0 origin-[80%_35%] will-change-transform">
-          <ScrollSequence name="laptop" frames={61} focus={LAPTOP_FOCUS} />
+          <CinematicStill name="laptop" focus={LAPTOP_FOCUS} glints={["sweep"]} />
           <LaptopFx focus={LAPTOP_FOCUS} tilt={tilt} />
         </div>
         <div data-dim aria-hidden className="pointer-events-none absolute inset-0 bg-ink-0" style={{ opacity: 0.85 }} />

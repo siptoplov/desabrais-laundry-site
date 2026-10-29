@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { hero } from "@/lib/content";
@@ -10,51 +9,19 @@ import { SplitWordmark, Tagline } from "@/components/ui/Brand";
 import { SplitReveal } from "@/components/ui/Reveal";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { IconArrow } from "@/components/ui/Icons";
-import { videoSrc } from "@/lib/media";
+import { CinematicStill } from "@/components/ui/CinematicStill";
+import { Dust } from "@/components/ui/Dust";
 import { useSmoothScroll } from "@/components/providers/SmoothScroll";
 
 export function Hero() {
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const [intro, setIntro] = useState(false);
-  const [video, setVideo] = useState<HTMLVideoElement | null>(null);
-  const [mode, setMode] = useState<"pending" | "plain" | "still">("pending");
-  const [playing, setPlaying] = useState(false);
   const [active, setActive] = useState(true);
   const light = useRef<HTMLDivElement>(null);
   const { scrollTo } = useSmoothScroll();
 
   useEffect(() => onIntroDone(() => setIntro(true)), []);
-
-  // The hero loop plays as a plain <video>: decoded and composited by the
-  // GPU with no per-frame copies, which keeps Safari on Macs smooth.
-  useEffect(() => {
-    if (prefersReducedMotion()) {
-      setMode("still");
-      return;
-    }
-    const v = document.createElement("video");
-    v.muted = true;
-    v.loop = true;
-    v.playsInline = true;
-    v.preload = "auto";
-    v.src = videoSrc("hero");
-    v.addEventListener("playing", () => setPlaying(true), { once: true });
-    v.play().catch(() => {});
-    setVideo(v);
-    setMode("plain");
-    return () => {
-      v.pause();
-      v.removeAttribute("src");
-      v.load();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!video) return;
-    if (active) video.play().catch(() => {});
-    else video.pause();
-  }, [active, video]);
 
   // DOM intro once the preloader hands over
   useEffect(() => {
@@ -142,8 +109,6 @@ export function Hero() {
     };
   }, [active]);
 
-  const showStill = mode === "still" || mode === "pending" || !playing;
-
   return (
     <section ref={section} id="top" aria-label="VORQEN" className="relative h-[100svh] min-h-[680px] w-full">
       {/* stage is fixed so the fly-in keeps going while the next section slides over */}
@@ -155,32 +120,13 @@ export function Hero() {
           {/* on narrow screens the 16:9 frame is shown wider than the
               viewport so the whole emblem fits; its edges fade into black */}
           <div className="absolute left-1/2 top-1/2 aspect-video w-[168%] -translate-x-1/2 -translate-y-1/2 lg:left-0 lg:top-0 lg:aspect-auto lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0">
-            <Image
-              src="/media/hero.jpg"
-              alt=""
-              fill
-              priority
-              sizes="(min-width:1024px) 100vw, 170vw"
-              quality={82}
-              className="object-cover transition-opacity duration-1000"
-              style={{ objectPosition: "49% 50%", opacity: showStill ? 1 : 0 }}
-            />
-            {mode === "plain" && video && (
-              <div
-                className="absolute inset-0"
-                ref={(el) => {
-                  if (el && !el.contains(video)) {
-                    video.className = "absolute inset-0 h-full w-full object-cover";
-                    video.style.objectPosition = "49% 50%";
-                    el.appendChild(video);
-                  }
-                }}
-              />
-            )}
+            {/* the original full-resolution key visual; light runs over its chrome */}
+            <CinematicStill name="hero" focus={[0.49, 0.5]} glints={["sweep", "pulse"]} priority sizes="(min-width:1024px) 100vw, 170vw" />
             <div className="absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-ink-0 to-transparent lg:hidden" />
             <div className="absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-ink-0 to-transparent lg:hidden" />
           </div>
         </div>
+        <Dust count={80} />
         <div
           ref={light}
           className="absolute left-0 top-0 hidden h-[70vmin] w-[70vmin] rounded-full will-change-transform lg:block"

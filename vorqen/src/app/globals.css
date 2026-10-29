@@ -465,3 +465,44 @@ html.js [data-split] {
 @media (prefers-reduced-motion: reduce) {
   .cloud-strip { animation: none; }
 }
+
+/* living stills — light confined to each image's own highlight mask */
+.fx-pulse {
+  opacity: 0;
+  animation: fx-pulse 4.5s var(--ease-soft) infinite;
+}
+@keyframes fx-pulse {
+  0%, 100% { opacity: 0.04; }
+  50% { opacity: 0.32; }
+}
+.fx-flow {
+  animation: fx-flow 2.6s linear infinite;
+  will-change: transform;
+}
+/* 440px = ten periods of the 44px glint pattern, so the loop is seamless */
+@keyframes fx-flow {
+  from { transform: translate3d(0, -440px, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+.fx-sweep {
+  transform: translate3d(-120%, 0, 0);
+  animation: fx-sweep 6.5s var(--ease-soft) infinite;
+  will-change: transform;
+}
+@keyframes fx-sweep {
+  0%, 35% { transform: translate3d(-120%, 0, 0); }
+  100% { transform: translate3d(220%, 0, 0); }
+}
+.still-fx .fx-pulse,
+.still-fx .fx-flow,
+.still-fx .fx-sweep {
+  animation-play-state: paused;
+}
+.still-fx.fx-on .fx-pulse,
+.still-fx.fx-on .fx-flow,
+.still-fx.fx-on .fx-sweep {
+  animation-play-state: running;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx-pulse, .fx-flow, .fx-sweep { animation: none; }
+}

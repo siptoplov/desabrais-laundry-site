@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { manifesto } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/device";
-import { ScrollSequence } from "@/components/ui/ScrollSequence";
+import { CinematicStill } from "@/components/ui/CinematicStill";
 import { Clouds } from "@/components/ui/Clouds";
 
 /**
@@ -52,7 +52,7 @@ export function Manifesto() {
       <div data-window className="absolute inset-0" style={{ clipPath: "inset(18% 22% 18% 22% round 28px)" }}>
         {/* zoom origin sits on the V in the footage */}
         <div data-media className="absolute inset-0 origin-[50%_62%] will-change-transform">
-          <ScrollSequence name="mountain-v" frames={81} focus={[0.5, 0.6]} />
+          <CinematicStill name="mountain-v" focus={[0.5, 0.6]} glints={["pulse", "flow"]} />
         </div>
         <Clouds />
         <div
