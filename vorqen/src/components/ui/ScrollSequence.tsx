@@ -94,7 +94,7 @@ export function ScrollSequence({
     const size = () => {
       const r = el.getBoundingClientRect();
       // never render more pixels than the frames carry
-      const scale = Math.min(dpr, (set * 1.15) / Math.max(1, r.width));
+      const scale = Math.min(dpr, set / Math.max(1, r.width));
       cv.width = Math.max(1, Math.round(r.width * scale));
       cv.height = Math.max(1, Math.round(r.height * scale));
       drawn = -1;

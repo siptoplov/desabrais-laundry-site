@@ -111,11 +111,9 @@ export function Hero() {
 
   return (
     <section ref={section} id="top" aria-label="VORQEN" className="relative h-[100svh] min-h-[680px] w-full">
-      {/* stage is fixed so the fly-in keeps going while the next section slides over */}
-      <div
-        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
-        style={{ visibility: active ? "visible" : "hidden" }}
-      >
+      {/* stage is fixed so the fly-in keeps going while the mountain dissolves
+          in over it; display:none once scrolled past, so it stops compositing */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" style={{ display: active ? "block" : "none" }}>
         <div ref={stage} className="absolute inset-x-0 top-0 h-[64%] origin-[49%_47%] will-change-transform lg:h-full">
           {/* on narrow screens the 16:9 frame is shown wider than the
               viewport so the whole emblem fits; its edges fade into black */}
@@ -126,7 +124,7 @@ export function Hero() {
             <div className="absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-ink-0 to-transparent lg:hidden" />
           </div>
         </div>
-        <Dust count={80} />
+        <Dust count={36} />
         <div
           ref={light}
           className="absolute left-0 top-0 hidden h-[70vmin] w-[70vmin] rounded-full will-change-transform lg:block"

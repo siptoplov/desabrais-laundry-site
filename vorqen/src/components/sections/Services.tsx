@@ -85,7 +85,7 @@ export function Services() {
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,6,0.5)_0%,transparent_26%,transparent_44%,rgba(5,5,6,0.85)_74%,#050506_100%)]" />
                   <div className="sweep absolute inset-0" />
                   {/* one pass of light as the card arrives */}
-                  <div data-arrive aria-hidden className="absolute -inset-y-1/4 left-0 w-full -translate-x-[130%] bg-[linear-gradient(105deg,transparent_35%,rgba(255,255,255,0.14)_50%,transparent_65%)]" />
+                  <div data-arrive aria-hidden className="absolute -inset-y-1/4 left-0 w-full -translate-x-[130%] will-change-transform bg-[linear-gradient(105deg,transparent_35%,rgba(255,255,255,0.14)_50%,transparent_65%)]" />
                   {/* cursor light */}
                   <div
                     aria-hidden

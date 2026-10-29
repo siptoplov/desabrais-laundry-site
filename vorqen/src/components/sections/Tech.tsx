@@ -51,11 +51,11 @@ export function Tech() {
           <CinematicStill name="laptop" focus={LAPTOP_FOCUS} glints={["sweep"]} />
           <LaptopFx focus={LAPTOP_FOCUS} tilt={tilt} />
         </div>
-        <div data-dim aria-hidden className="pointer-events-none absolute inset-0 bg-ink-0" style={{ opacity: 0.85 }} />
+        <div data-dim aria-hidden className="pointer-events-none absolute inset-0 bg-ink-0 will-change-[opacity]" style={{ opacity: 0.85 }} />
       </div>
       {/* travelling edge light */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div data-streak className="absolute -inset-y-1/4 left-0 w-[30%] rotate-[24deg] bg-[linear-gradient(90deg,transparent,rgba(232,240,255,0.07),transparent)] opacity-0" />
+        <div data-streak className="absolute -inset-y-1/4 left-0 w-[30%] rotate-[24deg] will-change-[transform,opacity] bg-[linear-gradient(90deg,transparent,rgba(232,240,255,0.07),transparent)] opacity-0" />
       </div>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,6,0.92)_0%,rgba(5,5,6,0.6)_38%,transparent_62%)] max-lg:bg-[linear-gradient(0deg,rgba(5,5,6,0.95)_0%,rgba(5,5,6,0.7)_45%,transparent_75%)]" />
 

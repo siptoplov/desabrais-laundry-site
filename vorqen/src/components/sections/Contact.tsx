@@ -48,7 +48,7 @@ export function Contact() {
       // the emblem rises over the far ridge like the sun at dawn
       gsap.fromTo("[data-sunrise]", { yPercent: 105, scale: 0.92 }, { yPercent: 0, scale: 1, ease: "power2.out", scrollTrigger: enter });
       gsap.fromTo("[data-dawn]", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, ease: "power1.out", scrollTrigger: enter });
-      gsap.fromTo("[data-rays]", { opacity: 0, rotate: -12 }, { opacity: 1, rotate: 0, ease: "none", scrollTrigger: enter });
+      gsap.fromTo("[data-rays]", { opacity: 0, rotate: -12 }, { opacity: 0.16, rotate: 0, ease: "none", scrollTrigger: enter });
       gsap.fromTo(
         "[data-valley-copy] > *",
         { opacity: 0, y: 40 },
@@ -90,7 +90,7 @@ export function Contact() {
       {/* the closing frame: valley at dawn */}
       <div ref={valley} className="relative h-[100svh] min-h-[660px] overflow-hidden">
         <div data-valley className="absolute inset-0 origin-[50%_35%] will-change-transform">
-          <CinematicStill name="valley" focus={[0.5, 0.4]} glints={["flow"]} />
+          <CinematicStill name="valley" focus={[0.5, 0.4]} glints={["flow"]} fxTop={0.4} />
         </div>
         <Clouds />
         <div
@@ -103,35 +103,35 @@ export function Contact() {
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[37%] h-0">
           <div
             data-dawn
-            className="absolute left-1/2 top-0 h-[70vh] w-[110vw] -translate-x-1/2 -translate-y-1/2 opacity-0"
+            className="absolute left-1/2 top-0 h-[70vh] w-[110vw] -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[transform,opacity]"
             style={{ background: "radial-gradient(50% 50% at 50% 50%, rgba(232,240,255,0.32), rgba(232,240,255,0.08) 40%, transparent 70%)" }}
           />
-          <div
+          {/* baked rays (scripts/mkfx.py): the scene only turns and fades an image */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             data-rays
-            className="absolute left-1/2 top-0 h-[150vmin] w-[150vmin] -translate-x-1/2 -translate-y-1/2 opacity-0"
-            style={{
-              background: "repeating-conic-gradient(from 180deg at 50% 50%, rgba(232,240,255,0.08) 0deg 1.5deg, transparent 1.5deg 9deg)",
-              WebkitMaskImage: "radial-gradient(closest-side, #000 8%, rgba(0,0,0,0.5) 35%, transparent 70%)",
-              maskImage: "radial-gradient(closest-side, #000 8%, rgba(0,0,0,0.5) 35%, transparent 70%)",
-            }}
+            src="/media/rays.webp"
+            alt=""
+            className="absolute left-1/2 top-0 h-[150vmin] w-[150vmin] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[transform,opacity]"
           />
         </div>
 
         {/* the emblem rises from behind the horizon (window bottom = horizon line) */}
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[15%] h-[22.5%] overflow-hidden [mask-image:linear-gradient(180deg,#000_78%,transparent)]">
-          <div data-sunrise className="absolute bottom-0 left-1/2 h-full -translate-x-1/2" style={{ aspectRatio: `${EMBLEM_RATIO}` }}>
+          <div data-sunrise className="absolute bottom-0 left-1/2 h-full -translate-x-1/2 will-change-transform" style={{ aspectRatio: `${EMBLEM_RATIO}` }}>
             <Emblem className="h-full w-full" />
+            {/* light crossing the chrome: a band slides under a fixed emblem mask */}
             <div
-              className="absolute inset-0 animate-[emblem-sweep_5s_var(--ease-soft)_infinite]"
+              className="absolute inset-0 overflow-hidden"
               style={{
-                background: "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.85) 50%, transparent 65%) no-repeat",
-                backgroundSize: "60% 100%",
                 WebkitMaskImage: "url(/brand/emblem.webp)",
                 maskImage: "url(/brand/emblem.webp)",
                 WebkitMaskSize: "100% 100%",
                 maskSize: "100% 100%",
               }}
-            />
+            >
+              <div className="absolute inset-y-0 left-0 w-[60%] animate-[emblem-sweep_5s_var(--ease-soft)_infinite] bg-[linear-gradient(105deg,transparent_25%,rgba(255,255,255,0.85)_50%,transparent_75%)]" />
+            </div>
           </div>
         </div>
 
@@ -257,7 +257,7 @@ export function Contact() {
           </ul>
         </div>
       </div>
-      <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes nudge{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(8px);opacity:1}}@keyframes emblem-sweep{0%,55%{background-position:-150% 0}100%{background-position:250% 0}}`}</style>
+      <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes nudge{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(8px);opacity:1}}@keyframes emblem-sweep{0%,55%{transform:translate3d(-100%,0,0)}100%{transform:translate3d(170%,0,0)}}`}</style>
     </section>
   );
 }

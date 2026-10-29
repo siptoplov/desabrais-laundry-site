@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { manifesto } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/device";
@@ -8,9 +8,12 @@ import { CinematicStill } from "@/components/ui/CinematicStill";
 import { Clouds } from "@/components/ui/Clouds";
 
 /**
- * The mountain valley with the V of light. No pinning: the page keeps
- * scrolling freely while the framed window opens to full bleed as the
- * section rises into view, and the words light up as you read down.
+ * The mountain valley with the V of light, dissolving straight out of the
+ * hero: no frame, no cut. The scene reaches up over the hero and stays put
+ * (CSS sticky, so the compositor holds it, not script) while the hero flies
+ * into the emblem; it fades in through a bloom of light and keeps the
+ * forward push going. The words then scroll up over it and light up as you
+ * read, and the scene leaves with the end of the section.
  */
 export function Manifesto() {
   const section = useRef<HTMLElement>(null);
@@ -22,20 +25,37 @@ export function Manifesto() {
     const ws = el.querySelectorAll<HTMLElement>("[data-word]");
     if (prefersReducedMotion()) {
       gsap.set(ws, { opacity: 1 });
-      gsap.set("[data-window]", { clipPath: "inset(0% 0% 0% 0% round 0px)" });
+      gsap.set("[data-fade]", { opacity: 1 });
+      el.querySelector("[data-scene]")?.classList.add("scene-live");
       return;
     }
     const ctx = gsap.context(() => {
-      const wide = window.innerWidth >= window.innerHeight;
-      // window opens while the section travels from the bottom edge to the top
-      gsap.fromTo(
-        "[data-window]",
-        { clipPath: wide ? "inset(18% 22% 18% 22% round 28px)" : "inset(16% 8% 16% 8% round 22px)" },
-        { clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "top 10%", scrub: true } },
-      );
-      // slow push toward the V across the whole pass
-      gsap.fromTo("[data-media]", { scale: 1.3 }, { scale: 1.06, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } });
-      gsap.fromTo("[data-scrim]", { opacity: 0.2 }, { opacity: 1, ease: "none", scrollTrigger: { trigger: el, start: "top 60%", end: "top top", scrub: true } });
+      // cross-dissolve out of the hero while it zooms into the emblem. Only
+      // the photo and its scrim fade (one layer each, no off-screen pass);
+      // the clouds and the light join once the scene is solid, and leave
+      // again under the bloom when scrolling back
+      const scene = el.querySelector("[data-scene]")!;
+      gsap.fromTo("[data-fade]", { opacity: 0 }, {
+        opacity: 1,
+        ease: "power1.inOut",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          end: "top 15%",
+          scrub: true,
+          onUpdate: ({ progress: p }) => {
+            if (p > 0.97) scene.classList.add("scene-live");
+            else if (p < 0.5) scene.classList.remove("scene-live");
+          },
+        },
+      });
+      // ...through a bloom of light at the crossing point
+      gsap
+        .timeline({ scrollTrigger: { trigger: el, start: "top 85%", end: "top 5%", scrub: true } })
+        .fromTo("[data-flare]", { opacity: 0, scale: 0.55 }, { opacity: 0.9, scale: 1, ease: "power1.in", duration: 1 })
+        .to("[data-flare]", { opacity: 0, scale: 1.35, ease: "power1.out", duration: 1.1 });
+      // the forward push carries on into the valley and settles
+      gsap.fromTo("[data-media]", { scale: 1.45 }, { scale: 1.02, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 80%", end: "bottom top", scrub: true } });
       // words light up one by one as you scroll through
       gsap.fromTo(
         ws,
@@ -48,19 +68,29 @@ export function Manifesto() {
   }, []);
 
   return (
-    <section ref={section} id="manifesto" aria-label="Манифест" className="relative z-10 h-[130svh] min-h-[760px] overflow-hidden bg-ink-0">
-      <div data-window className="absolute inset-0" style={{ clipPath: "inset(18% 22% 18% 22% round 28px)" }}>
-        {/* zoom origin sits on the V in the footage */}
-        <div data-media className="absolute inset-0 origin-[50%_62%] will-change-transform">
-          <CinematicStill name="mountain-v" focus={[0.5, 0.6]} glints={["pulse", "flow"]} />
+    <section ref={section} id="manifesto" aria-label="Манифест" className="relative z-10 h-[130svh] min-h-[760px]">
+      {/* reaches a screen up over the hero, so the scene can dissolve in on
+          top of it and stay fixed on screen until the section ends */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 top-[-100svh]">
+        <div className="sticky top-0 h-[100svh] overflow-hidden">
+          <div data-scene className="scene absolute inset-0">
+            {/* zoom origin sits on the V in the footage */}
+            <div data-media data-fade className="absolute inset-0 origin-[50%_62%] opacity-0 will-change-[transform,opacity]">
+              <CinematicStill name="mountain-v" focus={[0.5, 0.6]} glints={["flow"]} fxTop={0.3} />
+            </div>
+            <Clouds />
+            <div
+              data-fade
+              className="absolute inset-0 opacity-0 will-change-[opacity]"
+              style={{ background: "linear-gradient(180deg, rgba(5,5,6,0.85) 0%, rgba(5,5,6,0.4) 22%, rgba(5,5,6,0.12) 55%, rgba(5,5,6,0.35) 80%, #050506 100%)" }}
+            />
+          </div>
+          <div
+            data-flare
+            className="absolute left-1/2 top-[32%] h-[110vmin] w-[110vmin] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 will-change-[opacity,transform] lg:top-[47%]"
+            style={{ background: "radial-gradient(closest-side, rgba(255,255,255,0.5), rgba(232,240,255,0.18) 38%, rgba(232,240,255,0.05) 60%, transparent)" }}
+          />
         </div>
-        <Clouds />
-        <div
-          data-scrim
-          aria-hidden
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(180deg, #050506 0%, rgba(5,5,6,0.55) 22%, rgba(5,5,6,0.1) 55%, rgba(5,5,6,0.25) 80%, #050506 100%)" }}
-        />
       </div>
 
       <div className="shell relative z-10 flex h-full flex-col items-center pt-[26svh] text-center">
@@ -71,10 +101,13 @@ export function Manifesto() {
         </p>
         <p className="max-w-[15ch] text-[clamp(40px,6.6vw,118px)] font-light leading-[1] tracking-[-0.045em] [text-shadow:0_2px_40px_rgba(0,0,0,0.5)]">
           {words.map((w, i) => (
-            <span key={i} data-word className="inline-block opacity-[0.08]">
-              {w}
-              {i < words.length - 1 ? " " : ""}
-            </span>
+            <Fragment key={i}>
+              <span data-word className="inline-block opacity-[0.08] will-change-[transform,opacity]">
+                {w}
+              </span>
+              {/* the space lives outside the inline-block, where it can't collapse */}
+              {i < words.length - 1 && " "}
+            </Fragment>
           ))}
         </p>
         <div data-manifesto-meta className="mt-10 flex flex-col items-center gap-6 opacity-0">
