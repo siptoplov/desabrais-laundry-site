@@ -72,10 +72,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru" className={`${manrope.variable} ${michroma.variable}`} suppressHydrationWarning>
       <head>
-        {/* Mark JS + loading before first paint so reveal states never flash */}
+        {/* Mark JS + loading before first paint so reveal states never flash.
+            Also drop whitespace text nodes a host/CDN may inject into <head>
+            (Netlify adds one) — React treats them as a hydration mismatch. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add('js','is-loading');`,
+            __html: `document.documentElement.classList.add('js','is-loading');for(var n=document.head.firstChild,x;n;n=x){x=n.nextSibling;if(n.nodeType===3&&!n.data.trim())n.remove()}`,
           }}
         />
         <link rel="preload" as="image" href="/brand/emblem.webp" type="image/webp" />

@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Next.js runtime (SSR, /api/lead route, image CDN). Netlify keeps it up to date.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

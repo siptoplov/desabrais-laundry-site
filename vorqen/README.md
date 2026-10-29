@@ -11,6 +11,14 @@ npm run build && npm start
 npm run lint       # tsc --noEmit
 ```
 
+## Deploy (Netlify)
+
+Live: https://vorqen-znfh.netlify.app (project `vorqen-znfh`, team `siptoplov`).
+`netlify.toml` builds with `npm run build` on Node 22, publishes `.next`, and enables
+`@netlify/plugin-nextjs`. That plugin turns `/api/lead` into a Netlify Function; without it
+the site deploys as raw files and every route returns 404. After you set the Telegram env vars in Netlify,
+trigger a new deploy: env values are read at build time.
+
 ## Structure
 
 ```
