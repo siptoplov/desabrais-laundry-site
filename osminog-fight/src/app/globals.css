@@ -311,29 +311,50 @@
   }
 
   /* ---------- Кнопки ---------- */
+  /* ---------- Кнопки «арена» ----------
+     Форма — срезанные углы, как у клетки-октагона. Слои: ::before — окантовка (хром или красный неон),
+     ::after — лицевая сторона: блик + «чернила» от точки входа курсора + заливка. Сама кнопка прозрачная,
+     поэтому drop-shadow светится ровно по форме со срезами. */
+  @property --ink {
+    syntax: '<length-percentage>';
+    inherits: false;
+    initial-value: 0%;
+  }
   .btn {
-    --btn-bg: transparent;
+    --cut: 14px;
+    --btn-rim: linear-gradient(135deg, #f4f5f7 0%, #7d838c 34%, #e9ecef 56%, #4f545b 100%);
+    --btn-face: linear-gradient(180deg, rgb(32 32 38 / 0.82), rgb(10 10 12 / 0.9));
+    --btn-fill: var(--cyan);
     --btn-fg: var(--ice);
-    --btn-bd: var(--line-strong);
+    --btn-fg-hover: var(--abyss);
+    --btn-glow: none;
+    --chamfer: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     min-height: 56px;
-    padding: 0 28px;
+    padding: 0 30px;
     font-family: var(--font-display);
     font-weight: 800;
     font-size: 20px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--btn-fg);
-    background: var(--btn-bg);
-    border: 1px solid var(--btn-bd);
-    border-radius: var(--radius);
+    background: none;
+    border: 0;
     isolation: isolate;
-    overflow: hidden;
-    transition: color 0.35s var(--ease-out), border-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+    filter: var(--btn-glow);
+    outline: 1px solid transparent;
+    outline-offset: 2px;
+    transition:
+      color 0.35s var(--ease-out),
+      filter 0.35s var(--ease-out),
+      outline-color 0.35s var(--ease-out),
+      outline-offset 0.35s var(--ease-out),
+      scale 0.15s var(--ease-out),
+      text-shadow 0.35s var(--ease-out);
     white-space: nowrap;
     will-change: transform;
   }
@@ -342,74 +363,93 @@
     z-index: 2;
     pointer-events: none;
   }
-  /* Перетекание цвета: «чернила» заливают кнопку от точки входа курсора */
+  /* окантовка */
   .btn::before {
     content: '';
     position: absolute;
-    z-index: 1;
-    left: var(--mx, 50%);
-    top: var(--my, 50%);
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: var(--btn-fill, var(--ice));
-    transform: translate(-50%, -50%);
-    transition: width 0.55s var(--ease-out), height 0.55s var(--ease-out);
+    inset: 0;
+    z-index: 0;
+    background: var(--btn-rim);
+    clip-path: var(--chamfer);
   }
-  .btn:hover::before,
-  .btn:focus-visible::before {
-    width: 280%;
-    height: 560%;
+  /* лицевая сторона: блик · чернила · заливка */
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: 1;
+    --cut: calc(var(--cut-face, 13.6px));
+    clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+    background:
+      linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.28) 48%, transparent 58%) -160% 0 / 250% 100% no-repeat,
+      radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--btn-fill) var(--ink), transparent calc(var(--ink) + 1px)),
+      linear-gradient(180deg, rgb(255 255 255 / 0.12), transparent 42%),
+      var(--btn-face);
+    transition: --ink 0.55s var(--ease-out), background-position 0.9s var(--ease-out);
+  }
+  .btn:hover::after,
+  .btn:focus-visible::after {
+    --ink: 160%;
+    background-position: 160% 0, 0 0, 0 0, 0 0;
   }
   .btn:hover,
   .btn:focus-visible {
-    color: var(--btn-fg-hover, var(--abyss));
+    color: var(--btn-fg-hover);
+    outline-color: rgb(242 242 243 / 0.22);
+    outline-offset: 5px;
   }
-  .btn-primary {
-    --btn-bg: var(--blood);
-    --btn-fg: #fff;
-    --btn-bd: var(--blood);
-    --btn-fill: #fff;
-    --btn-fg-hover: var(--blood-deep);
-    box-shadow: 0 0 0 0 rgb(255 43 58 / 0.5), 0 10px 40px -10px rgb(255 43 58 / 0.65);
+  /* фокус с клавиатуры — заметнее, чем рамка наведения */
+  .btn:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 5px;
   }
-  .btn-primary:hover {
-    box-shadow: 0 0 0 6px rgb(255 43 58 / 0.18), 0 16px 60px -10px rgb(255 43 58 / 0.9);
-  }
-  .btn-ghost {
-    --btn-bg: rgb(6 6 7 / 0.35);
-    --btn-fill: var(--cyan);
-    backdrop-filter: blur(10px);
-  }
-  .btn-ghost:hover {
-    border-color: var(--cyan);
-  }
-  .btn-sm {
-    min-height: 44px;
-    padding: 0 18px;
-    font-size: 19px;
+  .btn:active {
+    scale: 0.97;
   }
   .btn .btn-icon {
     width: 18px;
     height: 18px;
     flex: none;
+    transition: transform 0.35s var(--ease-snap);
   }
-  /* Щупальца «хватают» кнопку за углы при наведении — чистый CSS, без лишних узлов DOM */
-  .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    pointer-events: none;
-    background:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cpath transform='rotate(0 11 11)' d='M2 20C2 10 6 3 14 3c5 0 6 5 2 6-3 1-4-2-2-3' fill='none' stroke='%23E8F1F8' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") left top / 0 0 no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cpath transform='rotate(90 11 11)' d='M2 20C2 10 6 3 14 3c5 0 6 5 2 6-3 1-4-2-2-3' fill='none' stroke='%23E8F1F8' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") right top / 0 0 no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cpath transform='rotate(180 11 11)' d='M2 20C2 10 6 3 14 3c5 0 6 5 2 6-3 1-4-2-2-3' fill='none' stroke='%23E8F1F8' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") right bottom / 0 0 no-repeat,
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cpath transform='rotate(270 11 11)' d='M2 20C2 10 6 3 14 3c5 0 6 5 2 6-3 1-4-2-2-3' fill='none' stroke='%23E8F1F8' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") left bottom / 0 0 no-repeat;
-    transition: background-size 0.5s var(--ease-snap);
+  .btn:hover .btn-icon {
+    transform: translateX(4px);
   }
-  .btn:hover::after {
-    background-size: 20px 20px, 20px 20px, 20px 20px, 20px 20px;
+
+  /* главная: глянцевый красный неон; на наведении зал гаснет — остаётся неоновая надпись */
+  .btn-primary {
+    --btn-rim: linear-gradient(180deg, #ff9aa2 0%, #ff2b3a 38%, #8f0a15 100%);
+    --btn-face: linear-gradient(180deg, #ff4b59 0%, #ff2b3a 40%, #d8101f 64%, #a30b17 100%);
+    --btn-fill: #0b0b0d;
+    --btn-fg: #fff;
+    --btn-fg-hover: #ff3d4b;
+    --btn-glow: drop-shadow(0 0 10px rgb(255 43 58 / 0.45)) drop-shadow(0 10px 26px rgb(255 43 58 / 0.35));
+  }
+  .btn-primary:hover,
+  .btn-primary:focus-visible {
+    --btn-glow: drop-shadow(0 0 16px rgb(255 43 58 / 0.75)) drop-shadow(0 12px 40px rgb(255 43 58 / 0.5));
+    outline-color: rgb(255 43 58 / 0.45);
+    text-shadow: 0 0 10px rgb(255 43 58 / 0.9), 0 0 24px rgb(255 43 58 / 0.6);
+  }
+
+  /* вторая: тёмное стекло в хромированной окантовке, на наведении — серебро */
+  .btn-ghost {
+    --btn-fill: var(--cyan);
+  }
+  .btn-ghost::after {
+    backdrop-filter: blur(10px);
+  }
+  .btn-ghost:hover,
+  .btn-ghost:focus-visible {
+    --btn-glow: drop-shadow(0 0 14px rgb(236 238 241 / 0.25));
+  }
+
+  .btn-sm {
+    --cut: 10px;
+    --cut-face: 9.6px;
+    min-height: 44px;
+    padding: 0 20px;
+    font-size: 19px;
   }
 
   .link-arrow {
