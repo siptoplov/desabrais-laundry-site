@@ -53,8 +53,8 @@ export function Header() {
         className="fixed inset-x-0 top-0 z-[80]"
       >
         <div
-          className={`absolute inset-0 transition-[background-color,backdrop-filter,border-color] duration-700 ${
-            scrolled ? "border-b border-line bg-ink-0/55 backdrop-blur-xl backdrop-saturate-150" : "border-b border-transparent"
+          className={`absolute inset-0 transition-[background-color,border-color] duration-700 ${
+            scrolled ? "border-b border-line bg-ink-0/90" : "border-b border-transparent"
           }`}
         />
         <div className="shell relative flex h-[76px] items-center justify-between lg:h-[88px]">

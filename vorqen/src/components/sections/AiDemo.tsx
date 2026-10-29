@@ -76,7 +76,8 @@ export function AiDemo() {
 
   useEffect(() => {
     const s = scroller.current;
-    if (s) s.scrollTo({ top: s.scrollHeight, behavior: "smooth" });
+    // instant: a smooth scroll per typed character queued dozens of animations
+    if (s) s.scrollTop = s.scrollHeight;
   }, [lines, typing]);
 
   return (

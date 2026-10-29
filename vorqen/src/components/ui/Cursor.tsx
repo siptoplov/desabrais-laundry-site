@@ -80,10 +80,10 @@ export function Cursor() {
   }, []);
 
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-[100] hidden mix-blend-difference [@media(hover:hover)_and_(pointer:fine)]:block">
+    <div aria-hidden className="pointer-events-none fixed inset-0 z-[100] hidden [@media(hover:hover)_and_(pointer:fine)]:block">
       <div
         ref={ring}
-        className="absolute left-0 top-0 flex h-9 w-9 items-center justify-center rounded-full border border-white opacity-0 transition-[opacity,background-color] duration-500 data-[active=true]:bg-white/10"
+        className="absolute left-0 top-0 flex h-9 w-9 items-center justify-center rounded-full border border-white/80 opacity-0 shadow-[0_0_0_1px_rgba(0,0,0,0.25)] transition-[opacity,background-color] duration-500 data-[active=true]:bg-white/10"
       >
         <span ref={label} className="t-label scale-[0.32] whitespace-nowrap text-white" />
       </div>

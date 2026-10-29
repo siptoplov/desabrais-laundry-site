@@ -45,8 +45,8 @@ export function Contact() {
       gsap.fromTo("[data-valley]", { scale: 1.3, yPercent: -6 }, { scale: 1, yPercent: 0, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom bottom", scrub: true } });
       gsap.fromTo(
         "[data-valley-copy] > *",
-        { opacity: 0, y: 50, filter: "blur(10px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", stagger: 0.12, duration: 1.6, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 45%", once: true } },
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, stagger: 0.12, duration: 1.6, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 45%", once: true } },
       );
     }, el);
     return () => ctx.revert();

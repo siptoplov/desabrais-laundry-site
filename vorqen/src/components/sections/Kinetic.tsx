@@ -7,8 +7,8 @@ import { prefersReducedMotion } from "@/lib/device";
 import { CinemaVideo } from "@/components/ui/CinemaVideo";
 
 /**
- * Black silk in motion behind three statements. Each line condenses out of
- * blur with its tracking opening up; the silk slowly drifts closer.
+ * Black silk in motion behind three statements. Each line's letters flip up
+ * from the centre outward; the silk slowly drifts closer.
  */
 export function Kinetic() {
   const section = useRef<HTMLElement>(null);
@@ -31,10 +31,10 @@ export function Kinetic() {
         const chars = line.querySelectorAll("[data-kchar]");
         tl.fromTo(
           chars,
-          { opacity: 0, yPercent: 70, filter: "blur(18px)" },
-          { opacity: 1, yPercent: 0, filter: "blur(0px)", duration: 0.5, stagger: { each: 0.035, from: "center" }, ease: "power3.out" },
+          { opacity: 0, yPercent: 80, rotateX: -70 },
+          { opacity: 1, yPercent: 0, rotateX: 0, duration: 0.5, stagger: { each: 0.035, from: "center" }, ease: "power3.out" },
           i * 0.9,
-        ).fromTo(line, { letterSpacing: "0.12em" }, { letterSpacing: "0.4em", duration: 0.9, ease: "power2.out" }, i * 0.9);
+        );
       });
       tl.fromTo("[data-kdash]", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.out" }, ">-0.4").to({}, { duration: 0.4 });
     }, el);
@@ -50,7 +50,7 @@ export function Kinetic() {
       <div aria-hidden className="absolute inset-x-0 top-0 h-[24%] bg-gradient-to-b from-ink-0 to-transparent" />
       <div className="relative flex h-full flex-col items-center justify-center gap-[clamp(18px,3vw,44px)] pb-[8vh] text-center">
         {kinetic.map((k) => (
-          <p key={k} data-kline className="t-display whitespace-nowrap pl-[0.4em] text-[clamp(20px,4.6vw,78px)]">
+          <p key={k} data-kline className="t-display whitespace-nowrap pl-[0.4em] text-[clamp(20px,4.6vw,78px)] [perspective:600px]">
             {k.split("").map((c, i) => (
               <span key={i} data-kchar className="chrome-text inline-block opacity-0">
                 {c === " " ? " " : c}

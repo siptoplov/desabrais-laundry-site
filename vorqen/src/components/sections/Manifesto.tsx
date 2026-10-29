@@ -38,7 +38,7 @@ export function Manifesto() {
           .fromTo("[data-media]", { scale: 1.45 }, { scale: 1.06, duration: 0.32, ease: "power2.inOut" }, 0)
           .fromTo("[data-frame-label]", { opacity: 1 }, { opacity: 0, duration: 0.12 }, 0.05)
           .fromTo("[data-scrim]", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.18)
-          .fromTo(ws, { opacity: 0.06, filter: "blur(10px)", yPercent: 20 }, { opacity: 1, filter: "blur(0px)", yPercent: 0, duration: 0.09, stagger: 0.06 }, 0.3)
+          .fromTo(ws, { opacity: 0.06, yPercent: 30 }, { opacity: 1, yPercent: 0, duration: 0.09, stagger: 0.06 }, 0.3)
           .fromTo("[data-manifesto-meta]", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.12 }, 0.72)
           .to("[data-media]", { scale: 1.5, duration: 0.5, ease: "power1.in" }, 0.5)
           .to("[data-v-glow]", { opacity: 1, scale: 1.2, duration: 0.35 }, 0.62)
@@ -65,8 +65,8 @@ export function Manifesto() {
           <div
             data-v-glow
             aria-hidden
-            className="absolute left-1/2 top-[64%] h-[40vh] w-[40vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 mix-blend-screen"
-            style={{ background: "radial-gradient(closest-side, rgba(232,240,255,0.35), transparent)" }}
+            className="absolute left-1/2 top-[64%] h-[40vh] w-[40vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0"
+            style={{ background: "radial-gradient(closest-side, rgba(232,240,255,0.22), transparent)" }}
           />
         </div>
         <div data-scrim aria-hidden className="absolute inset-0 opacity-0" style={{ background: "linear-gradient(180deg, rgba(5,5,6,0.82) 0%, rgba(5,5,6,0.35) 45%, rgba(5,5,6,0.1) 70%, rgba(5,5,6,0.55) 100%)" }} />
@@ -75,7 +75,7 @@ export function Manifesto() {
       <div data-copy className="shell relative z-10 flex h-full flex-col items-center pt-[16vh] text-center">
         <p className="max-w-[15ch] text-[clamp(40px,6.6vw,118px)] font-light leading-[1] tracking-[-0.045em] [text-shadow:0_2px_40px_rgba(0,0,0,0.5)]">
           {words.map((w, i) => (
-            <span key={i} data-word className="inline-block opacity-[0.06] will-change-[opacity,filter,transform]">
+            <span key={i} data-word className="inline-block opacity-[0.06] will-change-[opacity,transform]">
               {w}
               {i < words.length - 1 ? " " : ""}
             </span>

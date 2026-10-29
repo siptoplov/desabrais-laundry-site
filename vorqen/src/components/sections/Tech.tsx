@@ -31,12 +31,13 @@ export function Tech() {
       });
       tl.fromTo(
         "[data-device]",
-        { rotateX: 38, rotateZ: -8, scale: 1.55, yPercent: 18, opacity: 0.2, filter: "brightness(0.4)" },
-        { rotateX: 0, rotateZ: 0, scale: 1, yPercent: 0, opacity: 1, filter: "brightness(1)", duration: 0.45, ease: "power3.out" },
+        { rotateX: 38, rotateZ: -8, scale: 1.55, yPercent: 18 },
+        { rotateX: 0, rotateZ: 0, scale: 1, yPercent: 0, duration: 0.45, ease: "power3.out" },
         0,
       )
+        .fromTo("[data-dim]", { opacity: 0.85 }, { opacity: 0, duration: 0.4, ease: "power2.out" }, 0)
         .fromTo("[data-streak]", { xPercent: -120, opacity: 0 }, { xPercent: 220, opacity: 1, duration: 0.35, ease: "power1.inOut" }, 0.3)
-        .fromTo(letters, { opacity: 0, filter: "blur(14px)", yPercent: 50 }, { opacity: 1, filter: "blur(0px)", yPercent: 0, stagger: 0.03, duration: 0.18 }, 0.35)
+        .fromTo(letters, { opacity: 0, yPercent: 60 }, { opacity: 1, yPercent: 0, stagger: 0.03, duration: 0.18 }, 0.35)
         .fromTo("[data-tech-fade]", { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.04, duration: 0.15 }, 0.5)
         .to("[data-device]", { scale: 1.08, xPercent: 3, duration: 0.35 }, 0.65);
     }, el);
@@ -47,10 +48,11 @@ export function Tech() {
     <section ref={section} aria-label="Технологии" className="relative z-10 h-[100svh] overflow-hidden bg-ink-0 [perspective:1600px]">
       <div data-device className="absolute inset-0 origin-[70%_40%] will-change-transform" style={{ transformStyle: "preserve-3d" }}>
         <CinemaVideo name="laptop" objectPosition="72% 50%" />
+        <div data-dim aria-hidden className="absolute inset-0 bg-ink-0" style={{ opacity: 0.85 }} />
       </div>
       {/* travelling edge light */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-screen">
-        <div data-streak className="absolute -inset-y-1/4 left-0 w-[30%] rotate-[24deg] bg-[linear-gradient(90deg,transparent,rgba(232,240,255,0.12),transparent)] opacity-0" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div data-streak className="absolute -inset-y-1/4 left-0 w-[30%] rotate-[24deg] bg-[linear-gradient(90deg,transparent,rgba(232,240,255,0.07),transparent)] opacity-0" />
       </div>
       <div aria-hidden className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,6,0.92)_0%,rgba(5,5,6,0.6)_38%,transparent_62%)] max-lg:bg-[linear-gradient(0deg,rgba(5,5,6,0.95)_0%,rgba(5,5,6,0.7)_45%,transparent_75%)]" />
 

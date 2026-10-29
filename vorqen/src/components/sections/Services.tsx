@@ -139,7 +139,7 @@ export function Services() {
               <div className="relative flex h-full flex-col p-7 sm:p-9">
                 <div className="flex items-start justify-between">
                   <span className="t-num text-[11px] text-fg-2">{s.n} / 04</span>
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-ink-0/40 backdrop-blur-md transition-colors duration-700 group-hover:border-white/50">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-ink-0/60 transition-colors duration-700 group-hover:border-white/50">
                     <Icon size={20} />
                   </span>
                 </div>

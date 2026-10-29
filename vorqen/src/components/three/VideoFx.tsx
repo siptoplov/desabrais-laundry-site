@@ -178,7 +178,7 @@ export default function VideoFx({
 
   return (
     <Canvas
-      dpr={[1, 1.5]}
+      dpr={1}
       frameloop={active ? "always" : "never"}
       gl={{ antialias: false, alpha: false, powerPreference: "high-performance", stencil: false, depth: false }}
       onCreated={({ gl }) => {

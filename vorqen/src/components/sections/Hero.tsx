@@ -44,11 +44,16 @@ export function Hero() {
     v.playsInline = true;
     v.crossOrigin = "anonymous";
     v.preload = "auto";
-    v.src = videoSrc("hero");
+    // The shader only earns its cost under a mouse; touch screens get the
+    // plain loop. The shader samples the 1280 encode: it's uploaded to the
+    // GPU every frame and the lens softens it anyway.
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const gl = fine && hasWebGL();
+    v.src = gl ? "/media/hero-1280.mp4" : videoSrc("hero");
     v.addEventListener("playing", () => setPlaying(true), { once: true });
     v.play().catch(() => {});
     setVideo(v);
-    setMode(hasWebGL() ? "gl" : "plain");
+    setMode(gl ? "gl" : "plain");
     return () => {
       v.pause();
       v.removeAttribute("src");
@@ -69,13 +74,13 @@ export function Hero() {
     const ctx = gsap.context(() => {
       const letters = el.querySelectorAll("[data-letter]");
       if (prefersReducedMotion()) {
-        gsap.set([letters, "[data-hero-fade]"], { opacity: 1, y: 0, filter: "none" });
+        gsap.set([letters, "[data-hero-fade]"], { opacity: 1, y: 0 });
         return;
       }
       gsap.fromTo(
         letters,
-        { opacity: 0, filter: "blur(18px)", yPercent: 60 },
-        { opacity: 1, filter: "blur(0px)", yPercent: 0, duration: 1.8, stagger: 0.08, delay: 0.5, ease: "expo.out" },
+        { opacity: 0, yPercent: 60, scaleY: 1.3 },
+        { opacity: 1, yPercent: 0, scaleY: 1, duration: 1.8, stagger: 0.08, delay: 0.5, ease: "expo.out" },
       );
       gsap.fromTo("[data-hero-fade]", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1.4, stagger: 0.09, delay: 0.9 });
       gsap.fromTo("[data-hero-line]", { scaleX: 0 }, { scaleX: 1, duration: 1.8, delay: 0.7, ease: "expo.inOut" });
@@ -140,28 +145,34 @@ export function Hero() {
         style={{ visibility: active ? "visible" : "hidden" }}
       >
         <div ref={stage} className="absolute inset-x-0 top-0 h-[64%] origin-[49%_47%] will-change-transform lg:h-full">
-          <Image
-            src="/media/hero.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            quality={82}
-            className="object-cover transition-opacity duration-1000"
-            style={{ objectPosition: "49% 50%", opacity: showStill ? 1 : 0 }}
-          />
-          {mode === "plain" && video && (
-            <div
-              className="absolute inset-0"
-              ref={(el) => {
-                if (el && !el.contains(video)) {
-                  video.className = "absolute inset-0 h-full w-full object-cover";
-                  video.style.objectPosition = "49% 50%";
-                  el.appendChild(video);
-                }
-              }}
+          {/* on narrow screens the 16:9 frame is shown wider than the
+              viewport so the whole emblem fits; its edges fade into black */}
+          <div className="absolute left-1/2 top-1/2 aspect-video w-[168%] -translate-x-1/2 -translate-y-1/2 lg:left-0 lg:top-0 lg:aspect-auto lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0">
+            <Image
+              src="/media/hero.jpg"
+              alt=""
+              fill
+              priority
+              sizes="(min-width:1024px) 100vw, 170vw"
+              quality={82}
+              className="object-cover transition-opacity duration-1000"
+              style={{ objectPosition: "49% 50%", opacity: showStill ? 1 : 0 }}
             />
-          )}
+            {mode === "plain" && video && (
+              <div
+                className="absolute inset-0"
+                ref={(el) => {
+                  if (el && !el.contains(video)) {
+                    video.className = "absolute inset-0 h-full w-full object-cover";
+                    video.style.objectPosition = "49% 50%";
+                    el.appendChild(video);
+                  }
+                }}
+              />
+            )}
+            <div className="absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-ink-0 to-transparent lg:hidden" />
+            <div className="absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-ink-0 to-transparent lg:hidden" />
+          </div>
           {mode === "gl" && video && (
             <div className="absolute inset-0 transition-opacity duration-1000" style={{ opacity: playing ? 1 : 0 }}>
               <VideoFx video={video} active={active} focus={FOCUS} />
@@ -236,7 +247,7 @@ export function Hero() {
 
         {/* giant wordmark across the foot of the frame */}
         <div data-hero-wordmark className="pointer-events-none absolute inset-x-0 top-[54%] px-[var(--pad-x)] lg:bottom-[5vh] lg:top-auto">
-          <SplitWordmark className="mx-auto w-[82%] max-w-[1296px] lg:w-full drop-shadow-[0_0_40px_rgba(232,240,255,0.18)]" letterClassName="opacity-0" />
+          <SplitWordmark className="mx-auto w-[82%] max-w-[1296px] lg:w-full" letterClassName="opacity-0" />
         </div>
 
         <button
