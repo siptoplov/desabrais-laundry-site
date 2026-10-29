@@ -23,7 +23,7 @@ export function Footer() {
           <Tagline className="mt-8 justify-start" />
         </div>
         <nav aria-label="Навигация в подвале" className="col-span-6 lg:col-span-3 lg:col-start-7">
-          <p className="t-label mb-6 text-fg-3">Menu</p>
+          <p data-scramble className="t-label mb-6 text-fg-3">Menu</p>
           <ul className="space-y-3">
             {nav.map((n) => (
               <li key={n.href}>
@@ -42,7 +42,7 @@ export function Footer() {
           </ul>
         </nav>
         <div className="col-span-6 lg:col-span-3">
-          <p className="t-label mb-6 text-fg-3">Social</p>
+          <p data-scramble className="t-label mb-6 text-fg-3">Social</p>
           <ul className="space-y-3">
             {socials.map((s) => (
               <li key={s.label}>

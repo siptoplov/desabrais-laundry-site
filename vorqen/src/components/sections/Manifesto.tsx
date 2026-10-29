@@ -5,7 +5,7 @@ import { gsap } from "@/lib/gsap";
 import { manifesto } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/device";
 import { ScrollSequence } from "@/components/ui/ScrollSequence";
-import { Mist } from "@/components/ui/Mist";
+import { Clouds } from "@/components/ui/Clouds";
 
 /**
  * The mountain valley with the V of light. No pinning: the page keeps
@@ -54,7 +54,7 @@ export function Manifesto() {
         <div data-media className="absolute inset-0 origin-[50%_62%] will-change-transform">
           <ScrollSequence name="mountain-v" frames={81} focus={[0.5, 0.6]} />
         </div>
-        <Mist />
+        <Clouds />
         <div
           data-scrim
           aria-hidden
@@ -67,7 +67,7 @@ export function Manifesto() {
         <p className="t-label mb-10 flex items-center gap-5">
           <span className="text-fg">02</span>
           <span className="h-px w-10 bg-line-2" />
-          Growth / Manifesto
+          <span data-scramble>Growth / Manifesto</span>
         </p>
         <p className="max-w-[15ch] text-[clamp(40px,6.6vw,118px)] font-light leading-[1] tracking-[-0.045em] [text-shadow:0_2px_40px_rgba(0,0,0,0.5)]">
           {words.map((w, i) => (

@@ -9,9 +9,10 @@ import { serviceIcons, IconArrowUpRight } from "@/components/ui/Icons";
 import { SplitReveal } from "@/components/ui/Reveal";
 
 /**
- * Editorial two-column gallery (second column offset) that scrolls
- * naturally. Each photograph wipes in as it enters and drifts inside its
- * frame while it crosses the viewport.
+ * Even 2×2 gallery that scrolls naturally. Photos are loaded up front (no
+ * pop-in); each drifts inside its frame while it crosses the viewport, a
+ * light sweep crosses it once as it arrives, and a soft light follows the
+ * cursor over the card.
  */
 export function Services() {
   const section = useRef<HTMLElement>(null);
@@ -21,16 +22,12 @@ export function Services() {
     if (!el || prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       el.querySelectorAll<HTMLElement>("[data-card]").forEach((c) => {
-        const mask = c.querySelector("[data-mask]");
         const img = c.querySelector("[data-img]");
         const copy = c.querySelectorAll("[data-copy] > *");
-        gsap.fromTo(
-          mask,
-          { clipPath: "inset(100% 0% 0% 0% round 22px)" },
-          { clipPath: "inset(0% 0% 0% 0% round 22px)", duration: 1.6, ease: "expo.out", scrollTrigger: { trigger: c, start: "top 88%", once: true } },
-        );
-        gsap.fromTo(img, { yPercent: -7, scale: 1.18 }, { yPercent: 7, scale: 1.08, ease: "none", scrollTrigger: { trigger: c, start: "top bottom", end: "bottom top", scrub: true } });
-        gsap.fromTo(copy, { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.07, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: c, start: "top 70%", once: true } });
+        const sweep = c.querySelector("[data-arrive]");
+        gsap.fromTo(img, { yPercent: -6, scale: 1.16 }, { yPercent: 6, scale: 1.08, ease: "none", scrollTrigger: { trigger: c, start: "top bottom", end: "bottom top", scrub: true } });
+        gsap.fromTo(sweep, { xPercent: -130 }, { xPercent: 130, duration: 1.8, ease: "power2.inOut", scrollTrigger: { trigger: c, start: "top 75%", once: true } });
+        gsap.fromTo(copy, { opacity: 0, y: 24 }, { opacity: 1, y: 0, stagger: 0.07, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: c, start: "top 80%", once: true } });
       });
       gsap.fromTo("[data-bg]", { yPercent: -10 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } });
     }, el);
@@ -42,7 +39,7 @@ export function Services() {
       {/* faceted glass with converging beams, drifting slowly behind */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[90vh] opacity-60">
         <div data-bg className="absolute inset-0">
-          <Image src="/media/beams.jpg" alt="" fill sizes="100vw" quality={70} className="object-cover" />
+          <Image src="/media/beams.jpg" alt="" fill loading="eager" sizes="100vw" quality={75} className="object-cover" />
         </div>
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,6,0.4),#050506_95%)]" />
       </div>
@@ -53,7 +50,7 @@ export function Services() {
             <div className="mb-10 flex items-center gap-5">
               <span className="t-label text-fg">03</span>
               <span className="h-px w-10 bg-line-2" />
-              <span className="t-label">Services</span>
+              <span data-scramble className="t-label">Services</span>
             </div>
             <SplitReveal as="h2" className="t-h2 max-w-[14ch]">
               Что мы делаем для вашего роста
@@ -65,23 +62,36 @@ export function Services() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-24 lg:gap-8">
-          {services.map((s, i) => {
+          {services.map((s) => {
             const Icon = serviceIcons[s.icon];
             return (
               <article
                 key={s.n}
                 data-card
                 data-cursor="Explore"
-                className={`group relative aspect-[4/5] max-h-[820px] w-full ${i % 2 === 1 ? "sm:translate-y-[18%]" : ""}`}
+                className="group relative aspect-[4/5] w-full"
+                onPointerMove={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+                }}
               >
                 <div data-mask className="absolute inset-0 overflow-hidden rounded-[22px] border border-white/[0.08] bg-ink-2">
                   <div data-img className="absolute inset-0 will-change-transform">
                     <div className="absolute inset-0 transition-transform duration-[1600ms] ease-[var(--ease-expo)] group-hover:scale-[1.05]">
-                      <Image src={s.image} alt={s.title} fill sizes="(min-width:640px) 50vw, 100vw" quality={80} className="object-cover" />
+                      <Image src={s.image} alt={s.title} fill loading="eager" sizes="(min-width:640px) 50vw, 100vw" quality={85} className="object-cover" />
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,6,0.5)_0%,transparent_26%,transparent_44%,rgba(5,5,6,0.85)_74%,#050506_100%)]" />
                   <div className="sweep absolute inset-0" />
+                  {/* one pass of light as the card arrives */}
+                  <div data-arrive aria-hidden className="absolute -inset-y-1/4 left-0 w-full -translate-x-[130%] bg-[linear-gradient(105deg,transparent_35%,rgba(255,255,255,0.14)_50%,transparent_65%)]" />
+                  {/* cursor light */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                    style={{ background: "radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(232,240,255,0.14), transparent 60%)" }}
+                  />
                   <div className="absolute inset-0 rounded-[22px] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" />
                 </div>
 
@@ -115,8 +125,6 @@ export function Services() {
             );
           })}
         </div>
-        {/* room for the offset column */}
-        <div aria-hidden className="hidden sm:block sm:h-[12vw]" />
       </div>
     </section>
   );

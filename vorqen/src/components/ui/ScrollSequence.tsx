@@ -4,7 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/device";
-import { onIntroDone } from "@/lib/scroll-store";
+import { onIntroDone, scrollStore } from "@/lib/scroll-store";
+
+const scrollStoreIntro = () => scrollStore.introDone;
 
 /**
  * Footage that plays as you scroll: a WebP frame sequence drawn to a
@@ -12,8 +14,9 @@ import { onIntroDone } from "@/lib/scroll-store";
  * moves, forwards or backwards.
  *
  * Cheap by design:
- * - frames are fetched only after the intro and once the section is near,
- *   coarse-to-fine (every 8th frame first, then the gaps), four at a time;
+ * - after the intro every sequence is preloaded in page order (a section
+ *   the reader reaches early jumps the queue), coarse-to-fine: every 8th
+ *   frame first, then the gaps, six requests at a time;
  * - they stay compressed in memory; only ~20 frames around the playhead are
  *   decoded, off the main thread (createImageBitmap), and released when the
  *   section leaves the screen;
@@ -21,6 +24,24 @@ import { onIntroDone } from "@/lib/scroll-store";
  * - phones and 1x screens get the 960px set, retina gets 1600px.
  * The poster still (next/image) paints first and stays as the fallback.
  */
+/**
+ * Page-wide preload queue: after the intro every sequence is fetched in page
+ * order, one sequence at a time, so by the time the reader scrolls there the
+ * frames are already in memory.
+ */
+const queue: (() => Promise<void>)[] = [];
+let queueRunning = false;
+function enqueue(job: () => Promise<void>) {
+  queue.push(job);
+  if (queueRunning) return;
+  queueRunning = true;
+  const run = async () => {
+    while (queue.length) await queue.shift()!();
+    queueRunning = false;
+  };
+  onIntroDone(() => void run());
+}
+
 export function ScrollSequence({
   name,
   frames,
@@ -154,9 +175,10 @@ export function ScrollSequence({
       if (!raf && visible) raf = requestAnimationFrame(tick);
     };
 
-    // coarse-to-fine fetch order, four requests at a time
-    const load = () => {
-      if (started) return;
+    // coarse-to-fine fetch order, six requests at a time; resolves when done
+    const load = () =>
+      new Promise<void>((resolve) => {
+      if (started || !alive) return resolve();
       started = true;
       const order: number[] = [];
       const seen = new Set<number>();
@@ -164,9 +186,14 @@ export function ScrollSequence({
         for (let i = 0; i < frames; i += stride) if (!seen.has(i)) (seen.add(i), order.push(i));
       }
       let cursor = 0;
+      let inflight = 0;
       const next = (): void => {
-        if (!alive || cursor >= order.length) return;
+        if (!alive || cursor >= order.length) {
+          if (inflight === 0) resolve();
+          return;
+        }
         const i = order[cursor++]!;
+        inflight++;
         fetch(url(i))
           .then((r) => (r.ok ? r.blob() : null))
           .then((b) => {
@@ -174,18 +201,22 @@ export function ScrollSequence({
             pump();
           })
           .catch(() => {})
-          .finally(next);
+          .finally(() => {
+            inflight--;
+            next();
+          });
       };
-      for (let k = 0; k < 4; k++) next();
-    };
+      for (let k = 0; k < 6; k++) next();
+      });
 
-    // wait for the intro so frames never compete with the hero's first paint
-    let offIntro = () => {};
+    // join the page-wide queue (starts after the intro, in page order);
+    // a section the reader reaches early jumps the queue
+    enqueue(load);
     const near = new IntersectionObserver(
       (e) => {
-        if (e.some((x) => x.isIntersecting)) offIntro = onIntroDone(load);
+        if (e.some((x) => x.isIntersecting) && scrollStoreIntro()) void load();
       },
-      { rootMargin: "100% 0px" },
+      { rootMargin: "60% 0px" },
     );
     const vis = new IntersectionObserver((e) => {
       visible = e.some((x) => x.isIntersecting);
@@ -220,7 +251,6 @@ export function ScrollSequence({
       vis.disconnect();
       ro.disconnect();
       st.kill();
-      offIntro();
       alive = false;
       bitmaps.forEach((b) => b.close());
       bitmaps.clear();
@@ -234,6 +264,7 @@ export function ScrollSequence({
         alt=""
         fill
         priority={priority}
+        loading={priority ? undefined : "eager"}
         sizes="100vw"
         quality={85}
         className="object-cover"

@@ -448,3 +448,20 @@ html.js [data-split] {
     visibility: visible;
   }
 }
+
+/* cloud drift — paused off-screen, off for reduced motion */
+.cloud-strip {
+  animation: cloud-drift 80s linear infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+.clouds-on .cloud-strip {
+  animation-play-state: running;
+}
+@keyframes cloud-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cloud-strip { animation: none; }
+}

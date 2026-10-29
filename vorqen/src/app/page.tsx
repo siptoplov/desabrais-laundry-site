@@ -1,6 +1,8 @@
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { Motion } from "@/components/providers/Motion";
 import { Cursor } from "@/components/ui/Cursor";
+import { Scramble } from "@/components/ui/Scramble";
+import { ScrollRail } from "@/components/ui/ScrollRail";
 import { Preloader } from "@/components/sections/Preloader";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
@@ -36,6 +38,8 @@ export default function Page() {
       </main>
       <Footer />
       <Cursor />
+      <ScrollRail />
+      <Scramble />
       <div aria-hidden className="vignette" />
       <div aria-hidden className="grain" />
       </Motion>

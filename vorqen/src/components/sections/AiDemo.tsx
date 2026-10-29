@@ -81,7 +81,7 @@ export function AiDemo() {
   }, [lines, typing]);
 
   return (
-    <section ref={section} aria-label="AI-сотрудник" className="section relative z-10 overflow-hidden bg-ink-0">
+    <section ref={section} id="ai" aria-label="AI-сотрудник" className="section relative z-10 overflow-hidden bg-ink-0">
       <div aria-hidden className="pointer-events-none absolute right-[-10%] top-1/2 h-[70vw] w-[70vw] -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(232,240,255,0.06),transparent)]" />
       <div className="shell grid-12 items-center gap-y-16">
         <div className="col-span-12 lg:col-span-5">

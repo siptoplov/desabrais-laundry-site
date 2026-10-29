@@ -37,7 +37,7 @@ export function Kinetic() {
   }, []);
 
   return (
-    <section ref={section} aria-label="We build, we automate, we scale" className="relative z-10 h-[120svh] min-h-[720px] overflow-hidden bg-ink-0">
+    <section ref={section} id="statement" aria-label="We build, we automate, we scale" className="relative z-10 h-[120svh] min-h-[720px] overflow-hidden bg-ink-0">
       <div data-silk className="absolute inset-0 will-change-transform">
         <ScrollSequence name="silk" frames={81} focus={[0.5, 0.7]} />
       </div>

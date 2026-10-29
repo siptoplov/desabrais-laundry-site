@@ -19,7 +19,7 @@ export function SectionHead({
       <div className={`mb-10 flex items-center gap-5 ${align === "center" ? "justify-center" : ""}`} data-reveal>
         <span className="t-label text-fg">{index}</span>
         <span className="h-px w-10 bg-line-2" />
-        <span className="t-label">{label}</span>
+        <span data-scramble className="t-label">{label}</span>
       </div>
       <SplitReveal as="h2" className="t-h2 max-w-[18ch]">
         {title}

@@ -5,16 +5,21 @@ import { gsap } from "@/lib/gsap";
 import { mountains as copy } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/device";
 import { ScrollSequence } from "@/components/ui/ScrollSequence";
+import { LaptopFx } from "./LaptopFx";
 import { SplitWordmark } from "@/components/ui/Brand";
 import { SplitReveal } from "@/components/ui/Reveal";
+
+const LAPTOP_FOCUS: [number, number] = [0.72, 0.5];
 
 /**
  * Product moment: the black-glass laptop swings in out of perspective as the
  * section scrolls into view (no pinning), a light streak runs along its edge,
  * then the wordmark and the line resolve in the dark half of the frame.
+ * Hovering the laptop wakes it up (see LaptopFx).
  */
 export function Tech() {
   const section = useRef<HTMLElement>(null);
+  const tilt = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = section.current;
@@ -40,23 +45,26 @@ export function Tech() {
   }, []);
 
   return (
-    <section ref={section} aria-label="Технологии" className="relative z-10 h-[110svh] min-h-[720px] overflow-hidden bg-ink-0 [perspective:1600px]">
-      <div data-device className="absolute inset-0 origin-[70%_40%] will-change-transform" style={{ transformStyle: "preserve-3d" }}>
-        <ScrollSequence name="laptop" frames={61} focus={[0.72, 0.5]} />
-        <div data-dim aria-hidden className="absolute inset-0 bg-ink-0" style={{ opacity: 0.85 }} />
+    <section ref={section} id="tech" aria-label="Технологии" className="relative z-10 h-[110svh] min-h-[720px] overflow-hidden bg-ink-0 [perspective:1600px]">
+      <div data-device className="absolute inset-0 origin-[70%_40%] will-change-transform">
+        <div ref={tilt} className="absolute inset-0 origin-[80%_35%] will-change-transform">
+          <ScrollSequence name="laptop" frames={61} focus={LAPTOP_FOCUS} />
+          <LaptopFx focus={LAPTOP_FOCUS} tilt={tilt} />
+        </div>
+        <div data-dim aria-hidden className="pointer-events-none absolute inset-0 bg-ink-0" style={{ opacity: 0.85 }} />
       </div>
       {/* travelling edge light */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div data-streak className="absolute -inset-y-1/4 left-0 w-[30%] rotate-[24deg] bg-[linear-gradient(90deg,transparent,rgba(232,240,255,0.07),transparent)] opacity-0" />
       </div>
-      <div aria-hidden className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,6,0.92)_0%,rgba(5,5,6,0.6)_38%,transparent_62%)] max-lg:bg-[linear-gradient(0deg,rgba(5,5,6,0.95)_0%,rgba(5,5,6,0.7)_45%,transparent_75%)]" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,6,0.92)_0%,rgba(5,5,6,0.6)_38%,transparent_62%)] max-lg:bg-[linear-gradient(0deg,rgba(5,5,6,0.95)_0%,rgba(5,5,6,0.7)_45%,transparent_75%)]" />
 
-      <div className="shell relative flex h-full flex-col justify-end pb-[12vh] lg:justify-center lg:pb-0">
-        <div className="max-w-[560px]">
+      <div className="shell pointer-events-none relative flex h-full flex-col justify-end pb-[12vh] lg:justify-center lg:pb-0">
+        <div className="pointer-events-auto max-w-[560px]">
           <p data-tech-fade className="t-label mb-10 flex items-center gap-5 opacity-0">
             <span className="text-fg">04</span>
             <span className="h-px w-10 bg-line-2" />
-            {copy.label}
+            <span data-scramble>{copy.label}</span>
           </p>
           <SplitWordmark className="w-[min(78vw,420px)]" letterClassName="opacity-0" />
           <SplitReveal as="h2" className="t-h2 mt-10 max-w-[16ch]">
