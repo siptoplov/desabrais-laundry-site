@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { kinetic } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/device";
-import { CinemaVideo } from "@/components/ui/CinemaVideo";
+import { ScrollSequence } from "@/components/ui/ScrollSequence";
 
 /**
  * Black silk in motion behind three statements. Each line's letters flip up
@@ -22,29 +22,24 @@ export function Kinetic() {
       return;
     }
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: { trigger: el, start: "top top", end: "+=190%", scrub: 0.7, pin: true, anticipatePin: 1 },
-      });
-      tl.fromTo("[data-silk]", { scale: 1.18, yPercent: 6 }, { scale: 1, yPercent: 0, duration: 3.4 }, 0);
-      lines.forEach((line, i) => {
-        const chars = line.querySelectorAll("[data-kchar]");
-        tl.fromTo(
-          chars,
+      gsap.fromTo("[data-silk]", { scale: 1.2, yPercent: -6 }, { scale: 1, yPercent: 6, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } });
+      // each line flips up as it reaches the middle of the screen
+      lines.forEach((line) => {
+        gsap.fromTo(
+          line.querySelectorAll("[data-kchar]"),
           { opacity: 0, yPercent: 80, rotateX: -70 },
-          { opacity: 1, yPercent: 0, rotateX: 0, duration: 0.5, stagger: { each: 0.035, from: "center" }, ease: "power3.out" },
-          i * 0.9,
+          { opacity: 1, yPercent: 0, rotateX: 0, stagger: { each: 0.04, from: "center" }, ease: "power3.out", scrollTrigger: { trigger: line, start: "top 92%", end: "top 55%", scrub: 0.4 } },
         );
       });
-      tl.fromTo("[data-kdash]", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.out" }, ">-0.4").to({}, { duration: 0.4 });
+      gsap.fromTo("[data-kdash]", { scaleX: 0 }, { scaleX: 1, ease: "power2.out", scrollTrigger: { trigger: "[data-kdash]", start: "top 85%", end: "top 60%", scrub: 0.4 } });
     }, el);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={section} aria-label="We build, we automate, we scale" className="relative z-10 h-[100svh] overflow-hidden bg-ink-0">
+    <section ref={section} aria-label="We build, we automate, we scale" className="relative z-10 h-[120svh] min-h-[720px] overflow-hidden bg-ink-0">
       <div data-silk className="absolute inset-0 will-change-transform">
-        <CinemaVideo name="silk" objectPosition="50% 70%" />
+        <ScrollSequence name="silk" frames={81} focus={[0.5, 0.7]} />
       </div>
       <div aria-hidden className="absolute inset-0 bg-[radial-gradient(55%_45%_at_50%_45%,rgba(5,5,6,0.7),transparent)]" />
       <div aria-hidden className="absolute inset-x-0 top-0 h-[24%] bg-gradient-to-b from-ink-0 to-transparent" />

@@ -5,7 +5,7 @@ import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/device";
 import { markIntroDone } from "@/lib/scroll-store";
 import { Emblem, EMBLEM_RATIO, SplitWordmark } from "@/components/ui/Brand";
-import { rng } from "@/components/three/noise";
+import { rng } from "@/lib/media";
 import { EMBLEM_GHOST } from "./ghost";
 
 // Fan triangulation of the emblem box → non-overlapping crystal shards.

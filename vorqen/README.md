@@ -2,7 +2,7 @@
 
 Landing site for VORQEN: dark-luxury, cinematic, monochrome chrome. Russian copy with English accent labels.
 
-**Stack:** Next.js 16 (App Router) · TypeScript strict · Tailwind CSS v4 · React Three Fiber + drei + postprocessing · GSAP + ScrollTrigger + SplitText · Lenis · Framer Motion (LazyMotion)
+**Stack:** Next.js 16 (App Router) · TypeScript strict · Tailwind CSS v4 · GSAP + ScrollTrigger + SplitText · Framer Motion (LazyMotion) · canvas frame sequences
 
 ```bash
 npm install
@@ -32,9 +32,8 @@ src/
   components/
     sections/          Preloader, Header, Hero, Manifesto, Services, Mountains,
                        Process, AiDemo, WhyUs, Kinetic, Contact, Footer
-    three/             VideoFx (WebGL treatment of the hero footage)
     ui/                Brand marks, Cursor, Magnetic, TiltCard, SplitReveal, Icons
-    providers/         SmoothScroll (Lenis ↔ ScrollTrigger), Motion (LazyMotion)
+    providers/         SmoothScroll (native anchor scrolling), Motion (LazyMotion)
 public/brand/          emblem / wordmark extracted from the supplied key visual
 ```
 
@@ -61,22 +60,23 @@ The emblem and wordmark are **cut from the supplied artwork** (`public/brand/emb
 
 ## Cinematic media (`public/media/`)
 
-Stills and loops were generated in Higgsfield from the client's moodboard frames
-(Nano Banana 2.1 stills, Kling 3.0 Pro loops with start frame = end frame, so they loop seamlessly):
+Stills and clips were generated in Higgsfield from the client's moodboard frames
+(Nano Banana 2.1 stills; Kling 3.0 Pro clips with start frame = end frame, so they loop):
 
-| File | Used in |
-| --- | --- |
-| `hero` | Hero: chrome V among rim-lit rocks |
-| `mountain-v` | Manifesto: valley with the V of light |
-| `laptop` | Technology: black-glass laptop with the emblem |
-| `silk` | WE BUILD / AUTOMATE / SCALE |
-| `valley` | Final CTA: river valley at dawn |
-| `beams.jpg`, `svc-*.jpg` | Services background and the four service cards (stills only) |
+| Asset | Used in | How it plays |
+| --- | --- | --- |
+| `hero-1920.mp4` / `hero-1280.mp4` | Hero: chrome V among rim-lit rocks | autoplay loop, CSS fly-in on scroll |
+| `seq/mountain-v/` | Manifesto: valley with the V of light | scroll-scrubbed frames + drifting mist |
+| `seq/laptop/` | Technology: black-glass laptop | scroll-scrubbed frames |
+| `seq/silk/` | WE BUILD / AUTOMATE / SCALE | scroll-scrubbed frames |
+| `seq/valley/` | Final CTA: river valley at dawn | scroll-scrubbed frames + drifting mist |
+| `beams.jpg`, `svc-*.jpg` | Services backdrop and the four cards | stills |
 
-Each loop ships as `<name>-1920.mp4` (CRF 21) and `<name>-1280.mp4` (CRF 27), H.264, muted, faststart.
-`<name>.jpg` is the first frame, so the poster swaps to video without a jump. `CinemaVideo`
-loads a loop only when its section is near, plays it while visible and pauses it off-screen.
-Reduced motion keeps the stills.
+Scroll-scrubbed scenes (`ui/ScrollSequence.tsx`) are WebP frame sets in two widths,
+`1600/` for retina and `960/` for phones and 1x screens. There are 81 frames per 10 s clip
+(every 3rd frame) and 61 for the 5 s laptop clip. `<name>.jpg` is frame 0 and doubles as
+the poster. To rebuild a set from a new clip, use `scripts/mkseq.py <clip-name> <frame-step> public/media/seq` (expects `v-<clip-name>.mp4` in the cwd), or
+run ffmpeg `select='not(mod(n,3))'`, then resize to 1600/960 and save as WebP q≈72.
 
 ## Things to fill in
 
@@ -88,8 +88,9 @@ Reduced motion keeps the stills.
 ## Motion & performance notes
 
 - **Preloader (≤2.5s):** 16 non-overlapping shards fly in from depth, the light sweeps across the emblem, then the wordmark letters resolve from blur. A faint inlined "ghost" emblem paints in the first frame, so LCP lands at FCP.
-- **Hero:** the footage is drawn through a WebGL shader (`three/VideoFx.tsx`). A liquid lens and ripple follow the cursor, and RGB separation appears at the frame edges as you scroll or move fast. On scroll the camera flies into the emblem. On touch screens the lens drifts on its own. On portrait screens the frame is fitted to width and the overflow fades into black, so the whole emblem stays visible. Rendering stops once the hero has scrolled away.
-- **Pinned scenes:** the manifesto window expands to full screen, the words light up, then the camera pushes into the V. Services scroll horizontally with photo cards that reveal behind a mask and drift inside their frames. The laptop swings in from perspective. The silk section opens its tracking line by line. The valley drifts back as the final screen enters.
-- **Software WebGL** (SwiftShader / llvmpipe, which includes Lighthouse and PageSpeed) plays the hero loop as a plain `<video>` without the shader. Append `?gl=force` to the URL to force WebGL for testing.
-- **`prefers-reduced-motion`:** Lenis is off, there are no pins or scrubs, all content is visible immediately, the preloader shortens to 0.9s, and the 3D scene is static.
+- **Scrolling is native.** There is no smooth-scroll library and no pinned sections. Every effect follows the scroll position, so the page never "holds" the reader.
+- **Hero:** a plain `<video>` loop with a soft light that trails the cursor. On scroll the frame scales into the emblem. On portrait screens the 16:9 frame is shown wider than the viewport, so the whole emblem fits.
+- **Cursor:** the V emblem sits exactly on the pointer, and a ring of rotating type follows with a lag. Over links the ring grows and spins faster, over `[data-cursor]` targets it shows a label, and over text fields it shrinks.
+- **Scroll scenes:** the manifesto window opens to full bleed as it rises, and the words light up as you read down. Service photos wipe in and drift inside their frames. The laptop swings in from perspective. The WE BUILD lines flip up as they reach mid-screen.
+- **`prefers-reduced-motion`:** no scrubs or frame sequences; posters and stills only, all content visible immediately, preloader 0.9s.
 - **Lighthouse 12.8** (local production build, headless): desktop **99** perf / 96 a11y / 100 best practices / 100 SEO. Mobile (simulated 4× CPU) **79** perf. The remaining cost is about 400ms of startup JS (GSAP/SplitText/ScrollTrigger setup with pinned sections). Real throttled LCP measures 0.2–2.2s.

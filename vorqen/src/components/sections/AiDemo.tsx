@@ -122,7 +122,7 @@ export function AiDemo() {
               </div>
             </div>
 
-            <div ref={scroller} data-lenis-prevent className="no-scrollbar h-[420px] space-y-3 overflow-y-auto px-5 py-6 sm:px-6" aria-live="polite">
+            <div ref={scroller} className="no-scrollbar h-[420px] space-y-3 overflow-y-auto px-5 py-6 sm:px-6" aria-live="polite">
               <AnimatePresence initial={false}>
                 {lines.map((l) =>
                   l.from === "system" ? (

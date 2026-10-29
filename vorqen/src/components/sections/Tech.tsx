@@ -4,14 +4,14 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { mountains as copy } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/device";
-import { CinemaVideo } from "@/components/ui/CinemaVideo";
+import { ScrollSequence } from "@/components/ui/ScrollSequence";
 import { SplitWordmark } from "@/components/ui/Brand";
 import { SplitReveal } from "@/components/ui/Reveal";
 
 /**
- * Product moment: the black-glass laptop swings in out of perspective like
- * an Apple reveal, a light streak runs along its edge, then the wordmark and
- * the line resolve in the dark half of the frame.
+ * Product moment: the black-glass laptop swings in out of perspective as the
+ * section scrolls into view (no pinning), a light streak runs along its edge,
+ * then the wordmark and the line resolve in the dark half of the frame.
  */
 export function Tech() {
   const section = useRef<HTMLElement>(null);
@@ -25,29 +25,24 @@ export function Tech() {
       return;
     }
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: { trigger: el, start: "top top", end: "+=170%", scrub: 0.8, pin: true, anticipatePin: 1 },
-      });
-      tl.fromTo(
-        "[data-device]",
-        { rotateX: 38, rotateZ: -8, scale: 1.55, yPercent: 18 },
-        { rotateX: 0, rotateZ: 0, scale: 1, yPercent: 0, duration: 0.45, ease: "power3.out" },
-        0,
-      )
-        .fromTo("[data-dim]", { opacity: 0.85 }, { opacity: 0, duration: 0.4, ease: "power2.out" }, 0)
-        .fromTo("[data-streak]", { xPercent: -120, opacity: 0 }, { xPercent: 220, opacity: 1, duration: 0.35, ease: "power1.inOut" }, 0.3)
-        .fromTo(letters, { opacity: 0, yPercent: 60 }, { opacity: 1, yPercent: 0, stagger: 0.03, duration: 0.18 }, 0.35)
-        .fromTo("[data-tech-fade]", { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.04, duration: 0.15 }, 0.5)
-        .to("[data-device]", { scale: 1.08, xPercent: 3, duration: 0.35 }, 0.65);
+      // the laptop swings in out of perspective while the section rises
+      const enter = { trigger: el, start: "top bottom", end: "top top", scrub: true };
+      gsap.fromTo("[data-device]", { rotateX: 34, rotateZ: -7, scale: 1.45, yPercent: 14 }, { rotateX: 0, rotateZ: 0, scale: 1, yPercent: 0, ease: "power2.out", scrollTrigger: enter });
+      gsap.fromTo("[data-dim]", { opacity: 0.85 }, { opacity: 0, ease: "none", scrollTrigger: enter });
+      gsap.fromTo("[data-streak]", { xPercent: -120, opacity: 0 }, { xPercent: 220, opacity: 1, ease: "none", scrollTrigger: { trigger: el, start: "top 60%", end: "bottom 40%", scrub: true } });
+      gsap.fromTo("[data-device]", { xPercent: 0 }, { xPercent: 4, ease: "none", immediateRender: false, scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true } });
+      // copy resolves as you reach it
+      const reveal = { trigger: el, start: "top 35%", once: true };
+      gsap.fromTo(letters, { opacity: 0, yPercent: 60 }, { opacity: 1, yPercent: 0, stagger: 0.06, duration: 1.4, ease: "expo.out", scrollTrigger: reveal });
+      gsap.fromTo("[data-tech-fade]", { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.1, duration: 1.4, delay: 0.3, ease: "expo.out", scrollTrigger: reveal });
     }, el);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={section} aria-label="Технологии" className="relative z-10 h-[100svh] overflow-hidden bg-ink-0 [perspective:1600px]">
+    <section ref={section} aria-label="Технологии" className="relative z-10 h-[110svh] min-h-[720px] overflow-hidden bg-ink-0 [perspective:1600px]">
       <div data-device className="absolute inset-0 origin-[70%_40%] will-change-transform" style={{ transformStyle: "preserve-3d" }}>
-        <CinemaVideo name="laptop" objectPosition="72% 50%" />
+        <ScrollSequence name="laptop" frames={61} focus={[0.72, 0.5]} />
         <div data-dim aria-hidden className="absolute inset-0 bg-ink-0" style={{ opacity: 0.85 }} />
       </div>
       {/* travelling edge light */}

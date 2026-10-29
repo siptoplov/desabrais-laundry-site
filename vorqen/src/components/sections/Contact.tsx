@@ -6,7 +6,8 @@ import { contact, site } from "@/lib/content";
 import { EASE, gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/device";
 import { Emblem, EMBLEM_RATIO, Tagline, Wordmark } from "@/components/ui/Brand";
-import { CinemaVideo } from "@/components/ui/CinemaVideo";
+import { ScrollSequence } from "@/components/ui/ScrollSequence";
+import { Mist } from "@/components/ui/Mist";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { useRevealGroup } from "@/components/ui/Reveal";
 import { IconArrow, IconArrowUpRight, IconMail, IconTelegram, IconWhatsApp } from "@/components/ui/Icons";
@@ -84,8 +85,9 @@ export function Contact() {
       {/* the closing frame: valley at dawn */}
       <div ref={valley} className="relative h-[100svh] min-h-[660px] overflow-hidden">
         <div data-valley className="absolute inset-0 origin-[50%_35%] will-change-transform">
-          <CinemaVideo name="valley" objectPosition="50% 40%" />
+          <ScrollSequence name="valley" frames={81} focus={[0.5, 0.4]} />
         </div>
+        <Mist strength={0.8} />
         <div
           aria-hidden
           className="absolute inset-0"

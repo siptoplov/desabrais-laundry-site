@@ -1,38 +1,33 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { hero } from "@/lib/content";
-import { hasWebGL, prefersReducedMotion } from "@/lib/device";
+import { prefersReducedMotion } from "@/lib/device";
 import { onIntroDone, scrollStore } from "@/lib/scroll-store";
 import { SplitWordmark, Tagline } from "@/components/ui/Brand";
 import { SplitReveal } from "@/components/ui/Reveal";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { IconArrow } from "@/components/ui/Icons";
-import { videoSrc } from "@/components/ui/CinemaVideo";
+import { videoSrc } from "@/lib/media";
 import { useSmoothScroll } from "@/components/providers/SmoothScroll";
-
-const VideoFx = dynamic(() => import("@/components/three/VideoFx"), { ssr: false });
-
-/** Where the emblem sits in the hero footage (uv, origin bottom-left). */
-const FOCUS: [number, number] = [0.5, 0.515];
 
 export function Hero() {
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const [intro, setIntro] = useState(false);
   const [video, setVideo] = useState<HTMLVideoElement | null>(null);
-  const [mode, setMode] = useState<"pending" | "gl" | "plain" | "still">("pending");
+  const [mode, setMode] = useState<"pending" | "plain" | "still">("pending");
   const [playing, setPlaying] = useState(false);
   const [active, setActive] = useState(true);
-  const cssZoom = useRef(true);
+  const light = useRef<HTMLDivElement>(null);
   const { scrollTo } = useSmoothScroll();
 
   useEffect(() => onIntroDone(() => setIntro(true)), []);
 
-  // Create the hero video once; WebGL samples it, or it's shown directly.
+  // The hero loop plays as a plain <video>: decoded and composited by the
+  // GPU with no per-frame copies, which keeps Safari on Macs smooth.
   useEffect(() => {
     if (prefersReducedMotion()) {
       setMode("still");
@@ -42,18 +37,12 @@ export function Hero() {
     v.muted = true;
     v.loop = true;
     v.playsInline = true;
-    v.crossOrigin = "anonymous";
     v.preload = "auto";
-    // The shader only earns its cost under a mouse; touch screens get the
-    // plain loop. The shader samples the 1280 encode: it's uploaded to the
-    // GPU every frame and the lens softens it anyway.
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    const gl = fine && hasWebGL();
-    v.src = gl ? "/media/hero-1280.mp4" : videoSrc("hero");
+    v.src = videoSrc("hero");
     v.addEventListener("playing", () => setPlaying(true), { once: true });
     v.play().catch(() => {});
     setVideo(v);
-    setMode(gl ? "gl" : "plain");
+    setMode("plain");
     return () => {
       v.pause();
       v.removeAttribute("src");
@@ -100,7 +89,7 @@ export function Hero() {
         scrub: true,
         onUpdate: (self) => {
           scrollStore.hero = self.progress;
-          if (stage.current && cssZoom.current) {
+          if (stage.current) {
             const p = self.progress;
             stage.current.style.transform = `scale(${1 + p * p * 1.4})`;
             stage.current.style.opacity = String(1 - gsap.utils.clamp(0, 1, (p - 0.45) / 0.5));
@@ -126,14 +115,32 @@ export function Hero() {
     return () => ctx.revert();
   }, []);
 
-  // the shader handles the fly-in once footage is live; otherwise CSS does
-  cssZoom.current = mode !== "gl" || !playing;
+  // cold light that trails the pointer across the footage (desktop only)
   useEffect(() => {
-    if (!cssZoom.current && stage.current) {
-      stage.current.style.transform = "";
-      stage.current.style.opacity = "";
-    }
-  }, [playing, mode]);
+    const l = light.current;
+    if (!l || !active || prefersReducedMotion() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const pos = { x: innerWidth * 0.5, y: innerHeight * 0.45 };
+    const cur = { ...pos };
+    let raf = 0;
+    const loop = () => {
+      cur.x += (pos.x - cur.x) * 0.08;
+      cur.y += (pos.y - cur.y) * 0.08;
+      l.style.transform = `translate3d(${cur.x}px, ${cur.y}px, 0) translate(-50%, -50%)`;
+      if (Math.abs(pos.x - cur.x) + Math.abs(pos.y - cur.y) > 0.5) raf = requestAnimationFrame(loop);
+      else raf = 0;
+    };
+    const onMove = (e: PointerEvent) => {
+      pos.x = e.clientX;
+      pos.y = e.clientY;
+      if (!raf) raf = requestAnimationFrame(loop);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", onMove);
+    };
+  }, [active]);
 
   const showStill = mode === "still" || mode === "pending" || !playing;
 
@@ -173,12 +180,12 @@ export function Hero() {
             <div className="absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-ink-0 to-transparent lg:hidden" />
             <div className="absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-ink-0 to-transparent lg:hidden" />
           </div>
-          {mode === "gl" && video && (
-            <div className="absolute inset-0 transition-opacity duration-1000" style={{ opacity: playing ? 1 : 0 }}>
-              <VideoFx video={video} active={active} focus={FOCUS} />
-            </div>
-          )}
         </div>
+        <div
+          ref={light}
+          className="absolute left-0 top-0 hidden h-[70vmin] w-[70vmin] rounded-full will-change-transform lg:block"
+          style={{ background: "radial-gradient(closest-side, rgba(232,240,255,0.1), rgba(232,240,255,0.03) 50%, transparent)" }}
+        />
         {/* legibility scrims */}
         <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(5,5,6,0.78)_0%,rgba(5,5,6,0.25)_32%,transparent_55%)] lg:block" />
         <div className="absolute inset-x-0 bottom-0 h-[62%] bg-[linear-gradient(0deg,#050506_42%,rgba(5,5,6,0.7)_70%,transparent)] lg:h-[42%] lg:bg-[linear-gradient(0deg,#050506,rgba(5,5,6,0.7)_45%,transparent)]" />

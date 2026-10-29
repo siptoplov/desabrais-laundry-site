@@ -4,13 +4,13 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { manifesto } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/device";
-import { CinemaVideo } from "@/components/ui/CinemaVideo";
+import { ScrollSequence } from "@/components/ui/ScrollSequence";
+import { Mist } from "@/components/ui/Mist";
 
 /**
- * Pinned scene over the mountain valley with the V of light.
- * 1) a small framed window expands to full bleed,
- * 2) the statement lights up word by word,
- * 3) the camera pushes into the V.
+ * The mountain valley with the V of light. No pinning: the page keeps
+ * scrolling freely while the framed window opens to full bleed as the
+ * section rises into view, and the words light up as you read down.
  */
 export function Manifesto() {
   const section = useRef<HTMLElement>(null);
@@ -26,56 +26,52 @@ export function Manifesto() {
       return;
     }
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-      mm.add({ wide: "(min-aspect-ratio: 1/1)", tall: "(max-aspect-ratio: 1/1)" }, (c) => {
-        const { wide } = c.conditions as { wide: boolean };
-        const start = wide ? "inset(24% 31% 24% 31% round 26px)" : "inset(30% 12% 30% 12% round 22px)";
-        const tl = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: { trigger: el, start: "top top", end: "+=240%", scrub: 0.8, pin: true, anticipatePin: 1 },
-        });
-        tl.fromTo("[data-window]", { clipPath: start }, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 0.32, ease: "power2.inOut" }, 0)
-          .fromTo("[data-media]", { scale: 1.45 }, { scale: 1.06, duration: 0.32, ease: "power2.inOut" }, 0)
-          .fromTo("[data-frame-label]", { opacity: 1 }, { opacity: 0, duration: 0.12 }, 0.05)
-          .fromTo("[data-scrim]", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.18)
-          .fromTo(ws, { opacity: 0.06, yPercent: 30 }, { opacity: 1, yPercent: 0, duration: 0.09, stagger: 0.06 }, 0.3)
-          .fromTo("[data-manifesto-meta]", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.12 }, 0.72)
-          .to("[data-media]", { scale: 1.5, duration: 0.5, ease: "power1.in" }, 0.5)
-          .to("[data-v-glow]", { opacity: 1, scale: 1.2, duration: 0.35 }, 0.62)
-          .to("[data-copy]", { yPercent: -18, opacity: 0, duration: 0.14 }, 0.88);
-      });
+      const wide = window.innerWidth >= window.innerHeight;
+      // window opens while the section travels from the bottom edge to the top
+      gsap.fromTo(
+        "[data-window]",
+        { clipPath: wide ? "inset(18% 22% 18% 22% round 28px)" : "inset(16% 8% 16% 8% round 22px)" },
+        { clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "top 10%", scrub: true } },
+      );
+      // slow push toward the V across the whole pass
+      gsap.fromTo("[data-media]", { scale: 1.3 }, { scale: 1.06, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } });
+      gsap.fromTo("[data-scrim]", { opacity: 0.2 }, { opacity: 1, ease: "none", scrollTrigger: { trigger: el, start: "top 60%", end: "top top", scrub: true } });
+      // words light up one by one as you scroll through
+      gsap.fromTo(
+        ws,
+        { opacity: 0.08, yPercent: 30 },
+        { opacity: 1, yPercent: 0, stagger: 0.08, ease: "none", scrollTrigger: { trigger: el, start: "top 55%", end: "top -5%", scrub: true } },
+      );
+      gsap.fromTo("[data-manifesto-meta]", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 5%", once: true } });
     }, el);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={section} id="manifesto" aria-label="Манифест" className="relative z-10 h-[100svh] overflow-hidden bg-ink-0">
-      <div data-frame-label aria-hidden className="absolute inset-x-0 top-[13%] z-10 flex justify-center">
-        <span className="t-label flex items-center gap-5">
+    <section ref={section} id="manifesto" aria-label="Манифест" className="relative z-10 h-[130svh] min-h-[760px] overflow-hidden bg-ink-0">
+      <div data-window className="absolute inset-0" style={{ clipPath: "inset(18% 22% 18% 22% round 28px)" }}>
+        {/* zoom origin sits on the V in the footage */}
+        <div data-media className="absolute inset-0 origin-[50%_62%] will-change-transform">
+          <ScrollSequence name="mountain-v" frames={81} focus={[0.5, 0.6]} />
+        </div>
+        <Mist />
+        <div
+          data-scrim
+          aria-hidden
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, #050506 0%, rgba(5,5,6,0.55) 22%, rgba(5,5,6,0.1) 55%, rgba(5,5,6,0.25) 80%, #050506 100%)" }}
+        />
+      </div>
+
+      <div className="shell relative z-10 flex h-full flex-col items-center pt-[26svh] text-center">
+        <p className="t-label mb-10 flex items-center gap-5">
           <span className="text-fg">02</span>
           <span className="h-px w-10 bg-line-2" />
           Growth / Manifesto
-        </span>
-      </div>
-
-      <div data-window className="absolute inset-0 will-change-[clip-path]" style={{ clipPath: "inset(24% 31% 24% 31% round 26px)" }}>
-        {/* zoom origin sits on the V in the footage */}
-        <div data-media className="absolute inset-0 origin-[50%_66%] will-change-transform">
-          <CinemaVideo name="mountain-v" objectPosition="50% 60%" />
-          <div
-            data-v-glow
-            aria-hidden
-            className="absolute left-1/2 top-[64%] h-[40vh] w-[40vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0"
-            style={{ background: "radial-gradient(closest-side, rgba(232,240,255,0.22), transparent)" }}
-          />
-        </div>
-        <div data-scrim aria-hidden className="absolute inset-0 opacity-0" style={{ background: "linear-gradient(180deg, rgba(5,5,6,0.82) 0%, rgba(5,5,6,0.35) 45%, rgba(5,5,6,0.1) 70%, rgba(5,5,6,0.55) 100%)" }} />
-      </div>
-
-      <div data-copy className="shell relative z-10 flex h-full flex-col items-center pt-[16vh] text-center">
+        </p>
         <p className="max-w-[15ch] text-[clamp(40px,6.6vw,118px)] font-light leading-[1] tracking-[-0.045em] [text-shadow:0_2px_40px_rgba(0,0,0,0.5)]">
           {words.map((w, i) => (
-            <span key={i} data-word className="inline-block opacity-[0.06] will-change-[opacity,transform]">
+            <span key={i} data-word className="inline-block opacity-[0.08]">
               {w}
               {i < words.length - 1 ? " " : ""}
             </span>

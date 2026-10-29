@@ -56,13 +56,6 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-tap-highlight-color: transparent;
 }
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
 body {
   background: var(--color-ink-0);
   font-family: var(--font-sans);

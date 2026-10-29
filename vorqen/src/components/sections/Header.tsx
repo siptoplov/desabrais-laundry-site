@@ -13,7 +13,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
-  const { scrollTo, lenis } = useSmoothScroll();
+  const { scrollTo } = useSmoothScroll();
 
   useEffect(() => {
     let last = window.scrollY;
@@ -30,13 +30,11 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    if (open) lenis?.stop();
-    else lenis?.start();
     document.documentElement.style.overflow = open ? "hidden" : "";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, lenis]);
+  }, [open]);
 
   const go = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
