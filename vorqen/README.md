@@ -32,8 +32,7 @@ src/
   components/
     sections/          Preloader, Header, Hero, Manifesto, Services, Mountains,
                        Process, AiDemo, WhyUs, Kinetic, Contact, Footer
-    three/             HeroCanvas, Emblem (crystal shards), Rocks, Dust,
-                       StudioEnv (strip-light studio), WavesCanvas (silk shader)
+    three/             VideoFx (WebGL treatment of the hero footage)
     ui/                Brand marks, Cursor, Magnetic, TiltCard, SplitReveal, Icons
     providers/         SmoothScroll (Lenis ↔ ScrollTrigger), Motion (LazyMotion)
 public/brand/          emblem / wordmark extracted from the supplied key visual
@@ -60,7 +59,24 @@ Reusable classes in `globals.css`: `.glass`, `.sweep` (diagonal light pass on ho
 
 The emblem and wordmark are **cut from the supplied artwork** (`public/brand/emblem.*`, `wordmark.*`; luminance → alpha). The wordmark is never re-typeset. When you have master SVG/PNG files, replace those four files at the same aspect ratio (emblem 488×358, wordmark 740×86). If the wordmark's letter spacing changes, also update `WORDMARK_LETTERS` in `ui/Brand.tsx`, which drives the per-letter reveal.
 
-The 3D emblem is four crystal shards traced from the logo (`three/shards.ts`). If you get a modelled GLB, swap it into `Emblem.tsx`. Keep it Draco-compressed and lazy-loaded the same way.
+## Cinematic media (`public/media/`)
+
+Stills and loops were generated in Higgsfield from the client's moodboard frames
+(Nano Banana 2.1 stills, Kling 3.0 Pro loops with start frame = end frame, so they loop seamlessly):
+
+| File | Used in |
+| --- | --- |
+| `hero` | Hero: chrome V among rim-lit rocks |
+| `mountain-v` | Manifesto: valley with the V of light |
+| `laptop` | Technology: black-glass laptop with the emblem |
+| `silk` | WE BUILD / AUTOMATE / SCALE |
+| `valley` | Final CTA: river valley at dawn |
+| `beams.jpg`, `svc-*.jpg` | Services background and the four service cards (stills only) |
+
+Each loop ships as `<name>-1920.mp4` (CRF 21) and `<name>-1280.mp4` (CRF 27), H.264, muted, faststart.
+`<name>.jpg` is the first frame, so the poster swaps to video without a jump. `CinemaVideo`
+loads a loop only when its section is near, plays it while visible and pauses it off-screen.
+Reduced motion keeps the stills.
 
 ## Things to fill in
 
@@ -72,8 +88,8 @@ The 3D emblem is four crystal shards traced from the logo (`three/shards.ts`). I
 ## Motion & performance notes
 
 - **Preloader (≤2.5s):** 16 non-overlapping shards fly in from depth, the light sweeps across the emblem, then the wordmark letters resolve from blur. A faint inlined "ghost" emblem paints in the first frame, so LCP lands at FCP.
-- **Hero:** physical chrome (metalness 1, roughness 0.1, clearcoat 1) lit by a strip-light studio built from Lightformers, so there's no HDRI download. On high-tier devices one strip travels across the set every 7s (the recurring light sweep). Pointer tilt is capped at ±15°; phones use the gyroscope or a slow auto-rotation. On scroll the shards burst toward the camera. The canvas stops rendering (`frameloop="never"`) once the hero has scrolled away.
-- **Tiers:** touch devices, narrow screens, ≤4 cores or ≤4GB RAM get DPR ≤1.25, 220 dust particles, no chromatic aberration, a static environment, and lower-detail rocks. `PerformanceMonitor` lowers DPR further if fps drops.
-- **Software WebGL** (SwiftShader / llvmpipe, which includes Lighthouse and PageSpeed) gets the 2D fallback: the PNG emblem plus the rock corners from the key visual. Append `?gl=force` to the URL to force WebGL for testing.
+- **Hero:** the footage is drawn through a WebGL shader (`three/VideoFx.tsx`). A liquid lens and ripple follow the cursor, and RGB separation appears at the frame edges as you scroll or move fast. On scroll the camera flies into the emblem. On touch screens the lens drifts on its own. On portrait screens the frame is fitted to width and the overflow fades into black, so the whole emblem stays visible. Rendering stops once the hero has scrolled away.
+- **Pinned scenes:** the manifesto window expands to full screen, the words light up, then the camera pushes into the V. Services scroll horizontally with photo cards that reveal behind a mask and drift inside their frames. The laptop swings in from perspective. The silk section opens its tracking line by line. The valley drifts back as the final screen enters.
+- **Software WebGL** (SwiftShader / llvmpipe, which includes Lighthouse and PageSpeed) plays the hero loop as a plain `<video>` without the shader. Append `?gl=force` to the URL to force WebGL for testing.
 - **`prefers-reduced-motion`:** Lenis is off, there are no pins or scrubs, all content is visible immediately, the preloader shortens to 0.9s, and the 3D scene is static.
 - **Lighthouse 12.8** (local production build, headless): desktop **99** perf / 96 a11y / 100 best practices / 100 SEO. Mobile (simulated 4× CPU) **79** perf. The remaining cost is about 400ms of startup JS (GSAP/SplitText/ScrollTrigger setup with pinned sections). Real throttled LCP measures 0.2–2.2s.

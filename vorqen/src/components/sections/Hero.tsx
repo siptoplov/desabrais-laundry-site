@@ -1,52 +1,89 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { hero } from "@/lib/content";
-import { getTier, hasWebGL, prefersReducedMotion, type Tier } from "@/lib/device";
+import { hasWebGL, prefersReducedMotion } from "@/lib/device";
 import { onIntroDone, scrollStore } from "@/lib/scroll-store";
-import { Emblem, EMBLEM_RATIO, SplitWordmark, Tagline } from "@/components/ui/Brand";
+import { SplitWordmark, Tagline } from "@/components/ui/Brand";
 import { SplitReveal } from "@/components/ui/Reveal";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { IconArrow } from "@/components/ui/Icons";
+import { videoSrc } from "@/components/ui/CinemaVideo";
 import { useSmoothScroll } from "@/components/providers/SmoothScroll";
 
-const HeroCanvas = dynamic(() => import("@/components/three/HeroCanvas"), { ssr: false });
+const VideoFx = dynamic(() => import("@/components/three/VideoFx"), { ssr: false });
+
+/** Where the emblem sits in the hero footage (uv, origin bottom-left). */
+const FOCUS: [number, number] = [0.5, 0.515];
 
 export function Hero() {
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const [intro, setIntro] = useState(false);
-  const [env, setEnv] = useState<{ tier: Tier; reduced: boolean; webgl: boolean } | null>(null);
-  const [canvasReady, setCanvasReady] = useState(false);
+  const [video, setVideo] = useState<HTMLVideoElement | null>(null);
+  const [mode, setMode] = useState<"pending" | "gl" | "plain" | "still">("pending");
+  const [playing, setPlaying] = useState(false);
   const [active, setActive] = useState(true);
+  const cssZoom = useRef(true);
   const { scrollTo } = useSmoothScroll();
 
+  useEffect(() => onIntroDone(() => setIntro(true)), []);
+
+  // Create the hero video once; WebGL samples it, or it's shown directly.
   useEffect(() => {
-    setEnv({ tier: getTier(), reduced: prefersReducedMotion(), webgl: hasWebGL() });
-    return onIntroDone(() => setIntro(true));
+    if (prefersReducedMotion()) {
+      setMode("still");
+      return;
+    }
+    const v = document.createElement("video");
+    v.muted = true;
+    v.loop = true;
+    v.playsInline = true;
+    v.crossOrigin = "anonymous";
+    v.preload = "auto";
+    v.src = videoSrc("hero");
+    v.addEventListener("playing", () => setPlaying(true), { once: true });
+    v.play().catch(() => {});
+    setVideo(v);
+    setMode(hasWebGL() ? "gl" : "plain");
+    return () => {
+      v.pause();
+      v.removeAttribute("src");
+      v.load();
+    };
   }, []);
 
-  // Intro choreography for DOM layers once the preloader hands over
+  useEffect(() => {
+    if (!video) return;
+    if (active) video.play().catch(() => {});
+    else video.pause();
+  }, [active, video]);
+
+  // DOM intro once the preloader hands over
   useEffect(() => {
     const el = section.current;
     if (!el || !intro) return;
-    const reduced = prefersReducedMotion();
     const ctx = gsap.context(() => {
       const letters = el.querySelectorAll("[data-letter]");
-      if (reduced) {
+      if (prefersReducedMotion()) {
         gsap.set([letters, "[data-hero-fade]"], { opacity: 1, y: 0, filter: "none" });
         return;
       }
-      gsap.fromTo(letters, { opacity: 0, filter: "blur(12px)", yPercent: 40 }, { opacity: 1, filter: "blur(0px)", yPercent: 0, duration: 1.4, stagger: 0.07, delay: 0.55 });
-      gsap.fromTo("[data-hero-fade]", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1.4, stagger: 0.08, delay: 0.95 });
+      gsap.fromTo(
+        letters,
+        { opacity: 0, filter: "blur(18px)", yPercent: 60 },
+        { opacity: 1, filter: "blur(0px)", yPercent: 0, duration: 1.8, stagger: 0.08, delay: 0.5, ease: "expo.out" },
+      );
+      gsap.fromTo("[data-hero-fade]", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1.4, stagger: 0.09, delay: 0.9 });
+      gsap.fromTo("[data-hero-line]", { scaleX: 0 }, { scaleX: 1, duration: 1.8, delay: 0.7, ease: "expo.inOut" });
     }, el);
     return () => ctx.revert();
   }, [intro]);
 
-  // Scroll-out: drive the WebGL burst + fade the DOM, stop rendering when gone
+  // Scroll: fly into the emblem, fade the DOM, stop rendering once gone
   useEffect(() => {
     const el = section.current;
     if (!el) return;
@@ -58,109 +95,165 @@ export function Hero() {
         scrub: true,
         onUpdate: (self) => {
           scrollStore.hero = self.progress;
-          if (stage.current) {
-            stage.current.style.opacity = String(1 - gsap.utils.clamp(0, 1, (self.progress - 0.55) / 0.45));
+          if (stage.current && cssZoom.current) {
+            const p = self.progress;
+            stage.current.style.transform = `scale(${1 + p * p * 1.4})`;
+            stage.current.style.opacity = String(1 - gsap.utils.clamp(0, 1, (p - 0.45) / 0.5));
           }
         },
         onLeave: () => setActive(false),
         onEnterBack: () => setActive(true),
       });
       gsap.to("[data-hero-content]", {
-        yPercent: -18,
+        yPercent: -14,
         opacity: 0,
         ease: "none",
-        scrollTrigger: { trigger: el, start: "top top", end: "60% top", scrub: true },
+        scrollTrigger: { trigger: el, start: "top top", end: "55% top", scrub: true },
+      });
+      gsap.to("[data-hero-wordmark]", {
+        yPercent: 40,
+        scale: 1.08,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: { trigger: el, start: "top top", end: "70% top", scrub: true },
       });
     }, el);
     return () => ctx.revert();
   }, []);
 
-  const show3D = env?.webgl;
+  // the shader handles the fly-in once footage is live; otherwise CSS does
+  cssZoom.current = mode !== "gl" || !playing;
+  useEffect(() => {
+    if (!cssZoom.current && stage.current) {
+      stage.current.style.transform = "";
+      stage.current.style.opacity = "";
+    }
+  }, [playing, mode]);
+
+  const showStill = mode === "still" || mode === "pending" || !playing;
 
   return (
-    <section ref={section} id="top" aria-label="VORQEN" className="relative h-[100svh] min-h-[640px] w-full">
-      {/* WebGL stage — fixed so the burst can travel into the next section */}
-      <div ref={stage} className="pointer-events-none fixed inset-0 z-0" style={{ visibility: active ? "visible" : "hidden" }}>
-        {show3D && env && <HeroCanvas tier={env.tier} reduced={env.reduced} active={active} onReady={() => setCanvasReady(true)} />}
-        {/* no-WebGL / software-GL fallback: rock corners from the key visual */}
-        {/* server-rendered under the preloader; fades out once WebGL takes over */}
-        <div aria-hidden className="absolute inset-0 transition-opacity duration-1000" style={{ opacity: canvasReady ? 0 : 1 }}>
-          <img src="/brand/rock-tr.webp" alt="" width={564} height={560} fetchPriority="high" className="absolute -right-[4vw] -top-[6vh] w-[min(46vw,560px)] mix-blend-screen" />
-          <img src="/brand/rock-bl.webp" alt="" width={760} height={564} fetchPriority="high" className="absolute -bottom-[6vh] -left-[4vw] w-[min(54vw,700px)] mix-blend-screen" />
+    <section ref={section} id="top" aria-label="VORQEN" className="relative h-[100svh] min-h-[680px] w-full">
+      {/* stage is fixed so the fly-in keeps going while the next section slides over */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+        style={{ visibility: active ? "visible" : "hidden" }}
+      >
+        <div ref={stage} className="absolute inset-x-0 top-0 h-[64%] origin-[49%_47%] will-change-transform lg:h-full">
+          <Image
+            src="/media/hero.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            quality={82}
+            className="object-cover transition-opacity duration-1000"
+            style={{ objectPosition: "49% 50%", opacity: showStill ? 1 : 0 }}
+          />
+          {mode === "plain" && video && (
+            <div
+              className="absolute inset-0"
+              ref={(el) => {
+                if (el && !el.contains(video)) {
+                  video.className = "absolute inset-0 h-full w-full object-cover";
+                  video.style.objectPosition = "49% 50%";
+                  el.appendChild(video);
+                }
+              }}
+            />
+          )}
+          {mode === "gl" && video && (
+            <div className="absolute inset-0 transition-opacity duration-1000" style={{ opacity: playing ? 1 : 0 }}>
+              <VideoFx video={video} active={active} focus={FOCUS} />
+            </div>
+          )}
         </div>
-        {/* static emblem until WebGL is up (and as a no-WebGL fallback) */}
-        <div
-          className="absolute left-1/2 top-[33%] w-[min(54vw,300px)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-1000 sm:top-[32%] sm:w-[min(24vw,360px)]"
-          style={{ aspectRatio: `${EMBLEM_RATIO}`, opacity: canvasReady ? 0 : 1 }}
-          aria-hidden
-        >
-          <Emblem className="h-full w-full" />
-        </div>
-        <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-b from-transparent to-ink-0/80" />
+        {/* legibility scrims */}
+        <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(5,5,6,0.78)_0%,rgba(5,5,6,0.25)_32%,transparent_55%)] lg:block" />
+        <div className="absolute inset-x-0 bottom-0 h-[62%] bg-[linear-gradient(0deg,#050506_42%,rgba(5,5,6,0.7)_70%,transparent)] lg:h-[42%] lg:bg-[linear-gradient(0deg,#050506,rgba(5,5,6,0.7)_45%,transparent)]" />
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink-0/80 to-transparent" />
       </div>
 
-      <div data-hero-content className="shell relative z-10 flex h-full flex-col pb-10 pt-[50svh] sm:pt-[52svh] lg:pb-12">
-        <div className="flex flex-col items-center">
-          <h1 className="sr-only">VORQEN — {hero.title}</h1>
-          <SplitWordmark className="w-[min(72vw,440px)]" letterClassName="opacity-0" />
-          <div data-hero-fade className="mt-6 opacity-0">
-            <Tagline />
+      <div className="relative z-10 flex h-full flex-col">
+        <div data-hero-content className="shell flex flex-1 flex-col justify-end pb-9 pt-28 lg:justify-center lg:pb-[6vh]">
+          <div className="max-w-[420px] text-center lg:text-left">
+            <div data-hero-fade className="opacity-0">
+              <Tagline className="justify-center max-lg:text-[8.5px] lg:justify-start" />
+            </div>
+            <span data-hero-line className="dash mx-auto mt-8 hidden origin-left scale-x-0 lg:block lg:mx-0" />
+            <h1 className="mt-5 lg:mt-8">
+              <SplitReveal
+                as="span"
+                play={intro}
+                delay={0.8}
+                className="block text-[clamp(23px,2.7vw,44px)] font-light leading-[1.1] tracking-[-0.035em]"
+              >
+                {hero.title}
+              </SplitReveal>
+            </h1>
+            <p data-hero-fade className="t-body mt-3 opacity-0 max-lg:text-[14px] lg:mt-5">
+              {hero.sub}
+            </p>
+            <div data-hero-fade className="mt-6 flex items-center justify-center gap-2.5 opacity-0 lg:mt-10 lg:justify-start lg:gap-3">
+              <Magnetic>
+                <a
+                  href="#contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollTo("#contact");
+                  }}
+                  className="btn btn-chrome sweep max-lg:!h-12 max-lg:!px-5 max-lg:!text-[14px]"
+                >
+                  {hero.ctaPrimary}
+                  <IconArrow size={18} className="arrow" />
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a
+                  href="#services"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollTo("#services");
+                  }}
+                  className="btn btn-ghost sweep max-lg:!h-12 max-lg:!px-5 max-lg:!text-[14px]"
+                >
+                  {hero.ctaSecondary}
+                </a>
+              </Magnetic>
+            </div>
           </div>
         </div>
 
-        <div className="mt-auto grid grid-cols-1 items-end gap-8 lg:grid-cols-12 lg:gap-[var(--gutter)]">
-          <div className="text-center lg:col-span-6 lg:text-left">
-            <SplitReveal as="p" play={intro} delay={0.85} className="mx-auto max-w-[22ch] text-[clamp(24px,2.5vw,40px)] font-light leading-[1.12] tracking-[-0.03em] lg:mx-0">
-              {hero.title}
-            </SplitReveal>
-            <p data-hero-fade className="t-body mt-4 opacity-0">
-              {hero.sub}
-            </p>
-          </div>
-          <div data-hero-fade className="flex flex-col items-center justify-end gap-3 opacity-0 sm:flex-row lg:col-span-6">
-            <Magnetic>
-              <a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollTo("#contact");
-                }}
-                className="btn btn-chrome sweep"
-              >
-                {hero.ctaPrimary}
-                <IconArrow size={18} className="arrow" />
-              </a>
-            </Magnetic>
-            <Magnetic>
-              <a
-                href="#services"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollTo("#services");
-                }}
-                className="btn btn-ghost sweep"
-              >
-                {hero.ctaSecondary}
-              </a>
-            </Magnetic>
-          </div>
+        {/* right rail */}
+        <div data-hero-content className="pointer-events-none absolute right-[var(--pad-x)] top-[40%] hidden flex-col items-end gap-3 text-right lg:flex">
+          <span data-hero-fade className="t-label text-[9px] opacity-0">
+            Digital products · AI · Automation
+          </span>
+          <span data-hero-fade className="t-label text-[9px] text-fg-3 opacity-0">
+            Est. 2026 — Worldwide
+          </span>
+        </div>
+
+        {/* giant wordmark across the foot of the frame */}
+        <div data-hero-wordmark className="pointer-events-none absolute inset-x-0 top-[54%] px-[var(--pad-x)] lg:bottom-[5vh] lg:top-auto">
+          <SplitWordmark className="mx-auto w-[82%] max-w-[1296px] lg:w-full drop-shadow-[0_0_40px_rgba(232,240,255,0.18)]" letterClassName="opacity-0" />
         </div>
 
         <button
           type="button"
           data-hero-fade
           onClick={() => scrollTo("#manifesto")}
-          className="absolute bottom-10 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-4 opacity-0 lg:flex"
+          className="absolute bottom-[calc(6vh+min(9vw,150px)+28px)] right-[var(--pad-x)] hidden flex-col items-center gap-3 opacity-0 lg:flex"
           aria-label="Scroll — прокрутить вниз"
           data-cursor="Scroll"
         >
-          <span className="relative block h-14 w-px overflow-hidden bg-white/10">
+          <span className="t-label text-[9px]">Scroll</span>
+          <span className="relative block h-12 w-px overflow-hidden bg-white/10">
             <span className="absolute left-1/2 top-0 h-2 w-[3px] -translate-x-1/2 rounded-full bg-white shadow-[0_0_10px_rgba(232,240,255,0.9)] [animation:scroll-dot_2.2s_cubic-bezier(0.65,0,0.35,1)_infinite]" />
           </span>
-          <span className="t-label text-[9px]">Scroll</span>
         </button>
       </div>
-      <style>{`@keyframes scroll-dot{0%{transform:translate(-50%,-10px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translate(-50%,58px);opacity:0}}`}</style>
+      <style>{`@keyframes scroll-dot{0%{transform:translate(-50%,-10px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translate(-50%,50px);opacity:0}}`}</style>
     </section>
   );
 }

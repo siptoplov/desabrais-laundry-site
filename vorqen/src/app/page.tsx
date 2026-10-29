@@ -6,7 +6,7 @@ import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { Manifesto } from "@/components/sections/Manifesto";
 import { Services } from "@/components/sections/Services";
-import { Mountains } from "@/components/sections/Mountains";
+import { Tech } from "@/components/sections/Tech";
 import { Process } from "@/components/sections/Process";
 import { AiDemo } from "@/components/sections/AiDemo";
 import { WhyUs } from "@/components/sections/WhyUs";
@@ -27,7 +27,7 @@ export default function Page() {
         <Hero />
         <Manifesto />
         <Services />
-        <Mountains />
+        <Tech />
         <Process />
         <AiDemo />
         <WhyUs />

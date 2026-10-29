@@ -1,10 +1,12 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { contact, site } from "@/lib/content";
-import { EASE } from "@/lib/gsap";
-import { Emblem, EMBLEM_RATIO, Wordmark } from "@/components/ui/Brand";
+import { EASE, gsap } from "@/lib/gsap";
+import { prefersReducedMotion } from "@/lib/device";
+import { Emblem, EMBLEM_RATIO, Tagline, Wordmark } from "@/components/ui/Brand";
+import { CinemaVideo } from "@/components/ui/CinemaVideo";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { useRevealGroup } from "@/components/ui/Reveal";
 import { IconArrow, IconArrowUpRight, IconMail, IconTelegram, IconWhatsApp } from "@/components/ui/Icons";
@@ -29,10 +31,26 @@ const channels = [
 
 export function Contact() {
   const section = useRef<HTMLElement>(null);
+  const valley = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [errors, setErrors] = useState<Errors>({});
   const [flash, setFlash] = useState(0);
   useRevealGroup(section, { stagger: 0.08 });
+
+  // the valley drifts back as it enters; the title rises out of the mist
+  useEffect(() => {
+    const el = valley.current;
+    if (!el || prefersReducedMotion()) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo("[data-valley]", { scale: 1.3, yPercent: -6 }, { scale: 1, yPercent: 0, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom bottom", scrub: true } });
+      gsap.fromTo(
+        "[data-valley-copy] > *",
+        { opacity: 0, y: 50, filter: "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", stagger: 0.12, duration: 1.6, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 45%", once: true } },
+      );
+    }, el);
+    return () => ctx.revert();
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,72 +80,43 @@ export function Contact() {
   };
 
   return (
-    <section ref={section} id="contact" aria-label="Контакты" className="section relative z-10 overflow-hidden bg-ink-0">
-      {/* light rays behind the emblem */}
-      <div aria-hidden className="pointer-events-none absolute left-1/2 top-[clamp(120px,14vw,220px)] h-[1100px] w-[1100px] -translate-x-1/2 -translate-y-[38%]">
+    <section ref={section} id="contact" aria-label="Контакты" className="relative z-10 overflow-hidden bg-ink-0 pb-[var(--section-y)]">
+      {/* the closing frame: valley at dawn */}
+      <div ref={valley} className="relative h-[100svh] min-h-[660px] overflow-hidden">
+        <div data-valley className="absolute inset-0 origin-[50%_35%] will-change-transform">
+          <CinemaVideo name="valley" objectPosition="50% 40%" />
+        </div>
         <div
-          className="absolute inset-0 animate-[spin_60s_linear_infinite] opacity-60"
-          style={{
-            background:
-              "repeating-conic-gradient(from 0deg, rgba(232,240,255,0.07) 0deg 2deg, transparent 2deg 11deg, rgba(232,240,255,0.035) 11deg 12.5deg, transparent 12.5deg 24deg)",
-            WebkitMaskImage: "radial-gradient(closest-side, #000 0%, rgba(0,0,0,0.6) 30%, transparent 75%)",
-            maskImage: "radial-gradient(closest-side, #000 0%, rgba(0,0,0,0.6) 30%, transparent 75%)",
-          }}
+          aria-hidden
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, rgba(5,5,6,0.88) 0%, rgba(5,5,6,0.35) 30%, rgba(5,5,6,0.05) 52%, rgba(5,5,6,0.55) 78%, #050506 100%)" }}
         />
-        <div className="absolute inset-[30%] rounded-full bg-[radial-gradient(closest-side,rgba(232,240,255,0.16),transparent)]" />
-      </div>
-
-      <div className="shell relative">
-        <div className="flex flex-col items-center text-center">
-          <div data-reveal className="relative w-[clamp(120px,14vw,200px)]" style={{ aspectRatio: `${EMBLEM_RATIO}` }}>
+        <div data-valley-copy className="shell relative flex h-full flex-col items-center pt-[15vh] text-center">
+          <div className="relative w-[clamp(84px,8vw,120px)]" style={{ aspectRatio: `${EMBLEM_RATIO}` }}>
             <div className="animate-[float_7s_ease-in-out_infinite]">
-              <Emblem className="h-full w-full drop-shadow-[0_0_40px_rgba(232,240,255,0.25)]" />
+              <Emblem className="h-full w-full drop-shadow-[0_0_30px_rgba(232,240,255,0.35)]" />
             </div>
-            {/* success flash — light sweep across the metal */}
-            <AnimatePresence>
-              {flash > 0 && (
-                <m.div
-                  key={flash}
-                  className="absolute inset-0 mix-blend-screen"
-                  initial={{ backgroundPosition: "-150% 0", opacity: 1 }}
-                  animate={{ backgroundPosition: "250% 0", opacity: [1, 1, 0.6] }}
-                  transition={{ duration: 1.6, ease: [0.65, 0, 0.35, 1] }}
-                  style={{
-                    background: "linear-gradient(105deg, transparent 35%, #fff 50%, transparent 65%) no-repeat",
-                    backgroundSize: "60% 100%",
-                    WebkitMaskImage: "url(/brand/emblem.webp)",
-                    maskImage: "url(/brand/emblem.webp)",
-                    WebkitMaskSize: "100% 100%",
-                    maskSize: "100% 100%",
-                  }}
-                />
-              )}
-            </AnimatePresence>
-            {flash > 0 && (
-              <m.div
-                key={`glow-${flash}`}
-                aria-hidden
-                className="absolute inset-[-60%] rounded-full bg-[radial-gradient(closest-side,rgba(232,240,255,0.55),transparent)]"
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: [0, 1, 0], scale: [0.6, 1.2, 1.4] }}
-                transition={{ duration: 1.8, ease: "easeOut" }}
-              />
-            )}
           </div>
-          <div data-reveal className="mt-10 w-[clamp(200px,26vw,380px)]">
+          <div className="mt-8 w-[clamp(220px,30vw,440px)]">
             <Wordmark alt="VORQEN" className="h-auto w-full" />
           </div>
-          <h2 data-reveal className="t-label-lg mt-10 leading-[2.1] text-fg">
+          <Tagline className="mt-7" />
+          <h2 className="t-label-lg mt-auto mb-[18vh] leading-[2.1] text-fg [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
             {contact.titleLines[0]}
             <br />
             {contact.titleLines[1]}
+            <span aria-hidden className="mx-auto mt-6 block w-fit animate-[nudge_2.4s_var(--ease-soft)_infinite] text-fg-2">
+              <IconArrow size={22} className="rotate-90" />
+            </span>
           </h2>
-          <p data-reveal className="t-body mt-6 max-w-[42ch]">
-            {contact.lead}
-          </p>
         </div>
+      </div>
 
-        <div className="grid-12 mt-20 gap-y-10 lg:mt-28">
+      <div className="shell relative -mt-[14vh]">
+        <p data-reveal className="t-body mx-auto mb-14 max-w-[42ch] text-center">
+          {contact.lead}
+        </p>
+        <div className="grid-12 gap-y-10">
           <div data-reveal className="glass col-span-12 p-7 sm:p-10 lg:col-span-7 lg:p-12">
             <AnimatePresence mode="wait" initial={false}>
               {state === "done" ? (
@@ -139,6 +128,32 @@ export function Contact() {
                   className="flex min-h-[380px] flex-col items-start justify-center"
                   role="status"
                 >
+                  <div className="relative mb-8 w-[110px]" style={{ aspectRatio: `${EMBLEM_RATIO}` }}>
+                    <Emblem className="h-full w-full" />
+                    <m.div
+                      key={flash}
+                      aria-hidden
+                      className="absolute inset-0 mix-blend-screen"
+                      initial={{ backgroundPosition: "-150% 0" }}
+                      animate={{ backgroundPosition: "250% 0" }}
+                      transition={{ duration: 1.6, ease: [0.65, 0, 0.35, 1], delay: 0.2 }}
+                      style={{
+                        background: "linear-gradient(105deg, transparent 35%, #fff 50%, transparent 65%) no-repeat",
+                        backgroundSize: "60% 100%",
+                        WebkitMaskImage: "url(/brand/emblem.webp)",
+                        maskImage: "url(/brand/emblem.webp)",
+                        WebkitMaskSize: "100% 100%",
+                        maskSize: "100% 100%",
+                      }}
+                    />
+                    <m.div
+                      aria-hidden
+                      className="absolute inset-[-70%] rounded-full bg-[radial-gradient(closest-side,rgba(232,240,255,0.45),transparent)]"
+                      initial={{ opacity: 0, scale: 0.6 }}
+                      animate={{ opacity: [0, 1, 0], scale: [0.6, 1.2, 1.4] }}
+                      transition={{ duration: 1.8, ease: "easeOut" }}
+                    />
+                  </div>
                   <span className="t-label">Request / Received</span>
                   <p className="mt-6 max-w-[18ch] text-[clamp(28px,2.8vw,44px)] font-light leading-[1.1] tracking-[-0.03em]">{contact.success}</p>
                   <span className="dash mt-8" />
@@ -203,7 +218,7 @@ export function Contact() {
           </ul>
         </div>
       </div>
-      <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}`}</style>
+      <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes nudge{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(8px);opacity:1}}`}</style>
     </section>
   );
 }

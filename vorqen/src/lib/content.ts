@@ -32,10 +32,11 @@ export const hero = {
 export const manifesto = "Больше, чем просто IT. Это — ваш рост.";
 
 export type ServiceIcon = "monitor" | "bot" | "chart" | "cloud";
-export const services: { n: string; icon: ServiceIcon; title: string; text: string; tags: string[] }[] = [
+export const services: { n: string; icon: ServiceIcon; image: string; title: string; text: string; tags: string[] }[] = [
   {
     n: "01",
     icon: "monitor",
+    image: "/media/svc-web.jpg",
     title: "Разработка сайтов и приложений",
     text: "Современные сайты, веб-приложения, e-commerce, MVP.",
     tags: ["Web", "Mobile", "E-commerce", "MVP"],
@@ -43,6 +44,7 @@ export const services: { n: string; icon: ServiceIcon; title: string; text: stri
   {
     n: "02",
     icon: "bot",
+    image: "/media/svc-ai.jpg",
     title: "AI-решения и автоматизация",
     text: "AI-агенты, чат-боты, автоматизация процессов, интеграции.",
     tags: ["AI Agents", "LLM", "Chatbots", "Workflows"],
@@ -50,6 +52,7 @@ export const services: { n: string; icon: ServiceIcon; title: string; text: stri
   {
     n: "03",
     icon: "chart",
+    image: "/media/svc-biz.jpg",
     title: "Бизнес под ключ",
     text: "Анализ, стратегия, маркетинг, продукт, команда, запуск.",
     tags: ["Strategy", "Marketing", "Product", "Launch"],
@@ -57,6 +60,7 @@ export const services: { n: string; icon: ServiceIcon; title: string; text: stri
   {
     n: "04",
     icon: "cloud",
+    image: "/media/svc-crm.jpg",
     title: "Интеграции и CRM",
     text: "Связь всех процессов в единую систему для максимальной эффективности.",
     tags: ["CRM", "API", "Data", "Analytics"],
@@ -64,7 +68,7 @@ export const services: { n: string; icon: ServiceIcon; title: string; text: stri
 ];
 
 export const mountains = {
-  label: "Technology / Growth",
+  label: "Technology / Systems",
   title: "Технологии, которые работают на ваш бизнес.",
 };
 
