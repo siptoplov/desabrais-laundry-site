@@ -35,14 +35,15 @@ export const site = {
     ticketSupport: { name: 'TicketPro', phone: '+375 29 693-59-35', phoneHref: '+375296935935', email: 'help@ticketpro.by', hours: '9:00–20:00' },
   },
   /**
-   * Слоты под ассеты из Higgsfield (или любого 3D/видео-редактора).
-   * heroModel — GLB-модель осьминога (public/models/octopus.glb) заменит процедурную 3D-модель на главной.
-   * heroVideo — зацикленное видео (public/video/hero.mp4, 6–10 с, без звука) под 3D-сценой.
+   * Первый экран: чемпион лиги — чёрный осьминог (персонаж «osminog-champion» из Higgsfield).
+   * heroVideo — петля без звука (кадр из Higgsfield, прокрученный вперёд-назад), heroPoster — её первый кадр.
+   * Версии *Mobile — квадратный кроп по центру для телефонов.
    */
   media: {
-    heroModel: '',
-    heroVideo: '',
-    heroPoster: '',
+    heroVideo: '/video/hero.mp4',
+    heroVideoMobile: '/video/hero-mobile.mp4',
+    heroPoster: '/img/hero/champion.webp',
+    heroPosterMobile: '/img/hero/champion-m.webp',
   },
   /** Куда отправлять формы (Formspree, Getform, свой воркер с Telegram-ботом…). Пусто — режим «через Direct». */
   formsEndpoint: process.env.NEXT_PUBLIC_FORMS_ENDPOINT || '',

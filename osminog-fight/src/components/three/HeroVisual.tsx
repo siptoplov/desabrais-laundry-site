@@ -1,73 +1,75 @@
 'use client';
 
 /**
- * Выбирает визуал hero под устройство:
- *  • десктоп с WebGL → 3D-сцена (Three.js грузится лениво, по первому взаимодействию);
- *  • телефон / слабое железо / экономия трафика → лёгкий Canvas 2D.
- * Так Lighthouse на мобильных не платит за Three.js.
+ * Чемпион лиги — чёрный осьминог из Higgsfield — на первом экране:
+ *  • сразу виден стоп-кадр (он же LCP), видео-петля подключается поверх, когда может играть;
+ *  • на десктопе персонаж справа и растворяется к заголовку, на телефоне — квадратный кроп по центру;
+ *  • reduced-motion и экономия трафика — только стоп-кадр;
+ *  • лёгкий параллакс за курсором вместо прежней 3D-сцены.
  */
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { site } from '@/content/site';
 import { asset } from '@/lib/asset';
 
-const HeroScene = dynamic(() => import('./HeroScene'), { ssr: false });
-const OctoFallback = dynamic(() => import('./OctoFallback'), { ssr: false });
+const MOBILE = '(max-width: 767px)';
 
-function canUse3D() {
+function canPlayVideo() {
   try {
-    // ?lite — принудительно лёгкий режим (слабые устройства, отладка, скриншоты)
-    if (new URLSearchParams(location.search).has('lite')) return false;
-    const nav = navigator as Navigator & { connection?: { saveData?: boolean }; deviceMemory?: number };
+    const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
     if (nav.connection?.saveData) return false;
-    if (nav.deviceMemory && nav.deviceMemory < 4) return false;
-    if (!window.matchMedia('(min-width: 900px) and (hover: hover)').matches) return false;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-    const c = document.createElement('canvas');
-    return !!(c.getContext('webgl2') || c.getContext('webgl'));
+    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   } catch {
     return false;
   }
 }
 
 export function HeroVisual({ className = '' }: { className?: string }) {
-  const [mode, setMode] = useState<'none' | '3d' | '2d'>('none');
+  const { heroVideo, heroVideoMobile, heroPoster, heroPosterMobile } = site.media;
+  const [video, setVideo] = useState(false);
+  const layer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 3D/2D-сцена подгружается по первому взаимодействию (мышь, касание, скролл, клавиша)
-    // или через 6 с простоя — первый экран остаётся лёгким, а пользователь ничего не ждёт.
-    let started = false;
-    let timer = 0;
-    const events = ['pointermove', 'pointerdown', 'touchstart', 'wheel', 'scroll', 'keydown'] as const;
-    const start = () => {
-      if (started) return;
-      started = true;
-      clearTimeout(timer);
-      events.forEach((ev) => window.removeEventListener(ev, start));
-      setMode(canUse3D() ? '3d' : '2d');
+    setVideo(canPlayVideo());
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    let raf = 0;
+    const onMove = (e: PointerEvent) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const x = (e.clientX / window.innerWidth - 0.5) * -18;
+        const y = (e.clientY / window.innerHeight - 0.5) * -10;
+        layer.current?.style.setProperty('transform', `translate3d(${x}px, ${y}px, 0) scale(1.04)`);
+      });
     };
-    const arm = () => {
-      events.forEach((ev) => window.addEventListener(ev, start, { passive: true, once: true }));
-      timer = window.setTimeout(start, 6000);
-    };
-    if (document.documentElement.classList.contains('is-loading')) window.addEventListener('osm:intro-done', arm, { once: true });
-    else arm();
+    window.addEventListener('pointermove', onMove, { passive: true });
     return () => {
-      clearTimeout(timer);
-      window.removeEventListener('osm:intro-done', arm);
-      events.forEach((ev) => window.removeEventListener(ev, start));
+      cancelAnimationFrame(raf);
+      window.removeEventListener('pointermove', onMove);
     };
   }, []);
 
+  if (!heroPoster) return null;
+
   return (
     <div className={className} aria-hidden="true">
-      {site.media.heroVideo && (
-        <video className="absolute inset-0 h-full w-full object-cover opacity-50 mix-blend-screen" src={asset(site.media.heroVideo)} poster={site.media.heroPoster ? asset(site.media.heroPoster) : undefined} autoPlay muted loop playsInline preload="none" />
-      )}
-      <div className={`absolute inset-0 transition-opacity duration-[1600ms] ${mode === 'none' ? 'opacity-0' : 'opacity-100'}`}>
-        {mode === '3d' && <HeroScene className="h-full w-full" modelUrl={site.media.heroModel ? asset(site.media.heroModel) : undefined} />}
-        {mode === '2d' && <OctoFallback className="h-full w-full" />}
+      <div className="absolute inset-0 md:left-auto md:w-[78%] [mask-image:linear-gradient(to_bottom,black_55%,transparent)] md:[mask-image:linear-gradient(to_right,transparent,black_32%),linear-gradient(to_bottom,black_60%,transparent)] md:[mask-composite:intersect]">
+        <div ref={layer} className="absolute inset-0 scale-[1.04] transition-transform duration-700 ease-out">
+          <picture>
+            {heroPosterMobile && <source media={MOBILE} srcSet={asset(heroPosterMobile)} />}
+            <img src={asset(heroPoster)} alt="" fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-[50%_30%]" />
+          </picture>
+          {video && heroVideo && (
+            <video className="absolute inset-0 h-full w-full object-cover object-[50%_30%]" autoPlay muted loop playsInline preload="auto">
+              {heroVideoMobile && <source media={MOBILE} src={asset(heroVideoMobile)} type="video/mp4" />}
+              <source src={asset(heroVideo)} type="video/mp4" />
+            </video>
+          )}
+        </div>
+        {/* красный контровой свет — в тон глазам чемпиона */}
+        <div className="absolute inset-0 mix-blend-screen" style={{ background: 'radial-gradient(40% 50% at 55% 30%, rgba(255,43,58,.12), transparent 70%)' }} />
       </div>
+      {/* сверху в воде яркий свет — притемняем под меню; на телефоне — ещё и под текстом */}
+      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-abyss/85 via-abyss/40 to-transparent" />
+      <div className="absolute inset-0 bg-abyss/35 md:hidden" />
     </div>
   );
 }
