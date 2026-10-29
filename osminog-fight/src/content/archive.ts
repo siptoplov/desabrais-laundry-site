@@ -5,7 +5,7 @@ import type { Bout, Fighter, Video } from './types';
  * Источник — названия и описания видео на YouTube-канале Chinuk Gym (@chinukgym), сверено 27.10.2026.
  * Рекорд бойца — последний опубликованный (на дату recordAsOf). Результат боя указан только там,
  * где он прямо назван в описании видео, следует из описания следующего боя или опубликован в СМИ
- * и базах боёв (ссылки — в sources турнира в events.ts).
+ * и базах боёв — Sherdog для ММА (ссылки — в sources турнира в events.ts).
  * Чтобы добавить бой: допишите его в archiveBouts нужного турнира и, если бойца ещё нет, — в archiveFighters.
  */
 
@@ -168,12 +168,12 @@ export const archiveBouts: Record<string, Bout[]> = {
     { id: 'o8-fed-var', red: 'fedorinchik', blue: 'varnavskiy', discipline: 'k1', position: 'main-card', video: 'tTYP6pYX49A', result: { winner: 'red', method: 'DEC', round: 4, note: 'После экстра-раунда. Лучший бой вечера' } },
     { id: 'o8-nec-pes', red: 'nechitaylo', blue: 'peseckiy', discipline: 'k1', position: 'main-card', video: 'a2LnbOobxog', result: { winner: 'red', method: 'DEC', round: 4, note: 'После экстра-раунда' } },
     { id: 'o8-fok-sht', red: 'fokin', blue: 'shtyrkov', discipline: 'k1', position: 'undercard', video: '1esZ2oWW7V8', weightKg: 67, result: { winner: 'red', method: 'DEC', round: 4, note: 'После экстра-раунда. Федерация кикбоксинга России опротестовала решение' } },
-    { id: 'o8-kol-mil', red: 'milyakov', blue: 'kolontaevskiy', discipline: 'k1', position: 'undercard', video: 'lWPmY2g-S-Q' },
+    { id: 'o8-kol-mil', red: 'milyakov', blue: 'kolontaevskiy', discipline: 'mma', position: 'undercard', video: 'lWPmY2g-S-Q', result: { winner: 'blue', method: 'TKO', round: 1, time: '1:10' } },
     { id: 'o8-spa-mad', red: 'spodarenko', blue: 'madaev', discipline: 'k1', position: 'undercard', video: 'nPiBQ6Qswgg', weightKg: 75, result: { winner: 'blue', method: 'DEC', note: 'Лучший боец вечера' } },
-    { id: 'o8-mat-yuz', red: 'yuzefovich', blue: 'matveev', discipline: 'mma', position: 'main-card', video: 'NROK36qwinI', weightKg: 66 },
-    { id: 'o8-dzh-kul', red: 'kulichkov', blue: 'dzhumaboev', discipline: 'mma', position: 'undercard', video: 'eGO42KcYi4o', weightKg: 62 },
-    { id: 'o8-ras-sil', red: 'silos', blue: 'raspopov', discipline: 'mma', position: 'undercard', video: 'NovC_5h7xsQ', weightKg: 75 },
-    { id: 'o8-gad-lit', red: 'litvin', blue: 'gadzhiev', discipline: 'mma', position: 'undercard', video: 'S-5LYZs2WFI', weightKg: 93 },
+    { id: 'o8-mat-yuz', red: 'yuzefovich', blue: 'matveev', discipline: 'mma', position: 'main-card', video: 'NROK36qwinI', weightKg: 66, result: { winner: 'blue', method: 'UD', round: 3 } },
+    { id: 'o8-dzh-kul', red: 'kulichkov', blue: 'dzhumaboev', discipline: 'mma', position: 'undercard', video: 'eGO42KcYi4o', weightKg: 62, result: { winner: 'blue', method: 'SUB', round: 1, note: 'Удушающий приём' } },
+    { id: 'o8-ras-sil', red: 'silos', blue: 'raspopov', discipline: 'mma', position: 'undercard', video: 'NovC_5h7xsQ', weightKg: 75, result: { winner: 'blue', method: 'UD', round: 3 } },
+    { id: 'o8-gad-lit', red: 'litvin', blue: 'gadzhiev', discipline: 'mma', position: 'undercard', video: 'S-5LYZs2WFI', weightKg: 93, result: { winner: 'blue', method: 'SUB', round: 3, note: 'Удушение сзади' } },
   ],
   'osminog-7': [
     { id: 'o7-title', red: 'parhugadzhiev', blue: 'hotak', discipline: 'mma', position: 'title', video: 'vA7yhoPt41w', weightKg: 70, titleFight: 'Титул чемпиона мира среди профессионалов WTKF', headline: 'Бой за пояс чемпиона мира', rules: 'ММА · 3 × 5 мин', result: { winner: 'blue', method: 'SUB', round: 1, time: '2:50', note: 'Удушение гильотиной' } },
@@ -234,8 +234,8 @@ export const archiveBouts: Record<string, Bout[]> = {
     { id: 'o2-byb-mam', red: 'bybochkin', blue: 'mamedov', discipline: 'k1', position: 'main', video: 'YGWYoWY9Uw0', weightKg: 76, headline: 'Главный бой вечера', rules: 'К-1 · 3 × 3 мин + экстра-раунд' },
     { id: 'o2-tar-zhu', red: 'tarasov', blue: 'zhukovskiy', discipline: 'boxing', position: 'special', video: 'QHJKN6hZw3Y', rules: 'Бокс · 4 × 2 мин' },
     { id: 'o2-lap-bus', red: 'lapanik', blue: 'busygin', discipline: 'k1', position: 'main-card', video: 'sa7_2AyXAhg', weightKg: 81 },
-    { id: 'o2-shu-ism', red: 'shulga', blue: 'ismailov', discipline: 'mma', position: 'main-card', video: 'pxwYotgoYrg', weightKg: 75, rules: 'ММА · 2 × 5 мин' },
-    { id: 'o2-muh-mag', red: 'muhaev', blue: 'magomadov', discipline: 'mma', position: 'undercard', video: 'wH1WRZPubqI', weightKg: 65, rules: 'ММА · 2 × 5 мин' },
+    { id: 'o2-shu-ism', red: 'shulga', blue: 'ismailov', discipline: 'mma', position: 'main-card', video: 'pxwYotgoYrg', weightKg: 75, rules: 'ММА · 2 × 5 мин', result: { winner: 'blue', method: 'SUB', round: 2, time: '2:04', note: 'Удушение сзади' } },
+    { id: 'o2-muh-mag', red: 'muhaev', blue: 'magomadov', discipline: 'mma', position: 'undercard', video: 'wH1WRZPubqI', weightKg: 65, rules: 'ММА · 2 × 5 мин', result: { winner: 'blue', method: 'SUB', round: 1, time: '0:48', note: 'Удушение гильотиной' } },
     { id: 'o2-bel-saa', red: 'belanovskiy', blue: 'saadulo', discipline: 'muaythai', position: 'main-card', video: 'Ux6P6YZYigQ', weightKg: 63.5 },
     { id: 'o2-zho-tur', red: 'zhovner', blue: 'turbetskiy', discipline: 'muaythai', position: 'undercard', video: 'xmFIjX7w6Ac', weightKg: 63.5 },
   ],
@@ -257,7 +257,7 @@ export const archiveBouts: Record<string, Bout[]> = {
     { id: 'd16-erm-pot', red: 'ermolenko', blue: 'potachevskiy', discipline: 'k1', position: 'main-card', video: 'KKApTv3m5zs', weightKg: 60 },
     { id: 'd16-atr-abu', red: 'atrohov', blue: 'abuladze', discipline: 'boxing', position: 'main-card', video: 'AMpKHwLSbXw', weightKg: 69.9 },
     { id: 'd16-rab-oms', red: 'rabchenko', blue: 'omsarashvili', discipline: 'boxing', position: 'main-card', video: '3m-Rfa5h9Xo', weightKg: 69.9 },
-    { id: 'd16-lar-sev', red: 'larchenko', blue: 'sevastyan', discipline: 'muaythai', position: 'main-card', video: '0TxdQ8F8bjA', weightKg: 71 },
+    { id: 'd16-lar-sev', red: 'larchenko', blue: 'sevastyan', discipline: 'muaythai', position: 'main-card', video: '0TxdQ8F8bjA', weightKg: 71, result: { winner: 'red' } },
     { id: 'd16-che-gor', red: 'chernyakevich', blue: 'gorgiladze', discipline: 'boxing', position: 'main-card', video: 'KYdOVAQ5nPc', weightKg: 90.6 },
     { id: 'd16-she-bed', red: 'shelest', blue: 'bednik', discipline: 'k1', position: 'main-card', video: '4KI-R6btaX4', weightKg: 78 },
   ],

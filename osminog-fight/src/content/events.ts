@@ -193,6 +193,7 @@ export const events: FightEvent[] = [
     bouts: archiveBouts['osminog-8'],
     tickets: { status: 'closed', vendor: 'TicketPro', from: 35, to: 150, currency: 'BYN' },
     sources: [
+      { label: 'Sherdog · ММА-бои вечера (BFC 86)', url: 'https://www.sherdog.com/events/BFC-86-Belarusian-Fighting-Championship-112977' },
       { label: 'Рейтинг Букмекеров · итоги', url: 'https://bookmaker-ratings.ru/news/v-minske-zavershilsya-sovmestny-j-turnir-promoushenov-os-minog-i-bfc-po-k-1/' },
       { label: 'TicketPro', url: 'https://www.ticketpro.by/novosti/mezhdunarodnyj-turnir-osminog-8--bfc-86-projdyot-v-minske/' },
       { label: 'YouTube · Chinuk Gym', url: 'https://www.youtube.com/@chinukgym/videos' },
@@ -302,7 +303,10 @@ export const events: FightEvent[] = [
     ],
     bouts: archiveBouts['osminog-2'],
     tickets: { status: 'closed', currency: 'BYN' },
-    sources: [{ label: 'YouTube · Chinuk Gym', url: 'https://www.youtube.com/@chinukgym/videos' }],
+    sources: [
+      { label: 'Sherdog · Chinuk Fight Club — Octopus 2', url: 'https://www.sherdog.com/events/Chinuk-Fight-Club-Octopus-2-103307' },
+      { label: 'YouTube · Chinuk Gym', url: 'https://www.youtube.com/@chinukgym/videos' },
+    ],
   },
   {
     slug: 'proekt-osminog',
@@ -331,7 +335,10 @@ export const events: FightEvent[] = [
     disciplines: ['k1', 'muaythai', 'boxing'],
     story: ['Бои по К-1, муай-тай и боксу, которые спортивный клуб «Чинук» провёл под маркой «Осьминог» в декабре 2016 года. Здесь дрались Секу Бангура и Даниил Ермоленко — оба выходят в ринг лиги и сейчас.'],
     bouts: archiveBouts['osminog-2016-12'],
-    sources: [{ label: 'YouTube · Chinuk Gym', url: 'https://www.youtube.com/@chinukgym/videos' }],
+    sources: [
+      { label: 'СК «Хантер» · победа Дениса Ларченко', url: 'https://hunter-gym.by/journal/item/266-news20161209' },
+      { label: 'YouTube · Chinuk Gym', url: 'https://www.youtube.com/@chinukgym/videos' },
+    ],
   },
 ];
 

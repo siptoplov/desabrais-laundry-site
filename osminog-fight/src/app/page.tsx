@@ -5,6 +5,7 @@ import { EightStrikes } from '@/components/sections/EightStrikes';
 import { Chronicle } from '@/components/sections/Chronicle';
 import { Subscribe } from '@/components/forms/Subscribe';
 import { Btn } from '@/components/ui/Btn';
+import { PartnerLogo } from '@/components/ui/PartnerLogo';
 import { BoutRow } from '@/components/ui/BoutRow';
 import { FighterCard, NewsCard } from '@/components/ui/Cards';
 import { VideoCard } from '@/components/ui/VideoCard';
@@ -292,17 +293,17 @@ export default function Home() {
         <TentacleRule className="my-14 h-10" />
         <div className="wrap flex flex-col items-center gap-6 text-center">
           <p className="mono text-[11px] uppercase tracking-[0.22em] text-faint">{partners.general.role}</p>
-          <p className="display-upright text-[clamp(3rem,6vw,5rem)] leading-none">{partners.general.name}</p>
-          <p className="mono text-[11px] uppercase tracking-[0.22em] text-faint">
-            {partners.tv.role} · <span className="text-ice">{partners.tv.name}</span>
+          <PartnerLogo name={partners.general.name} className="h-12 md:h-16 !max-w-[320px]" />
+          <p className="mono flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-faint">
+            {partners.tv.role} · <PartnerLogo name={partners.tv.name} className="h-8" /> <span className="text-ice">{partners.tv.name}</span>
           </p>
         </div>
         <div className="marquee marquee--reverse mt-10" style={{ ['--marquee-speed' as string]: '60s' }} aria-label="Партнёры">
           {[0, 1].map((k) => (
             <div key={k} className="marquee__track" aria-hidden={k === 1}>
               {[...partners.list, ...partners.federations].map((p) => (
-                <span key={p} className="display-upright whitespace-nowrap text-[26px] text-mute">
-                  {p}
+                <span key={p} className="flex h-14 items-center">
+                  <PartnerLogo name={p} className="h-10" />
                 </span>
               ))}
             </div>

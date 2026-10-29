@@ -116,3 +116,20 @@ export const partners = {
   ],
   federations: ['Федерация кикбоксинга России', 'Федерация профессионального бокса', 'Белорусская федерация тайского бокса и кикбоксинга'],
 };
+
+/**
+ * Логотипы партнёров (public/img/partners/), ключ — название как в partners.
+ * Взяты с официальных сайтов компаний и подогнаны под тёмный фон. Нет логотипа — выводится название.
+ */
+export const partnerLogos: Record<string, string> = {
+  Rutube: '/img/partners/rutube.svg',
+  'Беларусь 5 · SPORT5.BY': '/img/partners/sport5.png',
+  belbet: '/img/partners/belbet.svg',
+  'Алютех': '/img/partners/alutech.svg',
+  Toyota: '/img/partners/toyota.svg',
+  'Geely · Лакшери Моторс': '/img/partners/geely.svg',
+  'Fightershop.by': '/img/partners/fightershop.webp',
+  'Chinuk Gym': '/img/partners/chinuk.png',
+};
+/** Логотипы-надписи: название уже на логотипе, подпись не нужна */
+export const partnerWordmarks = new Set(['Rutube', 'Алютех', 'Geely · Лакшери Моторс', 'Fightershop.by']);

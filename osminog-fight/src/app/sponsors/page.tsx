@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { PageHero } from '@/components/ui/PageHero';
 import { Btn } from '@/components/ui/Btn';
 import { Stat } from '@/components/ui/Primitives';
+import { PartnerLogo } from '@/components/ui/PartnerLogo';
 import { sponsorFormats } from '@/content/pages';
-import { partners } from '@/content/site';
+import { partners, partnerWordmarks } from '@/content/site';
 import { sponsors, sponsorsReady, sponsorTiers, type Sponsor } from '@/content/sponsors';
 import { getFighters, getPastEvents, getVideos } from '@/lib/cms';
 import { asset } from '@/lib/asset';
@@ -108,16 +109,19 @@ export default function SponsorsPage() {
           </h2>
           <div className="grid gap-4 md:grid-cols-2">
             {[partners.general, partners.tv].map((p) => (
-              <div key={p.name} className="panel flex flex-col gap-2 p-6 md:p-8">
+              <div key={p.name} className="panel flex flex-col gap-4 p-6 md:p-8">
                 <span className="mono text-[11px] uppercase tracking-[0.16em] text-faint">{p.role}</span>
-                <span className="display-upright text-[clamp(2rem,4vw,3.2rem)] leading-none">{p.name}</span>
+                <span className="flex min-h-14 items-center gap-4">
+                  <PartnerLogo name={p.name} className="h-12" />
+                  {!partnerWordmarks.has(p.name) && <span className="display-upright text-[clamp(1.6rem,3vw,2.4rem)] leading-none">{p.name}</span>}
+                </span>
               </div>
             ))}
           </div>
-          <ul className="flex flex-wrap gap-x-8 gap-y-3">
+          <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius)] border border-line bg-line sm:grid-cols-3 lg:grid-cols-4">
             {partners.list.map((p) => (
-              <li key={p} className="display-upright text-[clamp(1.4rem,2.4vw,1.9rem)] text-mute">
-                {p}
+              <li key={p} className="flex min-h-28 items-center justify-center bg-abyss-2 p-6 text-center">
+                <PartnerLogo name={p} className="h-12" caption />
               </li>
             ))}
           </ul>
