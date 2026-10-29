@@ -35,15 +35,13 @@ export const site = {
     ticketSupport: { name: 'TicketPro', phone: '+375 29 693-59-35', phoneHref: '+375296935935', email: 'help@ticketpro.by', hours: '9:00–20:00' },
   },
   /**
-   * Первый экран: чемпион лиги — чёрный осьминог (персонаж «osminog-champion» из Higgsfield).
-   * heroVideo — петля без звука (кадр из Higgsfield, прокрученный вперёд-назад), heroPoster — её первый кадр.
-   * Версии *Mobile — квадратный кроп по центру для телефонов.
+   * Первый экран: чемпион лиги — чёрный осьминог в красных перчатках на арене (ключевой арт;
+   * значки на табло, баннерах, груди и поясе заменены прежним логотипом лиги).
+   * heroArtFocus — где по горизонтали центр бойца на картинке, % (по нему центрируется телефон).
    */
   media: {
-    heroVideo: '/video/hero.mp4',
-    heroVideoMobile: '/video/hero-mobile.mp4',
-    heroPoster: '/img/hero/champion.webp',
-    heroPosterMobile: '/img/hero/champion-m.webp',
+    heroArt: '/img/hero/arena.webp',
+    heroArtFocus: 44,
   },
   /** Куда отправлять формы (Formspree, Getform, свой воркер с Telegram-ботом…). Пусто — режим «через Direct». */
   formsEndpoint: process.env.NEXT_PUBLIC_FORMS_ENDPOINT || '',

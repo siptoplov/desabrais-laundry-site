@@ -33,24 +33,24 @@ export function Radar({ axes, compare, size = 360 }: { axes: Axis[]; compare?: A
   return (
     <svg viewBox={`0 0 ${size} ${size}`} className="h-auto w-full max-w-[420px]" role="img" aria-label={`Профиль бойца: ${axes.map((a) => `${a.label} ${a.raw}`).join(', ')}`}>
       {[0.25, 0.5, 0.75, 1].map((r) => (
-        <polygon key={r} points={axes.map((_, i) => pt(i, r).join(',')).join(' ')} fill="none" stroke="rgba(232,241,248,.1)" />
+        <polygon key={r} points={axes.map((_, i) => pt(i, r).join(',')).join(' ')} fill="none" stroke="rgba(242,242,243,.1)" />
       ))}
       {axes.map((_, i) => {
         const [x, y] = pt(i, 1);
-        return <line key={i} x1={c} y1={c} x2={x} y2={y} stroke="rgba(232,241,248,.08)" />;
+        return <line key={i} x1={c} y1={c} x2={x} y2={y} stroke="rgba(242,242,243,.08)" />;
       })}
       {compare && <polygon points={poly(compare)} fill="rgba(255,43,58,.12)" stroke="#ff2b3a" strokeWidth="1.5" strokeDasharray="4 4" />}
-      <polygon points={poly(axes)} fill="rgba(0,229,255,.18)" stroke="#00e5ff" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 10px rgba(0,229,255,.5))' }} />
+      <polygon points={poly(axes)} fill="rgba(236,238,241,.18)" stroke="#ECEEF1" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 10px rgba(236,238,241,.5))' }} />
       {axes.map((a, i) => {
         const [x, y] = pt(i, Math.max(0.04, a.value));
         const [lx, ly] = pt(i, 1.24);
         return (
           <g key={a.label}>
-            <circle cx={x} cy={y} r="4" fill="#00e5ff" />
-            <text x={lx} y={ly - 6} textAnchor="middle" fill="rgba(232,241,248,.6)" fontSize="11" fontFamily="var(--font-mono)" letterSpacing="1.5">
+            <circle cx={x} cy={y} r="4" fill="#ECEEF1" />
+            <text x={lx} y={ly - 6} textAnchor="middle" fill="rgba(242,242,243,.6)" fontSize="11" fontFamily="var(--font-mono)" letterSpacing="1.5">
               {a.label.toUpperCase()}
             </text>
-            <text x={lx} y={ly + 10} textAnchor="middle" fill="#e8f1f8" fontSize="13" fontWeight="600" fontFamily="var(--font-mono)">
+            <text x={lx} y={ly + 10} textAnchor="middle" fill="#F2F2F3" fontSize="13" fontWeight="600" fontFamily="var(--font-mono)">
               {a.raw}
             </text>
           </g>
@@ -65,9 +65,9 @@ export function RecordBar({ f }: { f: Fighter }) {
   const { w, l, d = 0 } = f.record;
   const total = w + l + d || 1;
   const seg = [
-    { k: 'Победы', v: w, color: '#00e5ff' },
+    { k: 'Победы', v: w, color: '#ECEEF1' },
     { k: 'Поражения', v: l, color: '#ff2b3a' },
-    { k: 'Ничьи', v: d, color: '#7fa3c7' },
+    { k: 'Ничьи', v: d, color: '#6B7078' },
   ];
   return (
     <div className="flex flex-col gap-4">

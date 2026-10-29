@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 };
 
 const brandFiles = [
-  { file: '/brand/osminog-mark.svg', name: 'Знак · полный цвет', bg: '#05070A', note: 'SVG · для тёмного фона' },
-  { file: '/brand/osminog-mark-mono-white.svg', name: 'Знак · одноцветный', bg: '#0A1A2F', note: 'SVG · белый' },
-  { file: '/brand/osminog-mark-black.svg', name: 'Знак · для светлого фона', bg: '#E8F1F8', note: 'SVG · чёрный' },
-  { file: '/icon-512.png', name: 'Иконка', bg: '#05070A', note: 'PNG · 512×512' },
+  { file: '/brand/osminog-mark.svg', name: 'Знак · полный цвет', bg: '#060607', note: 'SVG · для тёмного фона' },
+  { file: '/brand/osminog-mark-mono-white.svg', name: 'Знак · одноцветный', bg: '#121215', note: 'SVG · белый' },
+  { file: '/brand/osminog-mark-black.svg', name: 'Знак · для светлого фона', bg: '#F2F2F3', note: 'SVG · чёрный' },
+  { file: '/icon-512.png', name: 'Иконка', bg: '#060607', note: 'PNG · 512×512' },
 ];
 
 export default function MediaPage() {
@@ -123,11 +123,11 @@ export default function MediaPage() {
                 <p className="display-upright text-[24px]">Цвета бренда</p>
                 <div className="mt-2 flex flex-wrap gap-3 text-[12px]">
                   {[
-                    ['Бездна', '#05070A'],
-                    ['Глубина', '#0A1A2F'],
+                    ['Бездна', '#060607'],
+                    ['Глубина', '#121215'],
                     ['Кровь', '#FF2B3A'],
-                    ['Биолюминесценция', '#00E5FF'],
-                    ['Холодный белый', '#E8F1F8'],
+                    ['Биолюминесценция', '#ECEEF1'],
+                    ['Холодный белый', '#F2F2F3'],
                   ].map(([n, c]) => (
                     <span key={c} className="mono flex items-center gap-2 text-mute">
                       <span className="h-4 w-4 rounded-sm border border-line" style={{ background: c }} />

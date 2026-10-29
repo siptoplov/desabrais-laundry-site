@@ -32,7 +32,7 @@ function QR({ text }: { text: string }) {
     q.make();
     setSvg(q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }));
   }, [text]);
-  return <div className="h-full w-full [&_path]:fill-[#05070A] [&_rect]:fill-[#E8F1F8] [&_svg]:h-full [&_svg]:w-full" dangerouslySetInnerHTML={{ __html: svg }} aria-label="QR-код карты болельщика" role="img" />;
+  return <div className="h-full w-full [&_path]:fill-[#060607] [&_rect]:fill-[#F2F2F3] [&_svg]:h-full [&_svg]:w-full" dangerouslySetInnerHTML={{ __html: svg }} aria-label="QR-код карты болельщика" role="img" />;
 }
 
 export function Cabinet({ fighters, events, videos }: { fighters: Fighter[]; events: FightEvent[]; videos: Video[] }) {
@@ -120,8 +120,8 @@ export function Cabinet({ fighters, events, videos }: { fighters: Fighter[]; eve
           onClick={() => setPicking(true)}
           aria-haspopup="dialog"
           aria-label={fanF ? `Карта болельщика. Мой боец: ${fullName(fanF)}. Нажмите, чтобы сменить бойца` : 'Карта болельщика. Нажмите, чтобы выбрать любимого бойца'}
-          className="group relative block aspect-[1.6] w-full overflow-hidden rounded-[18px] border border-line p-6 text-left shadow-[0_40px_120px_-40px_rgba(0,229,255,.45)] transition-[border-color,transform] duration-500 hover:-translate-y-1 hover:border-cyan/50 focus-visible:border-cyan"
-          style={{ background: 'radial-gradient(80% 90% at 0% 0%, #0e2440, #05070a 70%), #05070a' }}
+          className="group relative block aspect-[1.6] w-full overflow-hidden rounded-[18px] border border-line p-6 text-left shadow-[0_40px_120px_-40px_rgba(236,238,241,.45)] transition-[border-color,transform] duration-500 hover:-translate-y-1 hover:border-cyan/50 focus-visible:border-cyan"
+          style={{ background: 'radial-gradient(80% 90% at 0% 0%, #1C1C21, #060607 70%), #060607' }}
         >
           <div className="caustics" />
           <LogoMark className="absolute -right-10 -top-10 h-56 w-56 opacity-10" />
@@ -149,7 +149,7 @@ export function Cabinet({ fighters, events, videos }: { fighters: Fighter[]; eve
                   </span>
                 )}
               </div>
-              <div className="h-24 w-24 shrink-0 rounded bg-[#E8F1F8] p-2 sm:h-28 sm:w-28">
+              <div className="h-24 w-24 shrink-0 rounded bg-[#F2F2F3] p-2 sm:h-28 sm:w-28">
                 <QR text={`${site.url}/?fan=${id}`} />
               </div>
             </div>

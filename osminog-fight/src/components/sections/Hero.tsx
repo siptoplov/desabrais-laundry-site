@@ -8,7 +8,7 @@ import { fmtDate, fmtTime } from '@/lib/format';
 import { t } from '@/i18n';
 
 /**
- * Первый экран: бездна, чемпион лиги — чёрный осьминог, гигантский словесный знак с глитчем и «жидкостью»,
+ * Первый экран: арена, чемпион лиги — чёрный осьминог, гигантский хромовый словесный знак с глитчем и «жидкостью»,
  * живой таймер, CTA «Билеты» и «Смотреть бои».
  */
 export function Hero() {
@@ -19,9 +19,8 @@ export function Hero() {
   return (
     <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden pt-[var(--header-h)]" aria-labelledby="hero-title">
       {/* слои глубины */}
-      <div className="absolute inset-0 -z-20" style={{ background: 'radial-gradient(80% 70% at 70% 30%, #0e2440 0%, #0a1a2f 30%, #05070a 75%)' }} />
+      <div className="absolute inset-0 -z-20" style={{ background: 'radial-gradient(80% 70% at 70% 30%, #1C1C21 0%, #121215 30%, #060607 75%)' }} />
       <div className="godrays -z-10" />
-      <div className="caustics -z-10" />
       <HeroVisual className="absolute inset-0 -z-10" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-abyss via-abyss/60 to-transparent" />
 
@@ -36,7 +35,7 @@ export function Hero() {
           </span>
           <span
             aria-hidden="true"
-            className="display glitch t-mega block select-none [filter:drop-shadow(0_0_60px_rgba(0,229,255,.18))] hover:[filter:url(#liquid)]"
+            className="display glitch chrome t-mega block select-none [filter:drop-shadow(0_6px_30px_rgba(0,0,0,.6))_drop-shadow(0_0_40px_rgba(255,255,255,.08))] hover:[filter:url(#liquid)]"
             data-text="Осьминог"
           >
             Осьминог

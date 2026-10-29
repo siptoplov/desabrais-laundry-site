@@ -42,16 +42,16 @@ export default function NotFound() {
             />
             <defs>
               <linearGradient id="nfg" x1="0" y1="1" x2="0" y2="0">
-                <stop offset="0" stopColor="#05070a" />
-                <stop offset=".6" stopColor="#0e2440" />
-                <stop offset="1" stopColor="#00e5ff" />
+                <stop offset="0" stopColor="#060607" />
+                <stop offset=".6" stopColor="#1C1C21" />
+                <stop offset="1" stopColor="#ECEEF1" />
               </linearGradient>
             </defs>
           </svg>
         </div>
       </div>
       <style>{`
-        .nf-tentacle{stroke-dasharray:700;stroke-dashoffset:700;animation:nf-grab 1.4s .3s cubic-bezier(.16,1,.3,1) forwards, nf-sway 3s 1.7s ease-in-out infinite alternate;filter:drop-shadow(0 0 18px rgba(0,229,255,.35))}
+        .nf-tentacle{stroke-dasharray:700;stroke-dashoffset:700;animation:nf-grab 1.4s .3s cubic-bezier(.16,1,.3,1) forwards, nf-sway 3s 1.7s ease-in-out infinite alternate;filter:drop-shadow(0 0 18px rgba(236,238,241,.35))}
         .nf-page{animation:nf-drag 3.2s 1.6s cubic-bezier(.83,0,.17,1) infinite}
         @keyframes nf-grab{to{stroke-dashoffset:0}}
         @keyframes nf-sway{to{transform:translateX(6px) rotate(1deg)}}

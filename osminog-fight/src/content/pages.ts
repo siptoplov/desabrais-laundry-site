@@ -121,10 +121,10 @@ export const faq: FaqItem[] = [
 ];
 
 export const products: Product[] = [
-  { slug: 'tee-eight', name: 'Футболка «Восемь ударов»', kind: 'Футболка', tagline: 'Плотный хлопок, принт со светящимися щупальцами', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['#05070A', '#E8F1F8'], art: 'tee', status: 'soon' },
-  { slug: 'hoodie-abyss', name: 'Худи «Бездна»', kind: 'Худи', tagline: 'Оверсайз, вышитый знак на груди', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['#05070A', '#0A1A2F'], art: 'hoodie', status: 'soon' },
-  { slug: 'shorts-octagon', name: 'Шорты «Октагон»', kind: 'Шорты для тайского бокса', tagline: 'Сатин, разрезы по бокам, знак лиги', sizes: ['S', 'M', 'L', 'XL'], colors: ['#FF2B3A', '#05070A'], art: 'shorts', status: 'soon' },
-  { slug: 'gloves-grip', name: 'Перчатки «Хватка»', kind: 'Перчатки', tagline: '10 / 12 / 14 унций, натуральная кожа', sizes: ['10 oz', '12 oz', '14 oz'], colors: ['#FF2B3A', '#05070A'], art: 'gloves', status: 'soon' },
-  { slug: 'cap-ink', name: 'Кепка «Чернила»', kind: 'Кепка', tagline: 'Шестипанельная, вышивка циан', colors: ['#05070A'], art: 'cap', status: 'soon' },
+  { slug: 'tee-eight', name: 'Футболка «Восемь ударов»', kind: 'Футболка', tagline: 'Плотный хлопок, принт со светящимися щупальцами', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['#060607', '#F2F2F3'], art: 'tee', status: 'soon' },
+  { slug: 'hoodie-abyss', name: 'Худи «Бездна»', kind: 'Худи', tagline: 'Оверсайз, вышитый знак на груди', sizes: ['S', 'M', 'L', 'XL', 'XXL'], colors: ['#060607', '#121215'], art: 'hoodie', status: 'soon' },
+  { slug: 'shorts-octagon', name: 'Шорты «Октагон»', kind: 'Шорты для тайского бокса', tagline: 'Сатин, разрезы по бокам, знак лиги', sizes: ['S', 'M', 'L', 'XL'], colors: ['#FF2B3A', '#060607'], art: 'shorts', status: 'soon' },
+  { slug: 'gloves-grip', name: 'Перчатки «Хватка»', kind: 'Перчатки', tagline: '10 / 12 / 14 унций, натуральная кожа', sizes: ['10 oz', '12 oz', '14 oz'], colors: ['#FF2B3A', '#060607'], art: 'gloves', status: 'soon' },
+  { slug: 'cap-ink', name: 'Кепка «Чернила»', kind: 'Кепка', tagline: 'Шестипанельная, вышивка циан', colors: ['#060607'], art: 'cap', status: 'soon' },
   { slug: 'belt-replica', name: 'Пояс чемпиона — реплика', kind: 'Пояс-реплика', tagline: 'Металл, эмаль, кожа. Лимитированная серия', colors: ['#C9A44C'], art: 'belt', status: 'soon' },
 ];

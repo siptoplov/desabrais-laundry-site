@@ -54,7 +54,7 @@ export function FighterCard({ f, priority, size = 'md' }: { f: Fighter; priority
         )}
         {/* контровой свет */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-abyss via-abyss/10 to-transparent" />
-        <div className="pointer-events-none absolute inset-0 opacity-0 mix-blend-screen transition-opacity duration-700 group-hover:opacity-100" style={{ background: 'radial-gradient(60% 50% at 100% 30%, rgba(0,229,255,.35), transparent 70%), radial-gradient(50% 50% at 0% 40%, rgba(255,43,58,.3), transparent 70%)' }} />
+        <div className="pointer-events-none absolute inset-0 opacity-0 mix-blend-screen transition-opacity duration-700 group-hover:opacity-100" style={{ background: 'radial-gradient(60% 50% at 100% 30%, rgba(236,238,241,.35), transparent 70%), radial-gradient(50% 50% at 0% 40%, rgba(255,43,58,.3), transparent 70%)' }} />
         {/* щупальца-рамка */}
         <svg className="pointer-events-none absolute inset-0 h-full w-full text-cyan opacity-0 transition-opacity duration-500 group-hover:opacity-100" viewBox="0 0 100 125" preserveAspectRatio="none" fill="none" aria-hidden="true">
           <path d="M0 30 C 6 20, 4 8, 14 2" stroke="currentColor" strokeWidth=".6" className="[stroke-dasharray:40] [stroke-dashoffset:40] transition-[stroke-dashoffset] duration-700 group-hover:[stroke-dashoffset:0]" />

@@ -90,7 +90,7 @@ export function Footer() {
           <p className="display text-outline whitespace-nowrap text-center leading-[0.8]" style={{ fontSize: 'clamp(4rem, 19vw, 19rem)' }}>
             Осьминог
           </p>
-          <LogoMark className="absolute left-1/2 top-1/2 h-[18vw] max-h-[220px] w-[18vw] max-w-[220px] -translate-x-1/2 -translate-y-1/2 opacity-90 drop-shadow-[0_0_40px_rgba(0,229,255,.25)]" />
+          <LogoMark className="absolute left-1/2 top-1/2 h-[18vw] max-h-[220px] w-[18vw] max-w-[220px] -translate-x-1/2 -translate-y-1/2 opacity-90 drop-shadow-[0_0_40px_rgba(236,238,241,.25)]" />
         </div>
 
         <div className="mt-10 flex flex-col gap-6 text-[13px] text-faint md:flex-row md:items-center md:justify-between">

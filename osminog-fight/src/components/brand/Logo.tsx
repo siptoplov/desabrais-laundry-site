@@ -50,7 +50,7 @@ type MarkProps = {
 /** Знак: октагон-ринг + осьминог. */
 export function LogoMark({ className, mono, color = 'currentColor', eyes = '#FF2B3A', title = 'Осьминог', frame = true, animated }: MarkProps) {
   if (!animated) {
-    const style = { color, ['--osm-eye' as string]: mono ? 'var(--abyss, #05070A)' : eyes } as CSSProperties;
+    const style = { color, ['--osm-eye' as string]: mono ? 'var(--abyss, #060607)' : eyes } as CSSProperties;
     return (
       <svg viewBox="0 0 400 400" className={className} role="img" aria-label={title} style={style}>
         {frame && <use href="#osm-frame" />}
@@ -76,7 +76,7 @@ export function LogoMark({ className, mono, color = 'currentColor', eyes = '#FF2
         <path d={logoCollar} />
         <path d={logoHead} data-part="head" />
       </g>
-      <g data-part="eyes" fill={mono ? 'var(--abyss, #05070A)' : eyes}>
+      <g data-part="eyes" fill={mono ? 'var(--abyss, #060607)' : eyes}>
         {logoEyes.map((e, i) => (
           <ellipse key={i} cx={e.cx} cy={e.cy} rx="15" ry="7" transform={`rotate(${e.rot} ${e.cx} ${e.cy})`} />
         ))}

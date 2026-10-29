@@ -87,7 +87,7 @@ export function Gallery({ items, download = true, cols = 'sm:grid-cols-2 lg:grid
             </div>
           </div>
           <div className="relative flex flex-1 items-center justify-center px-14 pb-8">
-            <img src={asset(`${items[idx].src}-1080.webp`)} alt={items[idx].alt} className="max-h-full max-w-full rounded object-contain shadow-[0_40px_120px_-30px_rgba(0,229,255,.35)]" />
+            <img src={asset(`${items[idx].src}-1080.webp`)} alt={items[idx].alt} className="max-h-full max-w-full rounded object-contain shadow-[0_40px_120px_-30px_rgba(236,238,241,.35)]" />
             <button type="button" onClick={() => go(-1)} className="absolute left-2 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-line bg-abyss/60 hover:border-ice md:left-6" aria-label="Предыдущее">
               ←
             </button>

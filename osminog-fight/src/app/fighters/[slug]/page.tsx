@@ -79,7 +79,7 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
           ) : (
             <Silhouette f={f} className="absolute right-0 top-0 h-full w-full lg:w-[55%]" />
           )}
-          <div className="absolute inset-0 mix-blend-screen" style={{ background: 'radial-gradient(50% 60% at 95% 30%, rgba(0,229,255,.28), transparent 70%), radial-gradient(40% 50% at 40% 40%, rgba(255,43,58,.18), transparent 70%)' }} />
+          <div className="absolute inset-0 mix-blend-screen" style={{ background: 'radial-gradient(50% 60% at 95% 30%, rgba(236,238,241,.28), transparent 70%), radial-gradient(40% 50% at 40% 40%, rgba(255,43,58,.18), transparent 70%)' }} />
           <div className="absolute inset-0 bg-gradient-to-r from-abyss via-abyss/70 to-transparent lg:via-abyss/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-abyss via-transparent to-abyss/30" />
           <div className="caustics" />

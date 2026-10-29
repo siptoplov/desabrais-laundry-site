@@ -56,8 +56,8 @@ export function TentacleRule({ className = '' }: { className?: string }) {
       <path d="M0 20 C 200 -10, 300 50, 500 20 S 800 -10, 1000 20 S 1150 35, 1200 18" stroke="url(#tr-g)" strokeWidth="1.5" />
       <defs>
         <linearGradient id="tr-g" x1="0" x2="1">
-          <stop offset="0" stopColor="#00E5FF" stopOpacity="0" />
-          <stop offset=".5" stopColor="#00E5FF" stopOpacity=".7" />
+          <stop offset="0" stopColor="#ECEEF1" stopOpacity="0" />
+          <stop offset=".5" stopColor="#ECEEF1" stopOpacity=".7" />
           <stop offset="1" stopColor="#FF2B3A" stopOpacity="0" />
         </linearGradient>
       </defs>

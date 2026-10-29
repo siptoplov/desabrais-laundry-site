@@ -187,7 +187,7 @@ export default function Home() {
       {/* ───────── Билеты ───────── */}
       <section className="section relative overflow-hidden" aria-labelledby="tix-title">
         <div className="wrap relative">
-          <div className="relative overflow-hidden rounded-[var(--radius)] border border-line p-6 md:p-14" style={{ background: 'radial-gradient(70% 90% at 100% 0%, rgba(255,43,58,.18), transparent 60%), radial-gradient(60% 80% at 0% 100%, rgba(0,229,255,.12), transparent 60%), var(--abyss-2)' }}>
+          <div className="relative overflow-hidden rounded-[var(--radius)] border border-line p-6 md:p-14" style={{ background: 'radial-gradient(70% 90% at 100% 0%, rgba(255,43,58,.18), transparent 60%), radial-gradient(60% 80% at 0% 100%, rgba(236,238,241,.12), transparent 60%), var(--abyss-2)' }}>
             <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
               <div>
                 <p className="eyebrow mb-6">Билеты</p>

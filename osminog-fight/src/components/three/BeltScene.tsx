@@ -32,8 +32,8 @@ function useEmblemTexture() {
     c.width = c.height = 1024;
     const g = c.getContext('2d')!;
     const grd = g.createRadialGradient(512, 440, 60, 512, 512, 560);
-    grd.addColorStop(0, '#13233a');
-    grd.addColorStop(1, '#05070a');
+    grd.addColorStop(0, '#1D1D22');
+    grd.addColorStop(1, '#060607');
     g.fillStyle = grd;
     g.fillRect(0, 0, 1024, 1024);
     g.save();
@@ -173,7 +173,7 @@ export default function BeltScene({ className = '' }: { className?: string }) {
         <Env />
         <ambientLight intensity={0.2} />
         <directionalLight position={[-3, 4, 5]} intensity={2.2} color="#fff3e0" />
-        <pointLight position={[3, -1, 3]} intensity={18} color="#00e5ff" />
+        <pointLight position={[3, -1, 3]} intensity={18} color="#ECEEF1" />
         <pointLight position={[-4, 1, -2]} intensity={14} color="#ff2b3a" />
         <Belt drag={drag} />
       </Canvas>

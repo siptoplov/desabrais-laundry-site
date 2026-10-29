@@ -178,36 +178,36 @@ export function ArenaMap({ event }: { event: FightEvent }) {
           >
             <defs>
               <radialGradient id="ringGlow">
-                <stop offset="0" stopColor="#00e5ff" stopOpacity=".35" />
-                <stop offset="1" stopColor="#00e5ff" stopOpacity="0" />
+                <stop offset="0" stopColor="#ECEEF1" stopOpacity=".35" />
+                <stop offset="1" stopColor="#ECEEF1" stopOpacity="0" />
               </radialGradient>
             </defs>
             {/* сцена: экраны, вход, выход бойцов */}
-            <rect x="380" y="18" width="240" height="26" rx="3" fill="rgba(232,241,248,.08)" />
-            <text x="500" y="36" textAnchor="middle" fontSize="12" fill="rgba(232,241,248,.6)" fontFamily="var(--font-mono)" letterSpacing="3">
+            <rect x="380" y="18" width="240" height="26" rx="3" fill="rgba(242,242,243,.08)" />
+            <text x="500" y="36" textAnchor="middle" fontSize="12" fill="rgba(242,242,243,.6)" fontFamily="var(--font-mono)" letterSpacing="3">
               ЭКРАН
             </text>
             <path d="M40 700 L 330 520" stroke="rgba(255,43,58,.35)" strokeWidth="26" strokeLinecap="round" />
             <text x="120" y="660" fontSize="11" fill="rgba(255,120,130,.8)" fontFamily="var(--font-mono)" transform="rotate(-33 120 660)" letterSpacing="2">
               ВЫХОД БОЙЦОВ
             </text>
-            <text x="500" y="760" textAnchor="middle" fontSize="12" fill="rgba(232,241,248,.45)" fontFamily="var(--font-mono)" letterSpacing="3">
+            <text x="500" y="760" textAnchor="middle" fontSize="12" fill="rgba(242,242,243,.45)" fontFamily="var(--font-mono)" letterSpacing="3">
               ▼ ВХОД · ГАРДЕРОБ · БАР
             </text>
-            <rect x="842" y="350" width="60" height="80" rx="4" fill="rgba(232,241,248,.06)" />
-            <text x="872" y="394" textAnchor="middle" fontSize="11" fill="rgba(232,241,248,.4)" fontFamily="var(--font-mono)">
+            <rect x="842" y="350" width="60" height="80" rx="4" fill="rgba(242,242,243,.06)" />
+            <text x="872" y="394" textAnchor="middle" fontSize="11" fill="rgba(242,242,243,.4)" fontFamily="var(--font-mono)">
               ТВ
             </text>
 
             {/* ринг */}
             <circle cx={C.x} cy={C.y} r="150" fill="url(#ringGlow)" />
-            <rect x={C.x - RING / 2} y={C.y - RING / 2} width={RING} height={RING} fill="#0e2440" stroke="#e8f1f8" strokeOpacity=".5" />
+            <rect x={C.x - RING / 2} y={C.y - RING / 2} width={RING} height={RING} fill="#1C1C21" stroke="#F2F2F3" strokeOpacity=".5" />
             {[10, 20, 30].map((i) => (
-              <rect key={i} x={C.x - RING / 2 + i / 2} y={C.y - RING / 2 + i / 2} width={RING - i} height={RING - i} fill="none" stroke="#e8f1f8" strokeOpacity=".12" />
+              <rect key={i} x={C.x - RING / 2 + i / 2} y={C.y - RING / 2 + i / 2} width={RING - i} height={RING - i} fill="none" stroke="#F2F2F3" strokeOpacity=".12" />
             ))}
             <rect x={C.x - RING / 2 - 4} y={C.y - RING / 2 - 4} width="10" height="10" fill="#ff2b3a" />
-            <rect x={C.x + RING / 2 - 6} y={C.y + RING / 2 - 6} width="10" height="10" fill="#00e5ff" />
-            <text x={C.x} y={C.y + 6} textAnchor="middle" fontSize="20" fill="#e8f1f8" fontFamily="var(--font-display)" fontWeight="900" fontStyle="italic">
+            <rect x={C.x + RING / 2 - 6} y={C.y + RING / 2 - 6} width="10" height="10" fill="#ECEEF1" />
+            <text x={C.x} y={C.y + 6} textAnchor="middle" fontSize="20" fill="#F2F2F3" fontFamily="var(--font-display)" fontWeight="900" fontStyle="italic">
               РИНГ
             </text>
 

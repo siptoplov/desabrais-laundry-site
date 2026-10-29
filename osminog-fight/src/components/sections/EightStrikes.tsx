@@ -40,20 +40,20 @@ export function EightStrikes() {
         <div className="wrap relative grid items-center gap-10 lg:grid-cols-[1fr_1fr]">
           {/* знак с сегментами */}
           <div className="relative mx-auto aspect-square w-[min(78vw,560px)]" aria-hidden="true">
-            <div className="absolute inset-0 rounded-full blur-3xl transition-opacity duration-700" style={{ background: 'radial-gradient(circle, rgba(0,229,255,.25), transparent 60%)', opacity: step >= 4 ? 1 : 0.35 }} />
+            <div className="absolute inset-0 rounded-full blur-3xl transition-opacity duration-700" style={{ background: 'radial-gradient(circle, rgba(236,238,241,.25), transparent 60%)', opacity: step >= 4 ? 1 : 0.35 }} />
             <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full" fill="none">
               {octagon.map((d, i) => (
                 <path
                   key={i}
                   d={d}
-                  stroke={lit(i) ? (step >= 4 ? '#FF2B3A' : '#00E5FF') : 'rgba(232,241,248,.12)'}
+                  stroke={lit(i) ? (step >= 4 ? '#FF2B3A' : '#ECEEF1') : 'rgba(242,242,243,.12)'}
                   strokeWidth="14"
-                  style={{ transition: 'stroke .5s, filter .5s', filter: lit(i) ? `drop-shadow(0 0 10px ${step >= 4 ? '#FF2B3A' : '#00E5FF'})` : 'none' }}
+                  style={{ transition: 'stroke .5s, filter .5s', filter: lit(i) ? `drop-shadow(0 0 10px ${step >= 4 ? '#FF2B3A' : '#ECEEF1'})` : 'none' }}
                 />
               ))}
             </svg>
             <div className="absolute inset-[18%] transition-transform duration-700" style={{ transform: `scale(${0.86 + step * 0.035})` }}>
-              <LogoMark frame={false} className="h-full w-full" eyes={step >= 4 ? '#FF2B3A' : '#2a3a4d'} />
+              <LogoMark frame={false} className="h-full w-full" eyes={step >= 4 ? '#FF2B3A' : '#2A2A30'} />
             </div>
             <span className="display-upright absolute -bottom-2 left-1/2 -translate-x-1/2 text-[13px] tracking-[0.3em] text-mute">
               <span className="mono">{String(Math.min(8, (step + 1) * 2)).padStart(2, '0')} / 08</span>

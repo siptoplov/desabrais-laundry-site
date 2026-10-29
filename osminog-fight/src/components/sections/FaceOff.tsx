@@ -45,7 +45,7 @@ function Portrait({ f, s, side, setSide }: { f: Fighter; s: 'red' | 'blue'; side
           className={`h-full w-full object-cover ${s === 'blue' ? 'object-[60%_20%]' : 'object-[40%_20%]'}`}
         />
         {/* контровой свет угла */}
-        <div className="pointer-events-none absolute inset-0 mix-blend-screen" style={{ background: s === 'red' ? 'radial-gradient(70% 60% at 0% 35%, rgba(255,43,58,.45), transparent 65%)' : 'radial-gradient(70% 60% at 100% 35%, rgba(0,229,255,.4), transparent 65%)' }} />
+        <div className="pointer-events-none absolute inset-0 mix-blend-screen" style={{ background: s === 'red' ? 'radial-gradient(70% 60% at 0% 35%, rgba(255,43,58,.45), transparent 65%)' : 'radial-gradient(70% 60% at 100% 35%, rgba(236,238,241,.4), transparent 65%)' }} />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-abyss via-abyss/20 to-transparent" />
         <div className={`pointer-events-none absolute inset-0 ${s === 'red' ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-abyss via-transparent to-transparent`} />
       </div>
@@ -105,7 +105,7 @@ export function FaceOff({ red, blue, bout, title, eventTitle, eventHref }: { red
 
         {/* сравнение */}
         <div className="relative order-last col-span-2 flex flex-col justify-center gap-4 px-0 py-10 lg:order-none lg:col-span-1 lg:px-8">
-          <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-line-strong to-transparent lg:block" style={{ background: 'linear-gradient(transparent, rgba(232,241,248,.18), transparent)' }} />
+          <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-line-strong to-transparent lg:block" style={{ background: 'linear-gradient(transparent, rgba(242,242,243,.18), transparent)' }} />
           <div className="relative mb-2 flex items-center justify-center" aria-hidden="true">
             <span className="display-upright text-outline text-[clamp(4rem,8vw,7rem)] leading-none">VS</span>
           </div>
@@ -152,8 +152,8 @@ export function FaceOff({ red, blue, bout, title, eventTitle, eventHref }: { red
                             style={{
                               width: inView ? `${(r.b / max) * 100}%` : '0%',
                               transitionDelay: `${i * 0.08}s`,
-                              background: 'linear-gradient(90deg, #00e5ff, rgba(0,229,255,.4))',
-                              boxShadow: side === 'blue' ? '0 0 14px #00e5ff' : 'none',
+                              background: 'linear-gradient(90deg, #ECEEF1, rgba(236,238,241,.4))',
+                              boxShadow: side === 'blue' ? '0 0 14px #ECEEF1' : 'none',
                             }}
                           />
                         </div>

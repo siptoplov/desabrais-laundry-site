@@ -23,7 +23,7 @@ function blobPath(r: number) {
   return d + 'Z';
 }
 
-export function impact(x: number, y: number, color = '#05070A') {
+export function impact(x: number, y: number, color = '#060607') {
   play('punch');
   if (reduced()) return;
 

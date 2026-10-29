@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <PageHero eyebrow={`С ${site.since} года`} title={['Восемь', <span key="s" className="text-outline-accent">щупалец</span>]} lead={about.mission} crumbs={[{ name: 'О лиге', path: '/about/' }]} aside={<LogoMark className="mx-auto h-auto w-full max-w-[420px] drop-shadow-[0_0_60px_rgba(0,229,255,.25)]" />} />
+      <PageHero eyebrow={`С ${site.since} года`} title={['Восемь', <span key="s" className="text-outline-accent">щупалец</span>]} lead={about.mission} crumbs={[{ name: 'О лиге', path: '/about/' }]} aside={<LogoMark className="mx-auto h-auto w-full max-w-[420px] drop-shadow-[0_0_60px_rgba(236,238,241,.25)]" />} />
 
       {/* Манифест */}
       <section className="section-tight">
@@ -42,7 +42,7 @@ export default function AboutPage() {
           <ol className="relative flex flex-col border-l border-line pl-8">
             {about.history.map((h, i) => (
               <li key={h.year} className="relative pb-12 last:pb-0" data-reveal="" style={{ ['--d' as string]: `${i * 0.06}s` }}>
-                <span className="absolute -left-[39px] top-2 h-4 w-4 rounded-full border-2 border-cyan bg-abyss shadow-[0_0_12px_rgba(0,229,255,.6)]" aria-hidden="true" />
+                <span className="absolute -left-[39px] top-2 h-4 w-4 rounded-full border-2 border-cyan bg-abyss shadow-[0_0_12px_rgba(236,238,241,.6)]" aria-hidden="true" />
                 <p className="display-upright text-[56px] leading-none text-accent">{h.year}</p>
                 <p className="mt-3 max-w-2xl text-[17px] leading-relaxed text-mute">{h.text}</p>
               </li>

@@ -124,7 +124,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           </div>
           <div className="relative">
             {e.poster ? (
-              <img src={asset(`${e.poster}-560.webp`)} srcSet={posterSrcSet(e.poster)} sizes="440px" alt={`Постер ${e.title}`} width={560} height={700} className="w-full rounded-[var(--radius)] border border-line shadow-[0_50px_120px_-40px_rgba(0,229,255,.35)]" fetchPriority="high" />
+              <img src={asset(`${e.poster}-560.webp`)} srcSet={posterSrcSet(e.poster)} sizes="440px" alt={`Постер ${e.title}`} width={560} height={700} className="w-full rounded-[var(--radius)] border border-line shadow-[0_50px_120px_-40px_rgba(236,238,241,.35)]" fetchPriority="high" />
             ) : (
               <TypoPoster e={e} className="aspect-[4/5] w-full rounded-[var(--radius)] border border-line" />
             )}
@@ -288,13 +288,13 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             {/* стилизованная «карта»: сетка улиц и маркер */}
             <svg viewBox="0 0 400 300" className="absolute inset-0 h-full w-full">
               {Array.from({ length: 14 }, (_, i) => (
-                <line key={`h${i}`} x1="0" y1={i * 24 + 6} x2="400" y2={i * 24 - 30} stroke="rgba(232,241,248,.06)" />
+                <line key={`h${i}`} x1="0" y1={i * 24 + 6} x2="400" y2={i * 24 - 30} stroke="rgba(242,242,243,.06)" />
               ))}
               {Array.from({ length: 18 }, (_, i) => (
-                <line key={`v${i}`} x1={i * 26} y1="0" x2={i * 26 + 40} y2="300" stroke="rgba(232,241,248,.05)" />
+                <line key={`v${i}`} x1={i * 26} y1="0" x2={i * 26 + 40} y2="300" stroke="rgba(242,242,243,.05)" />
               ))}
-              <path d="M-10 210 C 120 170, 230 190, 410 90" stroke="rgba(0,229,255,.5)" strokeWidth="6" fill="none" />
-              <text x="250" y="132" fill="rgba(232,241,248,.5)" fontSize="10" fontFamily="var(--font-mono)" transform="rotate(-18 250 132)">
+              <path d="M-10 210 C 120 170, 230 190, 410 90" stroke="rgba(236,238,241,.5)" strokeWidth="6" fill="none" />
+              <text x="250" y="132" fill="rgba(242,242,243,.5)" fontSize="10" fontFamily="var(--font-mono)" transform="rotate(-18 250 132)">
                 {(e.address?.split(',')[0] ?? e.city).toUpperCase()}
               </text>
               <circle cx="200" cy="168" r="40" fill="rgba(255,43,58,.12)">

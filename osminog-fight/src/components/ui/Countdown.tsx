@@ -53,7 +53,7 @@ export function Countdown({ date, since, size = 'xl', className = '' }: Props) {
   return (
     <div className={`flex flex-col gap-3 ${className}`} role="timer" aria-live="off" aria-label={label}>
       <span className="mono flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-mute">
-        <span className={`inline-block h-2 w-2 rounded-full ${mode === 'since' ? 'bg-cyan shadow-[0_0_10px_#00e5ff]' : 'bg-blood shadow-[0_0_10px_#ff2b3a]'} animate-pulse`} />
+        <span className={`inline-block h-2 w-2 rounded-full ${mode === 'since' ? 'bg-cyan shadow-[0_0_10px_#ECEEF1]' : 'bg-blood shadow-[0_0_10px_#ff2b3a]'} animate-pulse`} />
         {label}
       </span>
       {mode === 'live' ? (

@@ -71,12 +71,12 @@ export function EdgeTentacles() {
         const a = anchors[i];
         const x = a.side === 0 ? -14 : w + 14;
         const grad = ctx.createLinearGradient(x, 0, a.side === 0 ? x + w * 0.3 : x - w * 0.3, 0);
-        grad.addColorStop(0, 'rgba(14,36,64,0.95)');
-        grad.addColorStop(1, 'rgba(5,7,10,0.9)');
+        grad.addColorStop(0, 'rgba(28,28,33,0.95)');
+        grad.addColorStop(1, 'rgba(6,6,7,0.9)');
         drawTentacle(
           ctx,
           { ...b, x, y: a.y * h, length: b.length * Math.min(w, 1400), reach: reach[i] },
-          { fill: grad, rim: `rgba(0,229,255,${0.18 + energy * 0.35})`, sucker: 'rgba(232,241,248,0.10)', rimWidth: 1.2 },
+          { fill: grad, rim: `rgba(236,238,241,${0.18 + energy * 0.35})`, sucker: 'rgba(242,242,243,0.10)', rimWidth: 1.2 },
           time,
         );
       });

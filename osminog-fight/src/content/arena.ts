@@ -17,7 +17,7 @@ export const zones: Zone[] = [
   { id: 'ringside', name: 'Ringside', price: 155.5, color: '#FF2B3A', perks: 'Первый ряд у канатов. Слышно каждый удар.' },
   { id: 'vip', name: 'VIP', price: 135, color: '#E9C46A', perks: 'Столы у ринга, отдельный вход, обслуживание.' },
   { id: 'lounge', name: 'Lounge', price: 110, color: '#B78CFF', perks: 'Ложи на 6 мест, бар, лучший обзор на выход бойцов.' },
-  { id: 'parter', name: 'Партер', price: 85, color: '#00E5FF', perks: 'Ряды вдоль ринга. Центр событий.' },
+  { id: 'parter', name: 'Партер', price: 85, color: '#ECEEF1', perks: 'Ряды вдоль ринга. Центр событий.' },
   { id: 'tribune', name: 'Трибуна', price: 55, color: '#7FA3C7', perks: 'Амфитеатр. Видно всё — от ринга до экранов.' },
 ];
 

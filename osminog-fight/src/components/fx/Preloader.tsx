@@ -59,9 +59,9 @@ export function Preloader() {
     <div ref={root} className="preloader" aria-hidden="true">
       <div className="pl-stage">
         <svg className="pl-eight" viewBox="0 0 200 320" fill="none">
-          <path d="M100 160 C 30 120, 30 30, 100 30 C 170 30, 170 120, 100 160 C 25 200, 25 290, 100 290 C 175 290, 175 200, 100 160 Z" stroke="#00E5FF" strokeWidth="6" strokeLinecap="round" pathLength={1} />
+          <path d="M100 160 C 30 120, 30 30, 100 30 C 170 30, 170 120, 100 160 C 25 200, 25 290, 100 290 C 175 290, 175 200, 100 160 Z" stroke="#ECEEF1" strokeWidth="6" strokeLinecap="round" pathLength={1} />
         </svg>
-        <LogoMark className="pl-logo" color="#E8F1F8" animated />
+        <LogoMark className="pl-logo" color="#F2F2F3" animated />
         <div className="pl-meta mono">
           <span>Удар</span>
           <span data-count>00</span>
@@ -69,19 +69,19 @@ export function Preloader() {
         </div>
       </div>
       <style>{`
-        .preloader{position:fixed;inset:0;z-index:300;background:radial-gradient(70% 60% at 50% 45%,#0a1a2f 0%,#05070a 70%);display:grid;place-items:center;animation:pl-out .9s 2.75s cubic-bezier(.83,0,.17,1) forwards}
+        .preloader{position:fixed;inset:0;z-index:300;background:radial-gradient(70% 60% at 50% 45%,#121215 0%,#060607 70%);display:grid;place-items:center;animation:pl-out .9s 2.75s cubic-bezier(.83,0,.17,1) forwards}
         html.no-intro .preloader{display:none}
         .pl-stage{position:relative;width:min(56vmin,420px);aspect-ratio:1;display:grid;place-items:center;opacity:0;animation:pl-in .4s ease-out forwards,pl-stage-out .6s 2.6s cubic-bezier(.7,0,.84,0) forwards}
-        .pl-eight{position:absolute;width:38%;filter:drop-shadow(0 0 14px rgba(0,229,255,.8));animation:pl-eight-out .45s 1s cubic-bezier(.7,0,.84,0) forwards}
+        .pl-eight{position:absolute;width:38%;filter:drop-shadow(0 0 14px rgba(236,238,241,.8));animation:pl-eight-out .45s 1s cubic-bezier(.7,0,.84,0) forwards}
         .pl-eight path{stroke-dasharray:1;stroke-dashoffset:1;animation:pl-draw 1s .1s cubic-bezier(.65,0,.35,1) forwards}
-        .pl-logo{width:100%;height:100%;filter:drop-shadow(0 0 30px rgba(0,229,255,.25))}
+        .pl-logo{width:100%;height:100%;filter:drop-shadow(0 0 30px rgba(236,238,241,.25))}
         .pl-logo [data-seg]{opacity:0;transform-box:fill-box;transform-origin:center;animation:pl-seg .5s cubic-bezier(.16,1,.3,1) forwards}
         ${Array.from({ length: 7 }, (_, i) => `.pl-logo [data-seg="${i}"]{animation-delay:${(HIT0 + i * HIT_STEP) / 1000}s}`).join('')}
         .pl-logo [data-part="body"]>path{opacity:0;animation:pl-rise .8s 1.55s cubic-bezier(.16,1,.3,1) forwards}
         .pl-logo [data-t]{opacity:0;transform-box:view-box;transform-origin:200px 200px;animation:pl-tent 1.1s cubic-bezier(.34,1.56,.64,1) forwards}
         ${Array.from({ length: 8 }, (_, i) => `.pl-logo [data-t="${i}"]{animation-delay:${(1.6 + i * 0.04).toFixed(2)}s}`).join('')}
         .pl-logo [data-part="eyes"]{opacity:0;animation:pl-eyes .5s 2.05s steps(1) forwards}
-        .pl-meta{position:absolute;bottom:-56px;left:50%;transform:translateX(-50%);display:flex;gap:10px;font-size:12px;letter-spacing:.3em;color:rgba(232,241,248,.6);text-transform:uppercase}
+        .pl-meta{position:absolute;bottom:-56px;left:50%;transform:translateX(-50%);display:flex;gap:10px;font-size:12px;letter-spacing:.3em;color:rgba(242,242,243,.6);text-transform:uppercase}
         .pl-meta [data-count]{color:#ff2b3a;min-width:2ch}
         .preloader::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;mix-blend-mode:screen;animation:pl-flash .5s 2.55s ease-out}
         @keyframes pl-in{to{opacity:1}}

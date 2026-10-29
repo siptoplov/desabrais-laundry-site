@@ -29,7 +29,7 @@ export function Cursor() {
       const r = el.getBoundingClientRect();
       const x = e.clientX || r.left + r.width / 2;
       const y = e.clientY || r.top + r.height / 2;
-      impact(x, y, el.dataset.impact === 'light' ? '#E8F1F8' : '#05070A');
+      impact(x, y, el.dataset.impact === 'light' ? '#F2F2F3' : '#060607');
     };
     document.addEventListener('click', onClick);
     return () => document.removeEventListener('click', onClick);
@@ -172,14 +172,14 @@ export function Cursor() {
       <style>{`
         .osm-cursor{position:fixed;left:0;top:0;z-index:250;pointer-events:none;opacity:0;transition:opacity .3s;mix-blend-mode:normal;display:none}
         html.has-cursor .osm-cursor{display:block}
-        .osm-cursor__iris{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(232,241,248,.9);background:radial-gradient(circle,rgba(0,229,255,.22) 0%,rgba(0,229,255,.06) 55%,transparent 70%);display:grid;place-items:center;transition:width .35s cubic-bezier(.16,1,.3,1),height .35s cubic-bezier(.16,1,.3,1),left .35s cubic-bezier(.16,1,.3,1),top .35s cubic-bezier(.16,1,.3,1),border-color .3s,background .3s,transform .16s;box-shadow:0 0 18px rgba(0,229,255,.25)}
-        .osm-cursor__pupil{width:12px;height:5px;border-radius:3px;background:#E8F1F8;transition:width .3s,height .3s,background .3s;will-change:transform}
-        .osm-cursor__label{position:absolute;left:0;top:0;transform:translate(-50%,-50%);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#05070A;font-weight:700;opacity:0;transition:opacity .2s;white-space:nowrap}
+        .osm-cursor__iris{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(242,242,243,.9);background:radial-gradient(circle,rgba(236,238,241,.22) 0%,rgba(236,238,241,.06) 55%,transparent 70%);display:grid;place-items:center;transition:width .35s cubic-bezier(.16,1,.3,1),height .35s cubic-bezier(.16,1,.3,1),left .35s cubic-bezier(.16,1,.3,1),top .35s cubic-bezier(.16,1,.3,1),border-color .3s,background .3s,transform .16s;box-shadow:0 0 18px rgba(236,238,241,.25)}
+        .osm-cursor__pupil{width:12px;height:5px;border-radius:3px;background:#F2F2F3;transition:width .3s,height .3s,background .3s;will-change:transform}
+        .osm-cursor__label{position:absolute;left:0;top:0;transform:translate(-50%,-50%);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#060607;font-weight:700;opacity:0;transition:opacity .2s;white-space:nowrap}
         .osm-cursor.is-blink .osm-cursor__iris{transform:scaleY(.08)}
         .osm-cursor.is-down .osm-cursor__iris{transform:scale(.75)}
-        .osm-cursor[data-mode=link] .osm-cursor__iris{left:-24px;top:-24px;width:48px;height:48px;border-color:var(--accent);background:radial-gradient(circle,rgba(0,229,255,.18),transparent 70%)}
+        .osm-cursor[data-mode=link] .osm-cursor__iris{left:-24px;top:-24px;width:48px;height:48px;border-color:var(--accent);background:radial-gradient(circle,rgba(236,238,241,.18),transparent 70%)}
         .osm-cursor[data-mode=link] .osm-cursor__pupil{width:16px;height:9px;background:var(--accent)}
-        .osm-cursor[data-mode=cta] .osm-cursor__iris,.osm-cursor[data-mode=play] .osm-cursor__iris,.osm-cursor[data-mode=drag] .osm-cursor__iris,.osm-cursor[data-mode=view] .osm-cursor__iris{left:-42px;top:-42px;width:84px;height:84px;border-color:transparent;background:#E8F1F8;box-shadow:0 0 40px rgba(232,241,248,.35)}
+        .osm-cursor[data-mode=cta] .osm-cursor__iris,.osm-cursor[data-mode=play] .osm-cursor__iris,.osm-cursor[data-mode=drag] .osm-cursor__iris,.osm-cursor[data-mode=view] .osm-cursor__iris{left:-42px;top:-42px;width:84px;height:84px;border-color:transparent;background:#F2F2F3;box-shadow:0 0 40px rgba(242,242,243,.35)}
         .osm-cursor[data-mode=cta] .osm-cursor__iris{background:#FF2B3A;box-shadow:0 0 50px rgba(255,43,58,.6)}
         .osm-cursor[data-mode=cta] .osm-cursor__label{color:#fff}
         .osm-cursor[data-mode=cta] .osm-cursor__pupil,.osm-cursor[data-mode=play] .osm-cursor__pupil,.osm-cursor[data-mode=drag] .osm-cursor__pupil,.osm-cursor[data-mode=view] .osm-cursor__pupil{opacity:0}

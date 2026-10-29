@@ -135,7 +135,7 @@ export function BoutRow({ bout, eventSlug, defaultOpen, vote = true }: { bout: B
                           type="button"
                           onClick={() => doVote(s)}
                           aria-pressed={on}
-                          className={`flex items-center justify-center gap-2 rounded border px-3 py-3 font-display text-[19px] font-[800] uppercase transition-all ${on ? (s === 'red' ? 'border-blood bg-blood text-white shadow-[0_0_24px_rgba(255,43,58,.5)]' : 'border-cyan bg-cyan text-abyss shadow-[0_0_24px_rgba(0,229,255,.45)]') : 'border-line text-mute hover:border-ice hover:text-ice'}`}
+                          className={`flex items-center justify-center gap-2 rounded border px-3 py-3 font-display text-[19px] font-[800] uppercase transition-all ${on ? (s === 'red' ? 'border-blood bg-blood text-white shadow-[0_0_24px_rgba(255,43,58,.5)]' : 'border-cyan bg-cyan text-abyss shadow-[0_0_24px_rgba(236,238,241,.45)]') : 'border-line text-mute hover:border-ice hover:text-ice'}`}
                         >
                           {on && '✓ '}
                           {c.short}
