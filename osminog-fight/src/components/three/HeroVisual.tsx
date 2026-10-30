@@ -4,6 +4,7 @@
  * Чемпион лиги — чёрный осьминог в красных перчатках — на арене (ключевой арт; значки на нём — прежний логотип лиги).
  *  • картинка сразу (она же LCP), поверх — дым, горящие глаза и лёгкий параллакс за курсором;
  *  • на десктопе персонаж справа и уходит в темноту к заголовку, на телефоне — по центру;
+ *  • если текст первого экрана поднимается до глаз (узкие и низкие окна) — арт приподнимается над ним;
  *  • reduced-motion — без пульса и дыма (их гасят общие правила в globals.css).
  */
 import { useEffect, useRef } from 'react';
@@ -15,10 +16,31 @@ const EYES = [
   { x: 37.3, y: 26 },
   { x: 45.3, y: 25.5 },
 ];
+/** Линия под глазами (доля высоты арта) — выше неё текст не заходит */
+const EYE_LINE = 0.3;
 
 export function HeroVisual({ className = '' }: { className?: string }) {
   const { heroArt, heroArtFocus } = site.media;
+  const box = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
+
+  // приподнимаем арт, чтобы глаза были над первой строкой текста, но не уходили под шапку
+  useEffect(() => {
+    const section = box.current?.closest('section');
+    const text = section?.querySelector<HTMLElement>('[data-hero-text]');
+    if (!box.current || !section || !text) return;
+    const fit = () => {
+      const h = box.current?.clientHeight ?? 0;
+      const header = parseFloat(getComputedStyle(section).paddingTop) || 0;
+      const need = h * EYE_LINE + 16 - text.offsetTop;
+      const room = h * EYES[0].y / 100 - header - 12;
+      layer.current?.style.setProperty('top', `${-Math.round(Math.max(0, Math.min(need, room)))}px`);
+    };
+    const ro = new ResizeObserver(fit);
+    ro.observe(box.current);
+    ro.observe(text);
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -42,13 +64,19 @@ export function HeroVisual({ className = '' }: { className?: string }) {
 
   return (
     <div className={className} aria-hidden="true">
-      <div className="absolute inset-0 overflow-hidden [mask-image:linear-gradient(to_bottom,black_60%,transparent)] md:[mask-image:linear-gradient(to_bottom,black_62%,transparent)]">
+      <div ref={box} className="absolute inset-0 overflow-hidden">
         <div
           ref={layer}
           className="absolute top-0 h-full max-md:left-1/2 max-md:-translate-x-[var(--focus)] md:right-0 [aspect-ratio:972/941] transition-[translate] duration-700 ease-out md:[mask-image:linear-gradient(to_right,transparent,black_38%)]"
           style={{ ['--focus' as string]: `${heroArtFocus}%` }}
         >
-          <img src={asset(heroArt)} alt="" fetchPriority="high" className="absolute inset-0 h-full w-full object-cover" />
+          {/* затухание вниз — на самой картинке, чтобы при подъёме не было края */}
+          <img
+            src={asset(heroArt)}
+            alt=""
+            fetchPriority="high"
+            className="absolute inset-0 h-full w-full object-cover [mask-image:linear-gradient(to_bottom,black_60%,transparent)] md:[mask-image:linear-gradient(to_bottom,black_62%,transparent)]"
+          />
           {EYES.map((e, i) => (
             <span
               key={i}

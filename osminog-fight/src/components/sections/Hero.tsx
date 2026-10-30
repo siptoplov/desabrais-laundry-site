@@ -25,7 +25,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-abyss via-abyss/60 to-transparent" />
 
       <div className="wrap flex flex-1 flex-col justify-end pb-10 md:pb-14">
-        <p className="eyebrow mb-6" data-reveal="load">
+        <p className="eyebrow mb-6" data-reveal="load" data-hero-text>
           {site.league} · Минск · с {site.since}
         </p>
 
@@ -35,7 +35,7 @@ export function Hero() {
           </span>
           <span
             aria-hidden="true"
-            className="display glitch chrome t-mega block select-none [filter:drop-shadow(0_6px_30px_rgba(0,0,0,.6))_drop-shadow(0_0_40px_rgba(255,255,255,.08))] hover:[filter:url(#liquid)]"
+            className="display glitch chrome t-mega block select-none [font-size:clamp(5.2rem,min(21vw,34svh),22rem)] [filter:drop-shadow(0_6px_30px_rgba(0,0,0,.6))_drop-shadow(0_0_40px_rgba(255,255,255,.08))] hover:[filter:url(#liquid)]"
             data-text="Осьминог"
           >
             Осьминог
