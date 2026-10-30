@@ -2,6 +2,7 @@
 
 /**
  * Плавный скролл Lenis — только для мыши/тачпада (на телефонах нативный скролл лучше).
+ * Крутится от тикера GSAP и обновляет ScrollTrigger — скролл-анимации идут в такт с прокруткой.
  * Библиотека грузится лениво, в простое браузера, и не мешает первому экрану.
  * Отключается при prefers-reduced-motion.
  */
@@ -20,9 +21,14 @@ export function SmoothScroll() {
     let cancelled = false;
     let cleanup = () => {};
     const start = async () => {
-      const { default: LenisCtor } = await import('lenis');
+      const [{ default: LenisCtor }, { gsap }, { ScrollTrigger }] = await Promise.all([import('lenis'), import('gsap'), import('gsap/ScrollTrigger')]);
       if (cancelled) return;
-      lenis = new LenisCtor({ lerp: 0.1, smoothWheel: true, autoRaf: true });
+      gsap.registerPlugin(ScrollTrigger);
+      lenis = new LenisCtor({ lerp: 0.1, smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      const raf = (t: number) => lenis?.raf(t * 1000);
+      gsap.ticker.add(raf);
+      gsap.ticker.lagSmoothing(0);
       // якорные ссылки — плавно
       const onClick = (e: MouseEvent) => {
         const a = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
@@ -37,6 +43,7 @@ export function SmoothScroll() {
       document.addEventListener('click', onClick);
       cleanup = () => {
         document.removeEventListener('click', onClick);
+        gsap.ticker.remove(raf);
         lenis?.destroy();
         lenis = null;
       };

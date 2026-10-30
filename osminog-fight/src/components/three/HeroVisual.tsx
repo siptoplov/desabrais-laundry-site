@@ -5,9 +5,11 @@
  *  • картинка сразу (она же LCP), поверх — дым, горящие глаза и лёгкий параллакс за курсором;
  *  • на десктопе персонаж справа и уходит в темноту к заголовку, на телефоне — по центру;
  *  • если текст первого экрана поднимается до глаз (узкие и низкие окна) — арт приподнимается над ним;
- *  • reduced-motion — без пульса и дыма (их гасят общие правила в globals.css).
+ *  • при прокрутке (GSAP ScrollTrigger) арт медленно наезжает и уходит в темноту;
+ *  • reduced-motion — без пульса, дыма и наезда (их гасят общие правила в globals.css).
  */
 import { useEffect, useRef } from 'react';
+import { HeroFog } from '@/components/fx/HeroFog';
 import { site } from '@/content/site';
 import { asset } from '@/lib/asset';
 
@@ -40,6 +42,27 @@ export function HeroVisual({ className = '' }: { className?: string }) {
     ro.observe(box.current);
     ro.observe(text);
     return () => ro.disconnect();
+  }, []);
+
+  // наезд камеры при прокрутке первого экрана
+  useEffect(() => {
+    const el = box.current;
+    const section = el?.closest('section');
+    if (!el || !section || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let revert = () => {};
+    let cancelled = false;
+    void Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
+      const ctx = gsap.context(() => {
+        gsap.to(el, { scale: 1.12, yPercent: 6, opacity: 0.35, ease: 'none', scrollTrigger: { trigger: section, start: 'top top', end: 'bottom top', scrub: true } });
+      });
+      revert = () => ctx.revert();
+    });
+    return () => {
+      cancelled = true;
+      revert();
+    };
   }, []);
 
   useEffect(() => {
@@ -86,7 +109,8 @@ export function HeroVisual({ className = '' }: { className?: string }) {
           ))}
         </div>
       </div>
-      {/* дым поверх бойца, у пола */}
+      {/* дым поверх бойца: живой (Vanta) на компьютере, CSS — у пола везде */}
+      <HeroFog className="absolute inset-0" />
       <div className="caustics" />
       {/* на телефоне — затемнение под текстом */}
       <div className="absolute inset-0 bg-abyss/40 md:hidden" />
