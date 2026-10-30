@@ -869,24 +869,14 @@
     }
   }
 
-  /* Упрощённая версия для тех, кто просит меньше движения */
+  /* «Уменьшить движение» в системе: сайт остаётся живым (ленты, дым, свечение, проявления),
+     убираем только резкие сдвиги — блоки проявляются на месте, без выезда */
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.001ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
+    html {
       scroll-behavior: auto !important;
-    }
-    .grain,
-    .caustics,
-    .godrays {
-      display: none;
     }
     .js [data-reveal],
     .js [data-split] .split-line > span {
-      opacity: 1 !important;
       transform: none !important;
     }
   }

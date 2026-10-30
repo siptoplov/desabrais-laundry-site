@@ -51,8 +51,7 @@ export const viewport: Viewport = {
  */
 function headScript(fightDay: string | null) {
   return `(function(){try{var d=document.documentElement;d.classList.add('js');
-var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(rm||sessionStorage.getItem('osm:intro')==='1'){d.classList.add('no-intro')}else{d.classList.add('is-loading')}
+if(sessionStorage.getItem('osm:intro')==='1'){d.classList.add('no-intro')}else{d.classList.add('is-loading')}
 var m=JSON.parse(localStorage.getItem('osm:mode')||'"auto"');
 var fd=${JSON.stringify(fightDay)};
 var today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Minsk'}).format(new Date());

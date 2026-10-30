@@ -6,7 +6,6 @@
  *  • на десктопе персонаж справа и уходит в темноту к заголовку, на телефоне — по центру;
  *  • если текст первого экрана поднимается до глаз (узкие и низкие окна) — арт приподнимается над ним;
  *  • при прокрутке (GSAP ScrollTrigger) арт медленно наезжает и уходит в темноту;
- *  • reduced-motion — без пульса, дыма и наезда (их гасят общие правила в globals.css).
  */
 import { useEffect, useRef } from 'react';
 import { HeroFog } from '@/components/fx/HeroFog';
@@ -48,7 +47,7 @@ export function HeroVisual({ className = '' }: { className?: string }) {
   useEffect(() => {
     const el = box.current;
     const section = el?.closest('section');
-    if (!el || !section || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!el || !section) return;
     let revert = () => {};
     let cancelled = false;
     void Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {

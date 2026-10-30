@@ -17,7 +17,7 @@ export function Chronicle() {
   const [desktop, setDesktop] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 900px) and (hover: hover) and (prefers-reduced-motion: no-preference)');
+    const mq = window.matchMedia('(min-width: 900px) and (hover: hover)');
     const measure = () => {
       setDesktop(mq.matches);
       if (track.current) setDist(Math.max(0, track.current.scrollWidth - window.innerWidth));

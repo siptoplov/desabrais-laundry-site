@@ -13,7 +13,6 @@ export function BeltVisual({ className = '' }: { className?: string }) {
   useEffect(() => {
     const ok = (() => {
       try {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
         if (new URLSearchParams(location.search).has('lite')) return false;
         const c = document.createElement('canvas');
         return !!(c.getContext('webgl2') || c.getContext('webgl'));

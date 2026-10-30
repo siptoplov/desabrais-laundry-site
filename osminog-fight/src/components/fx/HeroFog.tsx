@@ -2,7 +2,7 @@
 
 /**
  * Живой дым арены поверх чемпиона — Vanta FOG (three.js), смешение «экран»: чёрное не видно, светлое — дым.
- * Только мышь/тачпад и без reduced-motion; грузится лениво, в простое, после первого экрана.
+ * Только мышь/тачпад; грузится лениво, в простое, после первого экрана.
  * На телефонах остаётся лёгкий CSS-дым (.caustics).
  */
 import { useEffect, useRef } from 'react';
@@ -11,7 +11,7 @@ export function HeroFog({ className = '' }: { className?: string }) {
   const el = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     let fx: { destroy: () => void } | null = null;
     let cancelled = false;
     const start = async () => {

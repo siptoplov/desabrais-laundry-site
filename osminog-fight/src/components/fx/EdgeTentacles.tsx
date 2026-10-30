@@ -3,7 +3,7 @@
 /**
  * Щупальца по краям экрана. Проявляются при скролле (тянутся внутрь на скорости),
  * медленно втягиваются в покое. Canvas 2D, ≤ 1.5x DPR, пауза в фоновой вкладке.
- * На узких экранах и при reduced-motion — отключены.
+ * На узких экранах — отключены.
  */
 import { useEffect, useRef } from 'react';
 import { drawTentacle, type TentacleSpec } from '@/lib/tentacle';
@@ -13,7 +13,7 @@ export function EdgeTentacles() {
 
   useEffect(() => {
     const canvas = ref.current!;
-    const mq = window.matchMedia('(min-width: 900px) and (prefers-reduced-motion: no-preference)');
+    const mq = window.matchMedia('(min-width: 900px)');
     if (!mq.matches || new URLSearchParams(location.search).has('lite')) return;
     const ctx = canvas.getContext('2d')!;
     let w = 0;

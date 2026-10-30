@@ -14,14 +14,13 @@ export function Observers() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (!e.isIntersecting) continue;
           const el = e.target as HTMLElement;
           el.classList.add('is-in');
-          if (el.dataset.countTo) countUp(el, reduce);
+          if (el.dataset.countTo) countUp(el);
           io.unobserve(el);
         }
       },
@@ -40,35 +39,29 @@ export function Observers() {
     const visible = new Set<Element>();
     const gio = new IntersectionObserver((entries) => entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target))));
     document.querySelectorAll('.glitch').forEach((el) => gio.observe(el));
-    const gt = reduce
-      ? 0
-      : window.setInterval(() => {
-          const arr = Array.from(visible);
-          if (!arr.length) return;
-          const el = arr[Math.floor(Math.random() * arr.length)];
-          el.classList.add('is-glitching');
-          window.setTimeout(() => el.classList.remove('is-glitching'), 430);
-        }, 2600);
+    const gt = window.setInterval(() => {
+      const arr = Array.from(visible);
+      if (!arr.length) return;
+      const el = arr[Math.floor(Math.random() * arr.length)];
+      el.classList.add('is-glitching');
+      window.setTimeout(() => el.classList.remove('is-glitching'), 430);
+    }, 2600);
 
     return () => {
       io.disconnect();
       mo.disconnect();
       clearTimeout(pending);
       gio.disconnect();
-      if (gt) clearInterval(gt);
+      clearInterval(gt);
     };
   }, [pathname]);
 
   return null;
 }
 
-function countUp(el: HTMLElement, reduce: boolean) {
+function countUp(el: HTMLElement) {
   const to = parseFloat(el.dataset.countTo || '0');
   const dec = (el.dataset.countTo || '').includes('.') ? 1 : 0;
-  if (reduce) {
-    el.textContent = to.toFixed(dec);
-    return;
-  }
   const start = performance.now();
   const dur = 1400;
   const step = (now: number) => {

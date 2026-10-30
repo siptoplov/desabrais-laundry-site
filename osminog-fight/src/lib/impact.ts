@@ -1,11 +1,10 @@
 /**
  * «Удар»: чернильная клякса из точки клика + микротряска экрана + вспышка + звук.
- * Вызывается на главных CTA. Уважает prefers-reduced-motion.
+ * Вызывается на главных CTA.
  */
 'use client';
 import { play } from './sound';
 
-const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /** Органичная клякса: случайный «звёздчатый» контур с брызгами */
 function blobPath(r: number) {
@@ -25,7 +24,6 @@ function blobPath(r: number) {
 
 export function impact(x: number, y: number, color = '#060607') {
   play('punch');
-  if (reduced()) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(ns, 'svg');

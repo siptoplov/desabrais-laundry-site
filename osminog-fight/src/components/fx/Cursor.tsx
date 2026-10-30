@@ -40,7 +40,6 @@ export function Cursor() {
     if (!fine || !eye.current) return;
     const root = document.documentElement;
     root.classList.add('has-cursor');
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const pos = { x: innerWidth / 2, y: innerHeight / 2 };
     const cur = { x: pos.x, y: pos.y };
@@ -97,7 +96,7 @@ export function Cursor() {
     };
 
     const applyMagnet = (e: PointerEvent) => {
-      if (!magnet || reduce) return;
+      if (!magnet) return;
       const r = magnet.getBoundingClientRect();
       const dx = e.clientX - (r.left + r.width / 2);
       const dy = e.clientY - (r.top + r.height / 2);
@@ -121,7 +120,7 @@ export function Cursor() {
     };
 
     const loop = () => {
-      const k = reduce ? 1 : 0.22;
+      const k = 0.22;
       const nx = cur.x + (pos.x - cur.x) * k;
       const ny = cur.y + (pos.y - cur.y) * k;
       vel.x = vel.x * 0.8 + (nx - cur.x) * 0.2;
@@ -138,7 +137,7 @@ export function Cursor() {
     raf = requestAnimationFrame(loop);
 
     const blink = window.setInterval(() => {
-      if (document.hidden || reduce) return;
+      if (document.hidden) return;
       eye.current?.classList.add('is-blink');
       window.setTimeout(() => eye.current?.classList.remove('is-blink'), 160);
     }, 5200);
