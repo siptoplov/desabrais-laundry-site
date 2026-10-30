@@ -71,9 +71,13 @@ export function FighterCard({ f, priority, size = 'md' }: { f: Fighter; priority
         <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-4">
           <div className="flex items-center gap-2 text-[12px] text-mute">
             <Flag code={f.country} />
-            <span className="mono uppercase tracking-[0.12em]">
-              {f.disciplines.map((d) => disciplines[d].short).join(' · ')}
-              {f.weightKg ? ` · ${String(f.weightKg).replace('.', ',')} кг` : ''}
+            {/* на телефоне карточка узкая — только вес, без списка стилей */}
+            <span className="mono truncate uppercase tracking-[0.12em]">
+              <span className="max-sm:hidden">
+                {f.disciplines.map((d) => disciplines[d].short).join(' · ')}
+                {f.weightKg && f.disciplines.length ? ' · ' : ''}
+              </span>
+              {f.weightKg ? `${String(f.weightKg).replace('.', ',')} кг` : ''}
             </span>
           </div>
           <h3 className="display leading-[0.85]">

@@ -88,7 +88,7 @@ export function FighterCatalog({ fighters }: { fighters: Fighter[] }) {
 
   return (
     <div>
-      <div className="sticky top-[var(--header-h)] z-30 -mx-[var(--gutter)] mb-10 border-y border-line bg-abyss/85 px-[var(--gutter)] py-4 backdrop-blur-xl">
+      <div className="z-30 md:sticky md:top-[var(--header-h)] -mx-[var(--gutter)] mb-10 border-y border-line bg-abyss/85 px-[var(--gutter)] py-4 backdrop-blur-xl">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-3 md:flex-row md:items-center">
             <label className="relative flex-1">

@@ -35,14 +35,14 @@ function Avatar({ c, side }: { c: ResolvedCorner; side: 'red' | 'blue' }) {
 function CornerCell({ c, side, winner }: { c: ResolvedCorner; side: 'red' | 'blue'; winner?: boolean }) {
   const f = c.fighter;
   const body = (
-    <div className={`flex min-w-0 items-center gap-3 md:gap-4 ${side === 'blue' ? 'flex-row-reverse text-right' : ''}`}>
+    <div className={`flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-3 md:gap-4 ${side === 'blue' ? 'items-end text-right sm:flex-row-reverse' : 'items-start'}`}>
       <Avatar c={c} side={side} />
       <div className="min-w-0">
         <div className={`flex items-center gap-2 ${side === 'blue' ? 'justify-end' : ''}`}>
           {f && <Flag code={f.country} />}
           {winner && <span className="chip chip-cyan">Победа</span>}
         </div>
-        <p className="display truncate text-[clamp(1.35rem,2.2vw,2.1rem)] leading-[0.9]">
+        <p className="display text-[1.2rem] leading-[0.95] [overflow-wrap:anywhere] sm:truncate sm:text-[clamp(1.35rem,2.2vw,2.1rem)] sm:leading-[0.9]">
           {f?.firstName && <span className="hidden text-mute 2xl:inline">{f.firstName} </span>}
           {f ? f.lastName : c.name}
         </p>
@@ -83,7 +83,7 @@ export function BoutRow({ bout, eventSlug, defaultOpen, vote = true }: { bout: B
   return (
     <div className={`relative overflow-hidden rounded-[var(--radius)] border transition-colors ${open ? 'border-cyan/40 bg-deep/40' : 'border-line bg-abyss-2/60 hover:border-line-strong'} ${major ? 'shadow-[0_0_0_1px_rgba(255,43,58,.15)]' : ''}`} style={{ borderColor: undefined }}>
       {major && <div className="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-blood" aria-hidden="true" />}
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-4 md:gap-6 md:px-6">
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 px-3 py-4 sm:gap-3 sm:px-4 md:gap-6 md:px-6">
         <CornerCell c={red} side="red" winner={bout.result?.winner === 'red'} />
         <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls={id} className="group flex flex-col items-center gap-1 px-1 text-center">
           <span className="mono hidden text-[10px] uppercase tracking-[0.16em] text-accent sm:block">{positionLabel[bout.position]}</span>

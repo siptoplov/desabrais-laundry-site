@@ -26,7 +26,7 @@ export function Hero() {
 
       <div className="wrap flex flex-1 flex-col justify-end pb-10 md:pb-14">
         <p className="eyebrow mb-6" data-reveal="load" data-hero-text>
-          {site.league} · Минск · с {site.since}
+          <span className="max-md:hidden">{site.league} · </span>Минск · с {site.since}
         </p>
 
         <h1 id="hero-title" className="relative">
@@ -54,7 +54,7 @@ export function Hero() {
           <div className="flex flex-col gap-8">
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3" data-reveal="load" style={{ ['--d' as string]: '.2s' }}>
               {next && (
-                <Link href={`/events/${next.slug}/`} className="group flex items-center gap-4">
+                <Link href={`/events/${next.slug}/`} className="group flex flex-wrap items-center gap-x-4 gap-y-2">
                   <span className="chip chip-blood">Следующий</span>
                   <span className="display-upright text-[28px] transition-colors group-hover:text-accent">{next.title}</span>
                   <span className="mono text-[12px] uppercase tracking-[0.18em] text-mute">
