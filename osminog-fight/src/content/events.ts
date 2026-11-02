@@ -63,6 +63,7 @@ export const events: FightEvent[] = [
     bouts: [
       {
         id: 'o10-main',
+        result: { winner: 'red', method: 'KO', round: 1, note: 'Хай-кик в первом раунде' },
         red: 'mamedov',
         blue: 'totmyanin',
         discipline: 'k1',
@@ -74,6 +75,7 @@ export const events: FightEvent[] = [
       },
       {
         id: 'o10-comain',
+        result: { winner: 'red', method: 'UD' },
         red: 'bobko',
         blue: 'bashirov',
         discipline: 'k1',
@@ -85,6 +87,7 @@ export const events: FightEvent[] = [
       },
       {
         id: 'o10-yak-erm',
+        result: { winner: 'blue', method: 'DEC', round: 4, note: 'Решение по экстра-раунду. Якимович — лучший боец вечера, после боя увезён с рассечением' },
         red: 'yakimovich',
         blue: 'ermolenko',
         discipline: 'k1',
@@ -96,6 +99,7 @@ export const events: FightEvent[] = [
       },
       {
         id: 'o10-ban-elh',
+        result: { winner: 'red', method: 'UD' },
         red: 'bangura',
         blue: 'elhami',
         discipline: 'k1',
@@ -105,13 +109,13 @@ export const events: FightEvent[] = [
         headline: 'К-1 в перчатках ММА',
         note: 'Харизматичный боец из Беларуси против непобеждённого в кикбоксинге универсала из Ирана.',
       },
-      { id: 'o10-u1', rutube: 'b441fb45208e08c3f47b32b4182bf4cd', red: 'chernovalov', blue: 'alimardani', discipline: 'k1', position: 'undercard' },
+      { id: 'o10-u1', rutube: 'b441fb45208e08c3f47b32b4182bf4cd', red: 'chernovalov', blue: 'alimardani', discipline: 'k1', position: 'undercard', result: { winner: 'blue', method: 'TKO', round: 2 } },
       { id: 'o10-u2', rutube: '209738a9bd7996aafb66a7d8f53327e2', red: 'burmistrov', blue: 'dzaurov', discipline: 'mma', position: 'undercard' },
-      { id: 'o10-u3', rutube: 'a9aaa0b8ebaf194cf673e361428adb8c', red: 'voronik', blue: 'sharamko', discipline: 'k1', position: 'undercard' },
+      { id: 'o10-u3', rutube: 'a9aaa0b8ebaf194cf673e361428adb8c', red: 'voronik', blue: 'sharamko', discipline: 'k1', position: 'undercard', result: { winner: 'red', method: 'KO', note: 'Лучший нокаут вечера' } },
       { id: 'o10-u4', rutube: '17e088a6c59a4020b42580b236680c83', red: 'kulbakov', blue: 'tsurov', discipline: 'mma', position: 'undercard' },
-      { id: 'o10-u5', rutube: '5d3b03fbcca50a98aba0390f54f16d9d', red: 'lysenko', blue: 'kudryashov', discipline: 'muaythai', position: 'undercard' },
-      { id: 'o10-u6', rutube: '19fb563e2e0352b301fc128be6dfb261', red: 'marchukevich', blue: 'abdulov', discipline: 'boxing', position: 'undercard' },
-      { id: 'o10-u7', rutube: '51978298375599f615736b96c7cab4a2', red: 'krisanov', blue: 'valetov', discipline: 'boxing', position: 'undercard' },
+      { id: 'o10-u5', rutube: '5d3b03fbcca50a98aba0390f54f16d9d', red: 'lysenko', blue: 'kudryashov', discipline: 'muaythai', position: 'undercard', result: { winner: 'blue', method: 'SD' } },
+      { id: 'o10-u6', rutube: '19fb563e2e0352b301fc128be6dfb261', red: 'marchukevich', blue: 'abdulov', discipline: 'boxing', position: 'undercard', result: { winner: 'blue', method: 'TKO' } },
+      { id: 'o10-u7', rutube: '51978298375599f615736b96c7cab4a2', red: 'krisanov', blue: 'valetov', discipline: 'boxing', position: 'undercard', result: { winner: 'blue', note: 'Профессиональный дебют Валетова' } },
     ],
     tickets: {
       status: 'closed',
