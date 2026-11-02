@@ -3,6 +3,7 @@ import { Hero } from '@/components/sections/Hero';
 import { FaceOff } from '@/components/sections/FaceOff';
 import { EightStrikes } from '@/components/sections/EightStrikes';
 import { Chronicle } from '@/components/sections/Chronicle';
+import { FanZone } from '@/components/sections/FanZone';
 import { Subscribe } from '@/components/forms/Subscribe';
 import { Btn } from '@/components/ui/Btn';
 import { PartnerLogo } from '@/components/ui/PartnerLogo';
@@ -14,7 +15,7 @@ import { LogoMark } from '@/components/brand/Logo';
 import { zones } from '@/content/arena';
 import { partners, site } from '@/content/site';
 import { rubaha } from '@/content/pages';
-import { fullName, getFighter, getFighters, getLatestPast, getNews, getUpcoming, getVideos, legends, positionRank } from '@/lib/cms';
+import { fullName, getEvents, getFighter, getFighters, getLatestPast, getNews, getUpcoming, getVideos, legends, positionRank } from '@/lib/cms';
 import { asset, posterSrcSet } from '@/lib/asset';
 import { fmtDate, fmtMoney } from '@/lib/format';
 import { eventJsonLd, JsonLd } from '@/lib/seo';
@@ -151,6 +152,15 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ───────── Карта болельщика ───────── */}
+      <section className="section relative overflow-hidden" aria-label="Карта болельщика">
+        <Depth rays={false} />
+        <div className="wrap">
+          <SectionHead eyebrow="Карта болельщика" title={['За кого', <span key="s" className="text-blood">болеешь?</span>]} lead="Нажми на карту, выбери своего бойца из всех бойцов лиги и поставь ему сердечко — здесь появятся его рекорд, статистика и все бои с записями." />
+          <FanZone fighters={getFighters()} events={getEvents()} videos={getVideos()} compact />
         </div>
       </section>
 

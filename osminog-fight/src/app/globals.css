@@ -869,6 +869,29 @@
     }
   }
 
+  /* карта болельщика: блик пробегает по карте, сердечко «бьётся» при выборе */
+  .fan-card__shine {
+    position: absolute;
+    inset: -50% auto -50% -60%;
+    width: 40%;
+    transform: rotate(18deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09), transparent);
+    animation: fan-shine 5.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes fan-shine {
+    0%, 55% { left: -60%; }
+    100% { left: 130%; }
+  }
+  .heart-pop {
+    animation: heart-pop 0.6s cubic-bezier(0.2, 1.6, 0.4, 1);
+  }
+  @keyframes heart-pop {
+    0% { transform: scale(0.4); }
+    60% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+  }
+
   /* «Уменьшить движение» в системе: сайт остаётся живым (ленты, дым, свечение, проявления),
      убираем только резкие сдвиги — блоки проявляются на месте, без выезда */
   @media (prefers-reduced-motion: reduce) {

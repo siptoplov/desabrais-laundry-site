@@ -96,3 +96,47 @@ export const outcomeLabel: Record<Outcome, string> = {
 };
 
 export const videoUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;
+
+export interface FighterAnalytics {
+  /** Победы досрочно (KO / TKO / сдача) и по решению */
+  finishes: number;
+  decisions: number;
+  /** Текущая серия по известным итогам, от последнего боя */
+  streak: { outcome: 'win' | 'loss' | 'draw'; n: number } | null;
+  /** Форма — последние 5 официальных боёв, от нового к старому */
+  form: Outcome[];
+  /** Итоги по дисциплинам */
+  byDiscipline: { discipline: Discipline; fights: number; wins: number; losses: number }[];
+  /** Доля побед среди боёв с известным итогом, 0–100; null — итогов нет */
+  winRate: number | null;
+}
+
+export function analyticsOf(bouts: FighterBout[]): FighterAnalytics {
+  const official = bouts.filter((b) => !b.exhibition && b.outcome !== 'upcoming');
+  const known = official.filter((b) => b.outcome === 'win' || b.outcome === 'loss' || b.outcome === 'draw');
+  const wins = known.filter((b) => b.outcome === 'win');
+  const finishes = wins.filter((b) => ['KO', 'TKO', 'SUB'].includes(b.bout.result?.method ?? '')).length;
+  let streak: FighterAnalytics['streak'] = null;
+  for (const b of known) {
+    const o = b.outcome as 'win' | 'loss' | 'draw';
+    if (!streak) streak = { outcome: o, n: 1 };
+    else if (streak.outcome === o) streak.n++;
+    else break;
+  }
+  const map = new Map<Discipline, { discipline: Discipline; fights: number; wins: number; losses: number }>();
+  for (const b of official) {
+    const d = map.get(b.bout.discipline) ?? { discipline: b.bout.discipline, fights: 0, wins: 0, losses: 0 };
+    d.fights++;
+    if (b.outcome === 'win') d.wins++;
+    if (b.outcome === 'loss') d.losses++;
+    map.set(b.bout.discipline, d);
+  }
+  return {
+    finishes,
+    decisions: wins.length - finishes,
+    streak,
+    form: official.slice(0, 5).map((b) => b.outcome),
+    byDiscipline: Array.from(map.values()).sort((a, b) => b.fights - a.fights),
+    winRate: known.length ? Math.round((wins.length / known.length) * 100) : null,
+  };
+}
