@@ -7,7 +7,7 @@
  * • Продажи скоро → выбор сохраняется, оформляется заявка «сообщить о старте продаж».
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { blocks, lounges, promoCodes, ticketRules, zones, type ZoneId } from '@/content/arena';
+import { boxes, promoCodes, ringsideRows, sectors, ticketRules, zones, type ZoneId } from '@/content/arena';
 import type { FightEvent } from '@/content/types';
 import { SmartForm } from '@/components/forms/FormKit';
 import { fmtMoney, pad, plural } from '@/lib/format';
@@ -16,31 +16,56 @@ import { play } from '@/lib/sound';
 
 type Seat = { id: string; zone: ZoneId; x: number; y: number; label: string; row: string; num: number };
 
-const C = { x: 500, y: 390 };
-const RING = 150;
-const GAP = 18;
+/** Ринг на танцполе; амфитеатр расходится дугами от точки O (центр зала) */
+const C = { x: 500, y: 555 };
+const RING = 116;
+const O = { x: 500, y: 610 };
+const GAP = 17;
+const R0 = 215;
+const BOX_R = 400;
+
+const polar = (deg: number, r: number) => ({ x: O.x + Math.sin((deg * Math.PI) / 180) * r, y: O.y - Math.cos((deg * Math.PI) / 180) * r });
+
+/** Центры столиков лож балкона */
+const boxCenters = Array.from({ length: boxes.count }, (_, i) => polar(-80 + (160 * i) / (boxes.count - 1), BOX_R));
 
 function buildSeats(): Seat[] {
   const out: Seat[] = [];
-  for (const b of blocks) {
-    for (let r = 0; r < b.rows; r++) {
-      for (let s = 0; s < b.seats; s++) {
-        const along = (s - (b.seats - 1) / 2) * GAP;
-        const out_ = RING / 2 + b.offset + r * GAP;
-        const pos =
-          b.side === 'N' ? { x: C.x + along, y: C.y - out_ } : b.side === 'S' ? { x: C.x + along, y: C.y + out_ } : b.side === 'E' ? { x: C.x + out_, y: C.y + along } : { x: C.x - out_, y: C.y + along };
-        out.push({ id: `${b.id}-${r + 1}-${s + 1}`, zone: b.zone, ...pos, label: b.label, row: String(r + 1), num: s + 1 });
+  // ringside: ряды слева, справа и сверху от ринга
+  for (let r = 0; r < ringsideRows; r++) {
+    const off = RING / 2 + 20 + r * GAP;
+    const n = Math.round((RING + 40) / GAP);
+    for (let k = 0; k < n; k++) {
+      const along = (k - (n - 1) / 2) * GAP;
+      out.push({ id: `RS-N-${r + 1}-${k + 1}`, zone: 'ringside', x: C.x + along, y: C.y - off, label: 'Ringside · у ринга', row: String(r + 1), num: k + 1 });
+    }
+    for (const [side, sx] of [['W', -1], ['E', 1]] as const) {
+      const m = Math.round((RING + 10) / GAP);
+      for (let k = 0; k < m; k++) {
+        out.push({ id: `RS-${side}-${r + 1}-${k + 1}`, zone: 'ringside', x: C.x + sx * off, y: C.y - RING / 2 + 6 + k * GAP, label: side === 'W' ? 'Ringside · слева' : 'Ringside · справа', row: String(r + 1), num: k + 1 });
       }
     }
   }
-  const corners = { NW: [220, 150], NE: [780, 150], SE: [780, 630], SW: [220, 630] } as const;
-  for (const l of lounges) {
-    const [cx, cy] = corners[l.corner];
-    for (let i = 0; i < 6; i++) {
-      const a = (i / 6) * Math.PI * 2;
-      out.push({ id: `${l.id}-${i + 1}`, zone: 'lounge', x: cx + Math.cos(a) * 26, y: cy + Math.sin(a) * 26, label: `Lounge · ${l.label}`, row: l.label, num: i + 1 });
+  // амфитеатр: сектора A–E
+  for (const sc of sectors) {
+    for (let r = 0; r < sc.rows; r++) {
+      const rad = R0 + r * GAP;
+      const arc = ((sc.to - sc.from) * Math.PI * rad) / 180;
+      const n = Math.max(2, Math.floor(arc / GAP));
+      for (let k = 0; k < n; k++) {
+        const deg = sc.from + ((sc.to - sc.from) * (k + 0.5)) / n;
+        const zone: ZoneId = r < sc.vipRows ? 'vip' : sc.zone;
+        out.push({ id: `${sc.id}-${r + 1}-${k + 1}`, zone, ...polar(deg, rad), label: sc.label, row: String(r + 1), num: k + 1 });
+      }
     }
   }
+  // балкон: ложи со столиком
+  boxCenters.forEach((c, i) => {
+    for (let k = 0; k < boxes.seats; k++) {
+      const a = (k / boxes.seats) * Math.PI * 2 + Math.PI / 4;
+      out.push({ id: `L${i + 1}-${k + 1}`, zone: 'lounge', x: c.x + Math.cos(a) * 15, y: c.y + Math.sin(a) * 15, label: `Балкон · ложа ${i + 1}`, row: `Ложа ${i + 1}`, num: k + 1 });
+    }
+  });
   return out;
 }
 
@@ -182,32 +207,47 @@ export function ArenaMap({ event }: { event: FightEvent }) {
                 <stop offset="1" stopColor="#ECEEF1" stopOpacity="0" />
               </radialGradient>
             </defs>
-            {/* сцена: экраны, вход, выход бойцов */}
-            <rect x="380" y="18" width="240" height="26" rx="3" fill="rgba(242,242,243,.08)" />
-            <text x="500" y="36" textAnchor="middle" fontSize="12" fill="rgba(242,242,243,.6)" fontFamily="var(--font-mono)" letterSpacing="3">
-              ЭКРАН
+            {/* сцена с экраном — в торце, ринг на танцполе перед ней */}
+            <rect x="330" y="712" width="340" height="40" rx="4" fill="rgba(242,242,243,.1)" stroke="rgba(242,242,243,.25)" />
+            <text x="500" y="737" textAnchor="middle" fontSize="13" fill="rgba(242,242,243,.7)" fontFamily="var(--font-mono)" letterSpacing="4">
+              СЦЕНА · ЭКРАН
             </text>
-            <path d="M40 700 L 330 520" stroke="rgba(255,43,58,.35)" strokeWidth="26" strokeLinecap="round" />
-            <text x="120" y="660" fontSize="11" fill="rgba(255,120,130,.8)" fontFamily="var(--font-mono)" transform="rotate(-33 120 660)" letterSpacing="2">
+            <path d={`M500 712 L500 ${C.y + RING / 2 + 6}`} stroke="rgba(255,43,58,.4)" strokeWidth="22" />
+            <text x="512" y="690" fontSize="10" fill="rgba(255,120,130,.9)" fontFamily="var(--font-mono)" letterSpacing="2">
               ВЫХОД БОЙЦОВ
             </text>
-            <text x="500" y="760" textAnchor="middle" fontSize="12" fill="rgba(242,242,243,.45)" fontFamily="var(--font-mono)" letterSpacing="3">
-              ▼ ВХОД · ГАРДЕРОБ · БАР
+            <rect x="330" y={C.y - RING / 2 - 62} width="340" height={RING + 130} rx="10" fill="none" stroke="rgba(242,242,243,.12)" strokeDasharray="4 6" />
+            <text x="340" y={C.y + RING / 2 + 58} fontSize="10" fill="rgba(242,242,243,.35)" fontFamily="var(--font-mono)" letterSpacing="2">
+              ТАНЦПОЛ
             </text>
-            <rect x="842" y="350" width="60" height="80" rx="4" fill="rgba(242,242,243,.06)" />
-            <text x="872" y="394" textAnchor="middle" fontSize="11" fill="rgba(242,242,243,.4)" fontFamily="var(--font-mono)">
-              ТВ
+            {/* подписи секторов и балкона */}
+            {sectors.map((sc) => {
+              const p = { x: O.x + Math.sin((((sc.from + sc.to) / 2) * Math.PI) / 180) * (R0 - 20), y: O.y - Math.cos((((sc.from + sc.to) / 2) * Math.PI) / 180) * (R0 - 20) };
+              return (
+                <text key={sc.id} x={p.x} y={p.y} textAnchor="middle" fontSize="11" fill="rgba(242,242,243,.45)" fontFamily="var(--font-mono)" letterSpacing="2">
+                  {sc.label.toUpperCase()}
+                </text>
+              );
+            })}
+            <text x="500" y={O.y - BOX_R - 28} textAnchor="middle" fontSize="11" fill="rgba(183,140,255,.7)" fontFamily="var(--font-mono)" letterSpacing="3">
+              БАЛКОН · ЛОЖИ
+            </text>
+            {boxCenters.map((c, i) => (
+              <circle key={i} cx={c.x} cy={c.y} r="7" fill="rgba(183,140,255,.18)" stroke="#B78CFF" strokeOpacity=".4" pointerEvents="none" />
+            ))}
+            <text x="500" y="772" textAnchor="middle" fontSize="11" fill="rgba(242,242,243,.4)" fontFamily="var(--font-mono)" letterSpacing="3">
+              ВХОД · ГАРДЕРОБ · БАР — ПО БОКАМ ЗАЛА
             </text>
 
             {/* ринг */}
-            <circle cx={C.x} cy={C.y} r="150" fill="url(#ringGlow)" />
+            <circle cx={C.x} cy={C.y} r="120" fill="url(#ringGlow)" />
             <rect x={C.x - RING / 2} y={C.y - RING / 2} width={RING} height={RING} fill="#1C1C21" stroke="#F2F2F3" strokeOpacity=".5" />
             {[10, 20, 30].map((i) => (
               <rect key={i} x={C.x - RING / 2 + i / 2} y={C.y - RING / 2 + i / 2} width={RING - i} height={RING - i} fill="none" stroke="#F2F2F3" strokeOpacity=".12" />
             ))}
             <rect x={C.x - RING / 2 - 4} y={C.y - RING / 2 - 4} width="10" height="10" fill="#ff2b3a" />
             <rect x={C.x + RING / 2 - 6} y={C.y + RING / 2 - 6} width="10" height="10" fill="#ECEEF1" />
-            <text x={C.x} y={C.y + 6} textAnchor="middle" fontSize="20" fill="#F2F2F3" fontFamily="var(--font-display)" fontWeight="900" fontStyle="italic">
+            <text x={C.x} y={C.y + 6} textAnchor="middle" fontSize="18" fill="#F2F2F3" fontFamily="var(--font-display)" fontWeight="900" fontStyle="italic">
               РИНГ
             </text>
 
@@ -220,17 +260,13 @@ export function ArenaMap({ event }: { event: FightEvent }) {
               return (
                 <g key={s.id} onClick={() => toggle(s.id)} onMouseEnter={() => setHover(s)} style={{ cursor: 'pointer' }} opacity={dim ? 0.18 : 1}>
                   {isL ? (
-                    <circle cx={s.x} cy={s.y} r={on ? 9 : 7} fill={on ? '#fff' : z.color} fillOpacity={on ? 1 : 0.75} stroke={on ? z.color : 'none'} strokeWidth="3" />
+                    <circle cx={s.x} cy={s.y} r={on ? 7 : 5.5} fill={on ? '#fff' : z.color} fillOpacity={on ? 1 : 0.75} stroke={on ? z.color : 'none'} strokeWidth="3" />
                   ) : (
-                    <rect x={s.x - 6.5} y={s.y - 6.5} width="13" height="13" rx="3" fill={on ? '#fff' : z.color} fillOpacity={on ? 1 : 0.6} stroke={on ? z.color : 'none'} strokeWidth="3" />
+                    <rect x={s.x - 6} y={s.y - 6} width="12" height="12" rx="3" fill={on ? '#fff' : z.color} fillOpacity={on ? 1 : 0.6} stroke={on ? z.color : 'none'} strokeWidth="3" />
                   )}
-                  {on && !isL && <rect x={s.x - 11} y={s.y - 11} width="22" height="22" rx="5" fill="none" stroke="#fff" strokeOpacity=".35" />}
+                  {on && !isL && <rect x={s.x - 10} y={s.y - 10} width="20" height="20" rx="5" fill="none" stroke="#fff" strokeOpacity=".35" />}
                 </g>
               );
-            })}
-            {lounges.map((l) => {
-              const [cx, cy] = { NW: [220, 150], NE: [780, 150], SE: [780, 630], SW: [220, 630] }[l.corner];
-              return <circle key={l.id} cx={cx} cy={cy} r="44" fill="none" stroke="#B78CFF" strokeOpacity=".35" strokeDasharray="3 5" pointerEvents="none" />;
             })}
           </svg>
 
@@ -248,7 +284,7 @@ export function ArenaMap({ event }: { event: FightEvent }) {
             </div>
           )}
         </div>
-        <p className="text-[12px] text-faint">Схема — ориентировочная раскладка зала Prime Hall. Нумерация и цены уточняются при старте продаж у билетного оператора.</p>
+        <p className="text-[12px] text-faint">Схема — по раскладке Prime Hall на TicketPro: сцена с экраном, ринг на танцполе, амфитеатр A–E и балкон с ложами. Точная нумерация мест и цены — при старте продаж у билетного оператора.</p>
       </div>
 
       {/* ───── корзина ───── */}
