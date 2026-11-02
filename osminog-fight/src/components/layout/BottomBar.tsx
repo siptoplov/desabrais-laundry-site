@@ -1,7 +1,7 @@
 'use client';
 
 /** Нижняя панель быстрых действий на телефоне: Билеты · Эфир · Бойцы · Кард */
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { usePathname } from 'next/navigation';
 
 const items = [

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import type { ReactNode } from 'react';
 
 export function Arrow({ className = 'btn-icon' }: { className?: string }) {

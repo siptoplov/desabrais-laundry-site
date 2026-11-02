@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import type { FightEvent, Fighter, NewsItem } from '@/content/types';
 import { disciplines } from '@/content/site';
 import { fullName, recordStr } from '@/lib/cms';

@@ -4,7 +4,7 @@
  * Строка боя в карде: углы, вес, правила, результат. По клику раскрывается:
  * сравнение бойцов, описание и видео боя. Есть голосование «любимец зрителей».
  */
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { useEffect, useId, useState } from 'react';
 import type { Bout } from '@/content/types';
 import { disciplines } from '@/content/site';

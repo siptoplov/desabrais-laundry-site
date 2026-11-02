@@ -5,7 +5,7 @@
  * Посередине — сравнение статистики; полосы заливаются при появлении,
  * а у «надвигающегося» бойца подсвечиваются.
  */
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { useEffect, useRef, useState } from 'react';
 import type { Bout, Fighter } from '@/content/types';
 import { asset, photoSrcSet } from '@/lib/asset';

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { PageHero } from '@/components/ui/PageHero';
 import { BeltVisual } from '@/components/three/BeltVisual';
 import { Flag } from '@/components/ui/Primitives';

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { t } from '@/i18n';
 
 /** 404: щупальце обвивает «страницу» и утаскивает её в бездну */

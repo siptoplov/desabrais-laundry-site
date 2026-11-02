@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import type { ReactNode } from 'react';
 import { SplitTitle } from './Primitives';
 import { breadcrumbs, JsonLd } from '@/lib/seo';

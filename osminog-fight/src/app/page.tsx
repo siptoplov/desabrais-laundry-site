@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { Hero } from '@/components/sections/Hero';
 import { FaceOff } from '@/components/sections/FaceOff';
 import { EightStrikes } from '@/components/sections/EightStrikes';

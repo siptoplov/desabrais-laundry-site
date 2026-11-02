@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { PageHero } from '@/components/ui/PageHero';
 import { getPastEvents, positionLabel, positionRank, resolveCorner } from '@/lib/cms';
 import { disciplines } from '@/content/site';

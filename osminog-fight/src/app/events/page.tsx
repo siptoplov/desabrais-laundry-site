@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { PageHero } from '@/components/ui/PageHero';
 import { EventCard, TypoPoster } from '@/components/ui/Cards';
 import { Countdown } from '@/components/ui/Countdown';

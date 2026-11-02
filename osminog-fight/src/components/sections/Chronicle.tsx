@@ -4,7 +4,7 @@
  * Горизонтальная хроника лиги: вертикальный скролл двигает ленту вбок (sticky + ScrollTrigger).
  * На тач-экранах — обычная лента со свайпом и snap.
  */
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { useEffect, useRef, useState } from 'react';
 import { chronicle, getEvent } from '@/lib/cms';
 import { useScrollScene } from '@/lib/useScrollScene';

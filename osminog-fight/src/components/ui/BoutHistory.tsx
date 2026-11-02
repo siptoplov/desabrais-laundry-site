@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import type { Fighter } from '@/content/types';
 import { disciplines } from '@/content/site';
 import { positionLabel, recordStr, resolveCorner } from '@/lib/cms';

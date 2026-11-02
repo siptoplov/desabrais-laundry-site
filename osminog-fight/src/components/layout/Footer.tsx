@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { LogoMark } from '@/components/brand/Logo';
 import { FightNightToggle } from '@/components/fx/Toggles';
 import { Subscribe } from '@/components/forms/Subscribe';

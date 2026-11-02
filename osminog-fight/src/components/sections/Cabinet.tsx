@@ -6,7 +6,7 @@
  * корзина мерча. Всё хранится в браузере.
  * Когда появится бэкенд (Supabase/Firebase/свой API) — эти же данные синхронизируются с аккаунтом.
  */
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { useEffect, useState } from 'react';
 import type { FightEvent, Fighter, Video } from '@/content/types';
 import { Btn } from '@/components/ui/Btn';

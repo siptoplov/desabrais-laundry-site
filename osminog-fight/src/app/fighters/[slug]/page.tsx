@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { notFound } from 'next/navigation';
 import { Btn } from '@/components/ui/Btn';
 import { FavButton, ShareButton } from '@/components/ui/Actions';

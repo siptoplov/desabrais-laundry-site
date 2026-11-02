@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/ui/Link';
 import { HeroVisual } from '@/components/three/HeroVisual';
 import { Countdown } from '@/components/ui/Countdown';
 import { Btn } from '@/components/ui/Btn';
