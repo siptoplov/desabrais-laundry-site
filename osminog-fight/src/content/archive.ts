@@ -23,7 +23,7 @@ const heads = new Set([
   'roga', 'rogolevich', 'rolich', 'saadulo', 'sari', 'savin', 'serpitovskiy', 'shcheglov', 'shtyrkov', 'silos',
   'solovey', 'spodarenko', 'stepanenko', 'suleymanov', 'takallu', 'tarasov', 'tataru', 'tsyakallo', 'vaduev', 'vafaye',
   'valent', 'varaksa', 'varnavskiy', 'verbin', 'volkovich', 'yuzefovich', 'zhovner', 'zinovev',
-]);
+, 'chukmanov', 'baldzhi', 'shvetsov', 'ben-henia']);
 
 const a = (slug: string, firstName: string | undefined, lastName: string, country: Fighter['country'], extra: Partial<Fighter> = {}): Fighter => ({
   slug, firstName, lastName, country, disciplines: [], status: 'active', ...(heads.has(slug) ? { headshot: `/img/heads/${slug}.webp` } : {}), ...extra,
