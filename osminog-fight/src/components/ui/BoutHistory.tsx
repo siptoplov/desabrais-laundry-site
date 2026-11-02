@@ -3,7 +3,7 @@ import type { Fighter } from '@/content/types';
 import { disciplines } from '@/content/site';
 import { positionLabel, recordStr, resolveCorner } from '@/lib/cms';
 import { fmtDate, fmtShort, fmtViews, plural } from '@/lib/format';
-import { outcomeLabel, videoUrl, type FighterAnalytics, type FighterBout, type FighterStats, type Outcome } from '@/lib/stats';
+import { outcomeLabel, rutubeUrl, videoUrl, type FighterAnalytics, type FighterBout, type FighterStats, type Outcome } from '@/lib/stats';
 
 const outcomeChip: Record<Outcome, string> = { win: 'chip-cyan', loss: 'chip-blood', draw: '', unknown: '', upcoming: 'chip-cyan' };
 
@@ -34,10 +34,19 @@ export function BoutHistory({ bouts }: { bouts: FighterBout[] }) {
               </Link>
               {bout.result?.note && <span className="mt-1 text-[13px] text-faint">{bout.result.note}</span>}
             </span>
-            {bout.video ? (
-              <a href={videoUrl(bout.video)} target="_blank" rel="noopener noreferrer" className="link-arrow order-4 md:justify-self-end">
-                Смотреть бой ↗
-              </a>
+            {bout.video || bout.rutube ? (
+              <span className="order-4 flex flex-wrap gap-x-5 gap-y-1 md:flex-col md:items-end md:justify-self-end">
+                {bout.video && (
+                  <a href={videoUrl(bout.video)} target="_blank" rel="noopener noreferrer" className="link-arrow">
+                    Бой на YouTube ↗
+                  </a>
+                )}
+                {bout.rutube && (
+                  <a href={rutubeUrl(bout.rutube)} target="_blank" rel="noopener noreferrer" className="link-arrow">
+                    Бой на Rutube ↗
+                  </a>
+                )}
+              </span>
             ) : (
               <Link href={`/events/${event.slug}/`} className="link-arrow order-4 text-mute md:justify-self-end">
                 {event.status === 'upcoming' ? 'Кард турнира →' : 'О турнире →'}

@@ -12,6 +12,8 @@ import { positionLabel, recordStr, resolveCorner, totalFights, type ResolvedCorn
 import { asset } from '@/lib/asset';
 import { read, write } from '@/lib/storage';
 import { play } from '@/lib/sound';
+import { rutubeUrl } from '@/lib/stats';
+import { Btn } from '@/components/ui/Btn';
 import { Flag } from './Primitives';
 import { VideoCard } from './VideoCard';
 import { getVideos } from '@/lib/cms';
@@ -147,11 +149,16 @@ export function BoutRow({ bout, eventSlug, defaultOpen, vote = true }: { bout: B
                 </div>
               )}
             </div>
-            <div>
+            <div className="flex flex-col gap-3">
               {video ? (
                 <VideoCard v={video} showEvent={false} />
-              ) : (
+              ) : bout.rutube ? null : (
                 <div className="grid h-full min-h-[200px] place-items-center rounded border border-dashed border-line p-6 text-center text-[14px] text-faint">Видео боя появится в разделе «Эфир»</div>
+              )}
+              {bout.rutube && (
+                <Btn href={rutubeUrl(bout.rutube)} variant="ghost" size="sm" icon="play" className="w-fit">
+                  Смотреть на Rutube
+                </Btn>
               )}
             </div>
           </div>

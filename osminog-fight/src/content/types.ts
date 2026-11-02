@@ -7,7 +7,7 @@
 export type Discipline = 'k1' | 'muaythai' | 'boxing' | 'mma' | 'eurothai';
 
 /** XX — страна не указана (старые турниры, где в источнике её нет) */
-export type CountryCode = 'BY' | 'RU' | 'IR' | 'KZ' | 'UA' | 'PL' | 'LT' | 'MD' | 'RO' | 'UZ' | 'KG' | 'AF' | 'TJ' | 'TR' | 'XX';
+export type CountryCode = 'BY' | 'RU' | 'IR' | 'KZ' | 'UA' | 'PL' | 'LT' | 'MD' | 'RO' | 'UZ' | 'KG' | 'AF' | 'TJ' | 'TR' | 'BE' | 'XX';
 
 export type FighterStatus = 'active' | 'retired';
 
@@ -70,6 +70,8 @@ export interface Bout {
   note?: string;
   /** YouTube ID полного боя */
   video?: string;
+  /** Rutube ID полной записи боя (канал лиги) */
+  rutube?: string;
   result?: BoutResult;
   titleFight?: string;
 }

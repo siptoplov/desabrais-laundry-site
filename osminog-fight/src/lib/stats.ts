@@ -96,6 +96,7 @@ export const outcomeLabel: Record<Outcome, string> = {
 };
 
 export const videoUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;
+export const rutubeUrl = (id: string) => `https://rutube.ru/video/${id}/`;
 
 export interface FighterAnalytics {
   /** Победы досрочно (KO / TKO / сдача) и по решению */

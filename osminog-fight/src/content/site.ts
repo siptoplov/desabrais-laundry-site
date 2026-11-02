@@ -92,6 +92,7 @@ export const countries: Record<CountryCode, { name: string; flag: string }> = {
   KG: { name: 'Кыргызстан', flag: '🇰🇬' },
   AF: { name: 'Афганистан', flag: '🇦🇫' },
   TJ: { name: 'Таджикистан', flag: '🇹🇯' },
+  BE: { name: 'Бельгия', flag: '🇧🇪' },
   TR: { name: 'Турция', flag: '🇹🇷' },
   XX: { name: 'Страна не указана', flag: '' },
 };
