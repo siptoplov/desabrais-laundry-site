@@ -38,7 +38,7 @@ export default function EventsPage() {
                   </h2>
                   <p className="lead">{next.tagline}</p>
                   <p className="mono text-[13px] uppercase tracking-[0.16em] text-mute">
-                    {next.date ? `${fmtDate(next.date)} · ${fmtTime(next.date)}` : 'Дата и площадка — скоро'} · {next.city}
+                    {next.date ? [fmtDate(next.date), fmtTime(next.date)].filter(Boolean).join(' · ') : 'Дата и площадка — скоро'} · {next.city}
                   </p>
                 </div>
                 <Countdown date={next.date} since={past[0]?.date ?? undefined} size="md" />

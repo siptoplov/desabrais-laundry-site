@@ -7,7 +7,8 @@ export const site = {
   nameLatin: 'OSMINOG FIGHT',
   league: 'Belarusian Fight League',
   legalName: 'ООО «Октопус файтинг»',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://osminog.fight',
+  /** Адрес сайта для поисковиков (canonical, sitemap, OG). Свой домен — задать NEXT_PUBLIC_SITE_URL в netlify.toml */
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://osminog-fight.netlify.app',
   since: 2009,
   city: 'Минск',
   description:
@@ -26,6 +27,7 @@ export const site = {
     instagram: 'https://www.instagram.com/osminog.fight/',
     instagramHandle: '@osminog.fight',
     youtube: 'https://www.youtube.com/@chinukgym',
+    rutube: 'https://rutube.ru/channel/72319754/',
     /** ⚠ Заполните, когда появится официальный канал */
     telegram: '',
   },

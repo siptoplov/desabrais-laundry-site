@@ -17,7 +17,7 @@ export function orgJsonLd() {
     foundingDate: String(site.since),
     sport: ['Kickboxing', 'Muay Thai', 'Boxing', 'Mixed Martial Arts'],
     address: { '@type': 'PostalAddress', addressLocality: 'Минск', addressCountry: 'BY' },
-    sameAs: [site.socials.instagram, site.socials.youtube].filter(Boolean),
+    sameAs: [site.socials.instagram, site.socials.youtube, site.socials.rutube].filter(Boolean),
   };
 }
 

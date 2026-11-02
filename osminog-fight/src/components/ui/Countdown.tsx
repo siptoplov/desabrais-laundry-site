@@ -25,7 +25,8 @@ export function Countdown({ date, since, size = 'xl', className = '' }: Props) {
     return () => clearInterval(id);
   }, []);
 
-  const target = date ? new Date(date).getTime() : null;
+  // известен только день — считаем до 18:00 по Минску (так начинались все турниры лиги)
+  const target = date ? new Date(date.length === 10 ? `${date}T18:00:00+03:00` : date).getTime() : null;
   let mode: 'to' | 'live' | 'since' = 'since';
   let parts = { d: 0, h: 0, m: 0, s: 0 };
   if (now !== null) {

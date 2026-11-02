@@ -35,6 +35,11 @@ export const metadata: Metadata = {
   icons: { icon: [{ url: asset('/favicon.svg'), type: 'image/svg+xml' }, { url: asset('/icon-192.png'), sizes: '192x192' }], apple: asset('/apple-touch-icon.png') },
   manifest: asset('/manifest.webmanifest'),
   formatDetection: { telephone: false },
+  // коды подтверждения Google Search Console и Яндекс.Вебмастера — в netlify.toml ([build.environment])
+  verification: {
+    ...(process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION } : {}),
+    ...(process.env.NEXT_PUBLIC_YANDEX_VERIFICATION ? { yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION } : {}),
+  },
 };
 
 export const viewport: Viewport = {

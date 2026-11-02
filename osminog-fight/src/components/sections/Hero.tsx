@@ -58,7 +58,7 @@ export function Hero() {
                   <span className="chip chip-blood">Следующий</span>
                   <span className="display-upright text-[28px] transition-colors group-hover:text-accent">{next.title}</span>
                   <span className="mono text-[12px] uppercase tracking-[0.18em] text-mute">
-                    {next.date ? `${fmtDate(next.date, { day: 'numeric', month: 'long' })} · ${fmtTime(next.date)}` : 'дата — скоро'}
+                    {next.date ? [fmtDate(next.date, { day: 'numeric', month: 'long' }), fmtTime(next.date)].filter(Boolean).join(' · ') : 'дата — скоро'}
                   </span>
                 </Link>
               )}

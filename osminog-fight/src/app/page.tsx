@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Hero } from '@/components/sections/Hero';
 import { FaceOff } from '@/components/sections/FaceOff';
@@ -19,6 +20,8 @@ import { fullName, getEvents, getFighter, getFighters, getLatestPast, getNews, g
 import { asset, posterSrcSet } from '@/lib/asset';
 import { fmtDate, fmtMoney } from '@/lib/format';
 import { eventJsonLd, JsonLd } from '@/lib/seo';
+
+export const metadata: Metadata = { alternates: { canonical: '/' } };
 
 export default function Home() {
   const next = getUpcoming();

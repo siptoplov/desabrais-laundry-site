@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -31,7 +33,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${e.title}${e.collab ? ' ' + e.collab : ''} — ${when}`,
     description: `${e.tagline}. ${[e.venue, e.city].filter(Boolean).join(', ')}. Кард, расписание, билеты, видео боёв.`,
     alternates: { canonical: `/events/${e.slug}/` },
-    openGraph: { images: [{ url: `/og/events/${e.slug}.jpg`, width: 1200, height: 630 }] },
+    // карточка из scripts/og.mjs, если сгенерирована; иначе — общая картинка лиги
+    openGraph: { images: [existsSync(join(process.cwd(), 'public/og/events', `${e.slug}.jpg`)) ? { url: `/og/events/${e.slug}.jpg`, width: 1200, height: 630 } : { url: '/og/default.jpg', width: 1200, height: 630 }] },
   };
 }
 

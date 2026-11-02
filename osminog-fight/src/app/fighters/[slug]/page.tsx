@@ -26,12 +26,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!f) return {};
   const name = fullName(f);
   const rec = f.record ? `рекорд ${recordStr(f)}` : '';
+  const st = getFighterStats(f.slug);
+  const evs = Array.from(new Set(getFighterBouts(f.slug).map((b) => b.event.title)));
+  const where = f.country !== 'XX' ? ` (${countries[f.country].name}${f.city ? `, ${f.city}` : ''})` : '';
+  const league = `${st.fights} ${plural(st.fights, ['бой', 'боя', 'боёв'])} в лиге «Осьминог»${st.wins + st.losses + st.draws ? `: ${st.wins} ${plural(st.wins, ['победа', 'победы', 'побед'])}, ${st.losses} ${plural(st.losses, ['поражение', 'поражения', 'поражений'])}` : ''}`;
   return {
-    title: `${name}${f.nickname ? ` «${f.nickname}»` : ''} — ${[rec, countries[f.country].name].filter(Boolean).join(', ')}`,
-    description: `${name}: ${f.disciplines.map((d) => disciplines[d].label).join(', ')}${f.weightKg ? `, до ${f.weightKg} кг` : ''}. ${f.bio?.[0] ?? ''}`.trim(),
+    title: `${name}${f.nickname ? ` «${f.nickname}»` : ''} — ${[rec, f.country !== 'XX' ? countries[f.country].name : ''].filter(Boolean).join(', ') || 'боец лиги «Осьминог»'}`,
+    description: [
+      `${name}${where} — ${f.disciplines.map((d) => disciplines[d].label).join(', ') || 'единоборства'}${f.weightKg ? `, до ${f.weightKg} кг` : ''}${f.record ? `, рекорд ${recordStr(f)}` : ''}${f.club ? `, клуб «${f.club}»` : ''}.`,
+      `${league}${evs.length ? ` (${evs.slice(0, 3).join(', ')})` : ''}.`,
+      f.bio?.[0] ?? 'Профиль, статистика, все бои и видео.',
+    ].join(' '),
     alternates: { canonical: `/fighters/${f.slug}/` },
-    // OG-картинки генерирует scripts/og.mjs (npm run og) — для бойцов с портретом
-    openGraph: f.photo ? { images: [{ url: `/og/fighters/${f.slug}.jpg`, width: 1200, height: 630, alt: name }] } : undefined,
+    // OG: карточка из scripts/og.mjs для бойцов с портретом, иначе — портрет или общая картинка лиги
+    openGraph: { images: [f.photo ? { url: `/og/fighters/${f.slug}.jpg`, width: 1200, height: 630, alt: name } : f.headshot ? { url: f.headshot, width: 460, height: 575, alt: name } : { url: '/og/default.jpg', width: 1200, height: 630, alt: site.name }] },
   };
 }
 
