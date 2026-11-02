@@ -156,17 +156,17 @@ export const archiveFighters: Fighter[] = [
 
 export const archiveBouts: Record<string, Bout[]> = {
   'osminog-9': [
-    { id: 'o9-myd-art', rutube: '408356b76326a2ebbe43fafaf2f01bee', red: 'mamedov', blue: 'artyushchenko', discipline: 'k1', position: 'main', video: 'VjwPpcLkhFw', weightKg: 75, headline: 'Эльмар Мамедов — Роман Артющенко' },
+    { id: 'o9-myd-art', rutube: '408356b76326a2ebbe43fafaf2f01bee', red: 'mamedov', blue: 'artyushchenko', discipline: 'k1', position: 'main', video: 'VjwPpcLkhFw', weightKg: 75, headline: 'Эльмар Мамедов — Роман Артющенко', result: { winner: 'red', method: 'KO', round: 1 } },
     { id: 'o9-byb-ibr', rutube: '048874edf4438d05b69ae2f3d8b7b95c', red: 'bybochkin', blue: 'ibragimov', discipline: 'k1', position: 'main-card', video: 'VzgDubq30xA', weightKg: 78, result: { winner: 'red', note: 'Лучший боец вечера. Последний бой в карьере Быбочкина' }, headline: 'Бой вечера и прощание легенды' },
-    { id: 'o9-ser-sai', rutube: '07604d9a6f8cb72f620840649d7dacff', red: 'serpitovskiy', blue: 'saadulo', discipline: 'k1', position: 'main-card', video: 'XFMdcpi639k', weightKg: 66, headline: 'Реванш', note: 'Первый бой на «Осьминоге-6» закончился ничьей после экстра-раунда.' },
-    { id: 'o9-kok-mam', rutube: 'adb6a5b56cdd4d428714807274ba2d65', red: 'kokosh', blue: 'mamedov-ahliman', discipline: 'k1', position: 'main-card', video: 'cJ1XCkEgR3o', weightKg: 86, headline: 'Реванш', note: 'Первый бой в Москве (ФКР ПРО 10) решением выиграл Кокош.' },
+    { id: 'o9-ser-sai', rutube: '07604d9a6f8cb72f620840649d7dacff', red: 'serpitovskiy', blue: 'saadulo', discipline: 'k1', position: 'main-card', video: 'XFMdcpi639k', weightKg: 66, headline: 'Реванш', note: 'Первый бой на «Осьминоге-6» закончился ничьей после экстра-раунда.', result: { winner: 'blue', method: 'KO', round: 2, note: 'Реванш: левый боковой во втором раунде' } },
+    { id: 'o9-kok-mam', rutube: 'adb6a5b56cdd4d428714807274ba2d65', red: 'kokosh', blue: 'mamedov-ahliman', discipline: 'k1', position: 'main-card', video: 'cJ1XCkEgR3o', weightKg: 86, headline: 'Реванш', note: 'Первый бой в Москве (ФКР ПРО 10) решением выиграл Кокош.', result: { winner: 'red', method: 'SD' } },
     { id: 'o9-lap-mam', rutube: 'ed178a34d093e79977ee2a703a533c38', red: 'lapanik', blue: 'mamedov-nariman', discipline: 'k1', position: 'main-card', video: 'riRlX6I-SCA', weightKg: 78, result: { winner: 'red', method: 'UD' } },
-    { id: 'o9-kuv-tat', rutube: 'f0d8d7c59b88b51c0819939603e8f7ab', red: 'kuvakina', blue: 'tataru', discipline: 'k1', position: 'undercard', video: 'pN6g3AR1UU4', weightKg: 58, headline: 'Женский бой', result: { winner: 'red', method: 'UD', round: 3 } },
+    { id: 'o9-kuv-tat', rutube: 'f0d8d7c59b88b51c0819939603e8f7ab', red: 'kuvakina', blue: 'tataru', discipline: 'k1', position: 'undercard', video: 'pN6g3AR1UU4', weightKg: 58, headline: 'Женский бой', result: { winner: 'red', method: 'SD', round: 3 } },
     { id: 'o9-zin-sar', rutube: '31967fe3d456987ca1a96741e27a959d', red: 'zinovev', blue: 'sari', discipline: 'k1', position: 'undercard', video: 'tvqGd_gay8w', weightKg: 88, result: { winner: 'red', method: 'UD' } },
-    { id: 'o9-ste-ver', rutube: 'e1cabc8d4983861f381d59dd58cb363c', red: 'stepanenko', blue: 'verbin', discipline: 'k1', position: 'undercard', video: 'zDU3FGei81E', weightKg: 95 },
+    { id: 'o9-ste-ver', rutube: 'e1cabc8d4983861f381d59dd58cb363c', red: 'stepanenko', blue: 'verbin', discipline: 'k1', position: 'undercard', video: 'zDU3FGei81E', weightKg: 95, result: { winner: 'red', method: 'UD' } },
     { id: 'o9-chu-bal', rutube: '945f1a2d72c93ba36380970b27fb2495', red: 'chukmanov', blue: 'baldzhi', discipline: 'k1', position: 'undercard', weightKg: 95, headline: 'Тяжи по 198 и 195 см', note: 'Профессиональный дебют Балджи — за плечами более 120 любительских боёв.', result: { winner: 'red', method: 'UD' } },
     { id: 'o9-shv-ben', rutube: 'd33b504532a06b9c00d0e65e2fabe747', red: 'shvetsov', blue: 'ben-henia', discipline: 'k1', position: 'undercard', weightKg: 78, note: 'Сабри Бен Хениа — чемпион мира и Европы по К-1.' },
-    { id: 'o9-gav-tsy', rutube: 'f6b1a3f625e72e022bbd14f557f0eb1b', red: 'gavrish', blue: 'tsyakallo', discipline: 'eurothai', position: 'undercard', video: 'zMbwyXq771w' },
+    { id: 'o9-gav-tsy', rutube: 'f6b1a3f625e72e022bbd14f557f0eb1b', red: 'gavrish', blue: 'tsyakallo', discipline: 'eurothai', position: 'undercard', video: 'zMbwyXq771w', result: { winner: 'red' } },
   ],
   'osminog-8': [
     { id: 'o8-mam-mag', rutube: '0029159a71f0a28c9795a4489917eabe', red: 'mamedov', blue: 'magomedov', discipline: 'k1', position: 'main-card', video: 'cZEZGQr10-s', weightKg: 75, result: { winner: 'red', method: 'TKO', round: 2 } },
@@ -213,11 +213,11 @@ export const archiveBouts: Record<string, Bout[]> = {
     { id: 'o5-ban-tak', rutube: 'cfefae717c9e98d1d4e9dbe9ad4340c8', red: 'bangura', blue: 'takallu', discipline: 'k1', position: 'main-card', video: 'gbFi6xwGYKw', weightKg: 91 },
     { id: 'o5-var-vol', rutube: 'd856c71738e6a3cbf1e08d50bab7d64a', red: 'varaksa', blue: 'volkovich', discipline: 'k1', position: 'main-card', video: '_SX9JOvIetg', weightKg: 75 },
     { id: 'o5-gre-ser', rutube: '66a988fc83b0b96156d7c65252f33c47', red: 'grek', blue: 'serpitovskiy', discipline: 'k1', position: 'main-card', video: 'Jc9K8TePNHs', weightKg: 63 },
-    { id: 'o5-zho-bor', rutube: '70b798257550d20cd4ee023a26b0e3fb', red: 'zhovner', blue: 'borovkov', discipline: 'muaythai', position: 'main-card', video: 'LV-9p76Kh2I', weightKg: 67 },
+    { id: 'o5-zho-bor', rutube: '70b798257550d20cd4ee023a26b0e3fb', red: 'zhovner', blue: 'borovkov', discipline: 'muaythai', position: 'main-card', video: 'LV-9p76Kh2I', weightKg: 67, result: { winner: 'red', method: 'TKO', note: 'Рефери остановил бой' } },
   ],
   'osminog-4': [
-    { id: 'o4-gre-sol', rutube: '06a4571b7f23cba86629e0b3b94e2739', red: 'grek', blue: 'solovey', discipline: 'k1', position: 'main-card', video: 'YoYvbapxMdw', weightKg: 63 },
-    { id: 'o4-bob-bus', rutube: 'e5840383d0c10b521876800af6b88aa4', red: 'bobko', blue: 'busygin', discipline: 'k1', position: 'main-card', video: 'YKy6GejTrLs', weightKg: 77, rules: 'К-1 в перчатках ММА' },
+    { id: 'o4-gre-sol', rutube: '06a4571b7f23cba86629e0b3b94e2739', red: 'grek', blue: 'solovey', discipline: 'k1', position: 'main-card', video: 'YoYvbapxMdw', weightKg: 63, result: { winner: 'red', method: 'DEC' } },
+    { id: 'o4-bob-bus', rutube: 'e5840383d0c10b521876800af6b88aa4', red: 'bobko', blue: 'busygin', discipline: 'k1', position: 'main-card', video: 'YKy6GejTrLs', weightKg: 77, rules: 'К-1 в перчатках ММА', result: { winner: 'red', method: 'DEC' } },
     { id: 'o4-fed-lya', rutube: '75a6101145d1e84c4118c5da8d9214b2', red: 'fedorinchik', blue: 'lyatos', discipline: 'k1', position: 'main-card', video: 'b0natKPlvFY', weightKg: 71 },
     { id: 'o4-mam-mad', rutube: '104712c6fa58946d02156c3aa18022bb', red: 'mamedov', blue: 'madaev', discipline: 'k1', position: 'main-card', video: 'R8968WhAV-I', weightKg: 77 },
     { id: 'o4-kop-kro', rutube: '069c9dcdc00237ad7d46675ca7e24b4e', red: 'kopytov', blue: 'kromm', discipline: 'k1', position: 'main-card', video: 'RC3gjnfgEAo', result: { winner: 'blue' }, rules: 'К-1, свыше 100 кг' },
