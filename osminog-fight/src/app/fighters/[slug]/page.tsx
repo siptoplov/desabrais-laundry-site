@@ -119,6 +119,22 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
             ))}
           </dl>
           {f.record && f.recordAsOf && <p className="mono mt-3 text-[11px] uppercase tracking-[0.14em] text-faint">Рекорд на {fmtShort(f.recordAsOf)}</p>}
+          {(f.club || f.coach) && (
+            <dl className="mt-6 flex max-w-3xl flex-wrap gap-x-10 gap-y-3">
+              {f.club && (
+                <div>
+                  <dt className="label">Клуб</dt>
+                  <dd className="display-upright text-[22px] leading-tight">{f.club}</dd>
+                </div>
+              )}
+              {f.coach && (
+                <div>
+                  <dt className="label">Тренер</dt>
+                  <dd className="text-[16px] text-ice">{f.coach}</dd>
+                </div>
+              )}
+            </dl>
+          )}
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <FavButton slug={f.slug} name={name} />
             <ShareButton title={`${name} — ${site.name}`} path={`/fighters/${f.slug}/`} />

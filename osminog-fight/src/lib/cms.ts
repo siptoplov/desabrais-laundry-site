@@ -7,6 +7,7 @@
 import { events, chronicle } from '@/content/events';
 import { fighters, legends } from '@/content/fighters';
 import { videos } from '@/content/videos';
+import { clubs } from '@/content/clubs';
 import { news } from '@/content/news';
 import type { Bout, Corner, Fighter } from '@/content/types';
 import { boutsOf, statsOf } from '@/lib/stats';
@@ -20,10 +21,12 @@ export const getPastEvents = () => events.filter((e) => e.status === 'past');
 /** Последний прошедший турнир с главным боем — для блока «Лицом к лицу» */
 export const getLatestPast = () => events.find((e) => e.status === 'past' && e.bouts.some((b) => b.position === 'main' && getFighter(b.red)?.photo));
 
-/** У бойцов из архива дисциплины не заполнены вручную — берём их из боёв */
-const allFighters: Fighter[] = fighters.map((f) =>
-  f.disciplines.length ? f : { ...f, disciplines: Array.from(new Set(boutsOf(events, f.slug).map((b) => b.bout.discipline))) },
-);
+/** У бойцов из архива дисциплины не заполнены вручную — берём их из боёв; клуб и тренер — из clubs.ts */
+const allFighters: Fighter[] = fighters.map((f) => ({
+  ...clubs[f.slug],
+  ...f,
+  disciplines: f.disciplines.length ? f.disciplines : Array.from(new Set(boutsOf(events, f.slug).map((b) => b.bout.discipline))),
+}));
 
 export const getFighters = () => allFighters;
 export const getFighter = (slug?: string) => (slug ? allFighters.find((f) => f.slug === slug) : undefined);

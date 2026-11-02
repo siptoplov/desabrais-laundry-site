@@ -18,6 +18,9 @@ export interface Fighter {
   nickname?: string;
   country: CountryCode;
   city?: string;
+  /** Клуб и тренер — из описаний записей боёв */
+  club?: string;
+  coach?: string;
   disciplines: Discipline[];
   /** Весовая категория, кг (верхняя граница). Нет данных — не заполняем. */
   weightKg?: number;

@@ -185,6 +185,7 @@ export function FanZone({ fighters, events, videos, compact = false }: { fighter
                   <Flag code={fanF.country} withName />
                   {fanF.city && <span>· {fanF.city}</span>}
                   {fanF.nickname && <span className="text-accent">· «{fanF.nickname}»</span>}
+                  {fanF.club && <span>· клуб «{fanF.club}»</span>}
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
