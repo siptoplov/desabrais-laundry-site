@@ -4,7 +4,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { EventCard, TypoPoster } from '@/components/ui/Cards';
 import { Countdown } from '@/components/ui/Countdown';
 import { Btn } from '@/components/ui/Btn';
-import { Subscribe } from '@/components/forms/Subscribe';
+import { FollowLinks } from '@/components/ui/FollowLinks';
 import { getEvents, getPastEvents, getUpcoming } from '@/lib/cms';
 import { fmtDate, fmtTime } from '@/lib/format';
 import { disciplines } from '@/content/site';
@@ -43,8 +43,8 @@ export default function EventsPage() {
                 </div>
                 <Countdown date={next.date} since={past[0]?.date ?? undefined} size="md" />
                 <div className="flex flex-col gap-4">
-                  <p className="text-mute">Узнать дату и старт продаж первыми:</p>
-                  <Subscribe id="events-sub" />
+                  <p className="text-mute">Кард и старт продаж — в соцсетях лиги:</p>
+                  <FollowLinks />
                 </div>
                 <div className="flex flex-wrap gap-3">
                   <Btn href={`/events/${next.slug}/`} variant="ghost">

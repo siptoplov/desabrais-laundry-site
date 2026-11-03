@@ -11,7 +11,7 @@ import { Gallery } from '@/components/ui/Gallery';
 import { VideoCard } from '@/components/ui/VideoCard';
 import { AddToCalendar, ShareButton } from '@/components/ui/Actions';
 import { Stat, SplitTitle } from '@/components/ui/Primitives';
-import { Subscribe } from '@/components/forms/Subscribe';
+import { FollowLinks } from '@/components/ui/FollowLinks';
 import { getEvent, getEvents, getPastEvents, getVideos, positionRank } from '@/lib/cms';
 import { asset, posterSrcSet } from '@/lib/asset';
 import { fmtDate, fmtMoney, fmtTime, fmtWeekday } from '@/lib/format';
@@ -163,7 +163,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             {upcoming ? (
               <div className="panel p-6 md:p-8">
                 <Countdown date={e.date} since={lastPast?.date ?? undefined} size="md" />
-                <div className="mt-6">{e.date ? <AddToCalendar event={e} /> : <Subscribe id="ev-sub" />}</div>
+                <div className="mt-6">{e.date ? <AddToCalendar event={e} /> : <FollowLinks />}</div>
               </div>
             ) : (
               e.stats && (

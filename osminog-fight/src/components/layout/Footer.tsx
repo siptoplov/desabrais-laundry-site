@@ -1,7 +1,7 @@
 import Link from '@/components/ui/Link';
 import { LogoMark } from '@/components/brand/Logo';
 import { FightNightToggle } from '@/components/fx/Toggles';
-import { Subscribe } from '@/components/forms/Subscribe';
+import { FollowLinks } from '@/components/ui/FollowLinks';
 import { nav, navSecondary, partners, site } from '@/content/site';
 import { getUpcoming } from '@/lib/cms';
 
@@ -13,16 +13,14 @@ export function Footer() {
       <div className="wrap relative">
         <div className="grid gap-14 lg:grid-cols-[1.2fr_1fr]">
           <div className="flex flex-col gap-6">
-            <p className="eyebrow">Подписка</p>
+            <p className="eyebrow">Лига в соцсетях</p>
             <h2 id="footer-title" className="display t-2">
-              Глубина
+              Следи
               <br />
-              <span className="text-outline">напишет первой</span>
+              <span className="text-outline">за глубиной</span>
             </h2>
-            <p className="lead">Дата {next?.title ?? 'следующего турнира'}, кард и старт продаж — раньше всех.</p>
-            <div className="max-w-xl">
-              <Subscribe id="footer-sub" />
-            </div>
+            <p className="lead">Анонсы {next?.title ?? 'следующего турнира'}, кард, видео боёв и старт продаж билетов.</p>
+            <FollowLinks />
           </div>
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
             <div>

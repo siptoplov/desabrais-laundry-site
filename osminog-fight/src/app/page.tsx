@@ -5,7 +5,7 @@ import { FaceOff } from '@/components/sections/FaceOff';
 import { EightStrikes } from '@/components/sections/EightStrikes';
 import { Chronicle } from '@/components/sections/Chronicle';
 import { FanZone } from '@/components/sections/FanZone';
-import { Subscribe } from '@/components/forms/Subscribe';
+import { FollowLinks } from '@/components/ui/FollowLinks';
 import { Btn } from '@/components/ui/Btn';
 import { PartnerLogo } from '@/components/ui/PartnerLogo';
 import { BoutRow } from '@/components/ui/BoutRow';
@@ -59,9 +59,9 @@ export default function Home() {
               </div>
             </div>
             <div className="panel p-6 md:p-10" data-reveal="" style={{ ['--d' as string]: '.15s' }}>
-              <p className="display t-4 mb-2">Узнать дату первым</p>
-              <p className="mb-6 text-mute">E-mail или Telegram. Только бои — никакого спама.</p>
-              <Subscribe id="next-sub" />
+              <p className="display t-4 mb-2">Анонсы и кард</p>
+              <p className="mb-6 text-mute">Пары, площадка и старт продаж билетов — в соцсетях лиги.</p>
+              <FollowLinks />
               <div className="mt-8 grid grid-cols-3 gap-4 border-t border-line pt-6">
                 <Stat countTo={10} label="Выпусков серии" />
                 <Stat countTo={4} label="Дисциплины" />

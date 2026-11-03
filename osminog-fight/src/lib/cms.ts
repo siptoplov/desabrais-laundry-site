@@ -21,12 +21,31 @@ export const getPastEvents = () => events.filter((e) => e.status === 'past');
 /** Последний прошедший турнир с главным боем — для блока «Лицом к лицу» */
 export const getLatestPast = () => events.find((e) => e.status === 'past' && e.bouts.some((b) => b.position === 'main' && getFighter(b.red)?.photo));
 
+/**
+ * Текущий рекорд: в данных — рекорд ДО боя (с постера или описания боя на дату recordAsOf),
+ * к нему прибавляются итоги всех боёв лиги с этой даты (спарринги не в счёт).
+ * recordAsOf становится датой последнего учтённого боя.
+ */
+function withLeagueResults(f: Fighter): Fighter {
+  if (!f.record || !f.recordAsOf) return f;
+  const from = f.recordAsOf.slice(0, 10);
+  const counted = boutsOf(events, f.slug).filter((b) => !b.exhibition && b.event.date && b.event.date.slice(0, 10) >= from && (b.outcome === 'win' || b.outcome === 'loss' || b.outcome === 'draw'));
+  if (!counted.length) return f;
+  const r = { ...f.record, d: f.record.d ?? 0 };
+  for (const b of counted) b.outcome === 'win' ? r.w++ : b.outcome === 'loss' ? r.l++ : r.d++;
+  const last = counted.map((b) => b.event.date!.slice(0, 10)).sort().at(-1)!;
+  const total = r.w + r.l + r.d;
+  return { ...f, record: r.d ? r : { w: r.w, l: r.l }, recordAsOf: last, ...(f.winRate !== undefined && total ? { winRate: Math.round((r.w / total) * 100) } : {}) };
+}
+
 /** У бойцов из архива дисциплины не заполнены вручную — берём их из боёв; клуб и тренер — из clubs.ts */
-const allFighters: Fighter[] = fighters.map((f) => ({
-  ...clubs[f.slug],
-  ...f,
-  disciplines: f.disciplines.length ? f.disciplines : Array.from(new Set(boutsOf(events, f.slug).map((b) => b.bout.discipline))),
-}));
+const allFighters: Fighter[] = fighters.map((f) =>
+  withLeagueResults({
+    ...clubs[f.slug],
+    ...f,
+    disciplines: f.disciplines.length ? f.disciplines : Array.from(new Set(boutsOf(events, f.slug).map((b) => b.bout.discipline))),
+  }),
+);
 
 export const getFighters = () => allFighters;
 export const getFighter = (slug?: string) => (slug ? allFighters.find((f) => f.slug === slug) : undefined);

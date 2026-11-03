@@ -4,7 +4,7 @@ import { WatchHub } from '@/components/sections/WatchHub';
 import { VideoCard } from '@/components/ui/VideoCard';
 import { Btn } from '@/components/ui/Btn';
 import { Countdown } from '@/components/ui/Countdown';
-import { Subscribe } from '@/components/forms/Subscribe';
+import { FollowLinks } from '@/components/ui/FollowLinks';
 import { getEvents, getPastEvents, getUpcoming, getVideos } from '@/lib/cms';
 import { channel } from '@/content/videos';
 import { partners } from '@/content/site';
@@ -49,8 +49,8 @@ export default function WatchPage() {
             </div>
             <Countdown date={next?.date ?? null} since={last?.date ?? undefined} size="md" />
             <div className="flex flex-col gap-3">
-              <p className="text-[14px] text-mute">Напомнить о начале эфира:</p>
-              <Subscribe id="watch-sub" />
+              <p className="text-[14px] text-mute">Анонс эфира — в соцсетях лиги:</p>
+              <FollowLinks />
             </div>
           </div>
         </div>

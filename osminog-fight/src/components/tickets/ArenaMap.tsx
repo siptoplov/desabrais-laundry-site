@@ -4,12 +4,11 @@
  * Интерактивная схема зала: зоны, ряды, места, корзина, промокод.
  * • Мышь/палец: клик по месту. Клавиатура и скринридеры: список зон с кнопкой «лучшие места».
  * • Продажи открыты (tickets.status = 'onsale') → таймер резерва + переход к оплате у оператора.
- * • Продажи скоро → выбор сохраняется, оформляется заявка «сообщить о старте продаж».
+ * • Продажи скоро → схема показывает зоны и цены, кнопка ведёт на сайт билетного оператора.
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { boxes, promoCodes, ringsideRows, sectors, ticketRules, zones, type ZoneId } from '@/content/arena';
 import type { FightEvent } from '@/content/types';
-import { SmartForm } from '@/components/forms/FormKit';
 import { fmtMoney, pad, plural } from '@/lib/format';
 import { read, write } from '@/lib/storage';
 import { play } from '@/lib/sound';
@@ -81,7 +80,6 @@ export function ArenaMap({ event }: { event: FightEvent }) {
   const [discount, setDiscount] = useState(0);
   const [holdUntil, setHoldUntil] = useState<number | null>(null);
   const [now, setNow] = useState(Date.now());
-  const [step, setStep] = useState<'pick' | 'checkout'>('pick');
   const [zoom, setZoom] = useState(1);
   const live = useRef<HTMLParagraphElement>(null);
   const onSale = event.tickets?.status === 'onsale';
@@ -154,8 +152,6 @@ export function ArenaMap({ event }: { event: FightEvent }) {
       setPromoState({ ok: false, msg: 'Промокод не найден или ещё не действует' });
     }
   };
-
-  const summary = items.map((s) => `${s.label}, ${s.zone === 'lounge' ? s.row : `ряд ${s.row}`}, место ${s.num}`).join('; ');
 
   return (
     <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
@@ -376,11 +372,11 @@ export function ArenaMap({ event }: { event: FightEvent }) {
               <span>Оплатить на {event.tickets.vendor}</span>
             </a>
           ) : (
-            <button type="button" className="btn btn-primary w-full" disabled={!items.length} onClick={() => setStep('checkout')} data-impact="dark">
-              <span>{items.length ? 'Сообщить о старте продаж' : 'Выберите места'}</span>
-            </button>
+            <a className="btn btn-primary w-full" href={event.tickets?.url ?? 'https://www.ticketpro.by/'} target="_blank" rel="noopener noreferrer">
+              <span>Билеты на {event.tickets?.vendor ?? 'TicketPro'} ↗</span>
+            </a>
           )}
-          {!onSale && <p className="text-[12px] text-faint">Продажи {event.title} ещё не открыты. Сохраним ваш выбор и напишем первыми — места в заявке будут в приоритете при старте продаж.</p>}
+          {!onSale && <p className="text-[12px] text-faint">Продажи {event.title} ещё не открыты — билеты появятся на {event.tickets?.vendor ?? 'TicketPro'}. Схема показывает зоны и цены прошлого турнира.</p>}
           {items.length > 0 && (
             <button type="button" onClick={() => setSel([])} className="link-arrow self-start text-mute">
               Очистить выбор
@@ -389,33 +385,6 @@ export function ArenaMap({ event }: { event: FightEvent }) {
         </div>
       </aside>
 
-      {step === 'checkout' && (
-        <div className="fixed inset-0 z-[150] grid place-items-center overflow-y-auto bg-abyss/90 p-4 backdrop-blur" role="dialog" aria-modal="true" aria-labelledby="wl-title">
-          <div className="panel relative w-full max-w-2xl p-6 md:p-10">
-            <button type="button" onClick={() => setStep('pick')} className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border border-line hover:border-ice" aria-label="Закрыть">
-              ×
-            </button>
-            <h2 id="wl-title" className="display t-3 mb-2">
-              Лист ожидания
-            </h2>
-            <p className="mb-6 text-mute">
-              {items.length} {plural(items.length, ['место', 'места', 'мест'])} · {fmtMoney(total)}. Напишем, как только откроются продажи {event.title}.
-            </p>
-            <SmartForm
-              kind="tickets-waitlist"
-              title={`Лист ожидания ${event.title}`}
-              extra={{ Места: summary, Сумма: fmtMoney(total) }}
-              fields={[
-                { name: 'name', label: 'Имя', required: true, autoComplete: 'name' },
-                { name: 'phone', label: 'Телефон', type: 'tel', required: true, autoComplete: 'tel', placeholder: '+375 29 000-00-00' },
-                { name: 'email', label: 'E-mail', type: 'email', autoComplete: 'email', span: 2 },
-              ]}
-              submit="Встать в лист ожидания"
-              success={{ title: 'Вы в списке', text: 'Сообщим о старте продаж первыми. Места из заявки — в приоритете.' }}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

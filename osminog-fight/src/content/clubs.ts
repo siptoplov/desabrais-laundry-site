@@ -47,4 +47,9 @@ export const clubs: Record<string, { club?: string; coach?: string }> = {
   'yakimovich': { club: 'Muay Thai Factory', coach: 'Виталий Тишуров' },
   'zhovner': { club: 'Чинук', coach: 'Жуковский Юрий' },
   'zinovev': { club: 'Урал Калий Файтер', coach: 'Матвеев Сергей, Селянский Дмитрий' },
+  'satsuk': { club: 'Чинук' },
+  'avanesov': { club: 'МОПС' },
+  'belyavskiy': { club: 'Чинук' },
+  'atrohov': { club: 'Гладиатор' },
+  'chubrevich': { club: 'Булат' },
 };
