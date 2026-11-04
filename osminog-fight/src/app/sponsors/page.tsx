@@ -127,7 +127,14 @@ export default function SponsorsPage() {
           </ul>
           <div>
             <p className="label mb-3">При поддержке</p>
-            <p className="text-mute">{partners.federations.join(' · ')}</p>
+            <ul className="flex flex-wrap items-center gap-x-10 gap-y-6">
+              {partners.federations.map((f) => (
+                <li key={f} className="flex items-center gap-4">
+                  <PartnerLogo name={f} className="h-16" />
+                  <span className="max-w-[16rem] text-[14px] text-mute">{f}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
