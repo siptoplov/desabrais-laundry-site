@@ -7,6 +7,8 @@ export const site = {
   nameLatin: 'OSMINOG FIGHT',
   league: 'Belarusian Fight League',
   legalName: 'ООО «Октопус файтинг»',
+  /** Изготовитель сайта */
+  builder: 'VORQEN',
   /** Адрес сайта для поисковиков (canonical, sitemap, OG). Свой домен — задать NEXT_PUBLIC_SITE_URL в netlify.toml */
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://osminog-fight.netlify.app',
   since: 2009,

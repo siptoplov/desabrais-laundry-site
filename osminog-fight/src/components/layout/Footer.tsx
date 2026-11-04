@@ -94,6 +94,9 @@ export function Footer() {
         <div className="mt-10 flex flex-col gap-6 text-[13px] text-faint md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} {site.nameLatin} · {site.legalName}. {site.slogan}
+            <span className="mt-1 block">
+              Сайт создан в <span className="text-mute">{site.builder}</span>
+            </span>
           </p>
           <div className="flex flex-wrap items-center gap-6">
             <FightNightToggle />
