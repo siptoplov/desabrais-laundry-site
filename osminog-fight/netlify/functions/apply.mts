@@ -242,4 +242,4 @@ export default async (req: Request): Promise<Response> => {
   return json(200, { ok: true });
 };
 
-export const config = { path: '/api/apply' };
+export const config = { path: '/api/apply.php' };

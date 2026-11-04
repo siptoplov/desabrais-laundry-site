@@ -1,5 +1,5 @@
 /**
- * Отправка заявок: multipart POST на /api/apply (Netlify Function) → Telegram-бот → группа организаторов.
+ * Отправка заявок: multipart POST на /api/apply.php (PHP на хостинге или функция Netlify) → Telegram-бот → группа организаторов.
  * Если функция не настроена (503), недоступна (локальная разработка, сеть) — режим «через Direct»:
  * готовый текст заявки, который можно скопировать и отправить в Instagram.
  * Защита на клиенте: ловушка _hp, время заполнения, Turnstile (если задан ключ). Остальное проверяет сервер.
@@ -72,7 +72,7 @@ export async function submitForm(
   for (const [k, v] of Object.entries(values)) fd.set(k, v);
   if (photo) fd.set("photo", photo);
   try {
-    const res = await fetch("/api/apply", { method: "POST", body: fd });
+    const res = await fetch("/api/apply.php", { method: "POST", body: fd });
     if (res.ok) return { ok: true, mode: "sent" };
     if (
       res.status === 503 ||
