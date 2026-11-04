@@ -84,7 +84,7 @@ export default function ResultsPage() {
                               {disciplines[b.discipline].label}
                               {b.weightKg ? ` · ${String(b.weightKg).replace('.', ',')} кг` : ''}
                             </td>
-                            <td className="py-4 pr-4">{win ? <span className="chip chip-cyan">{win.short}</span> : b.result?.winner === 'draw' ? <span className="chip">Ничья</span> : <span className="text-[13px] text-faint">уточняется</span>}</td>
+                            <td className="py-4 pr-4">{win ? <span className="chip chip-cyan">{win.short}</span> : b.result?.winner === 'draw' ? <span className="chip">Ничья</span> : <span className="text-[13px] text-faint">итог не опубликован</span>}</td>
                             <td className="mono py-4 pr-4 text-[12px] text-mute">
                               {b.result ? [b.result.method && methodShort[b.result.method], b.result.round && `R${b.result.round}`, b.result.time, b.result.scorecards?.join(' / '), b.result.note].filter(Boolean).join(' · ') || '—' : '—'}
                             </td>

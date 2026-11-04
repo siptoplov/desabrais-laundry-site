@@ -21,7 +21,7 @@ export default function TicketsPage() {
       <PageHero
         eyebrow={`Билеты · ${ev.title}`}
         title={['Займи место', <span key="s" className="text-blood glow-blood">у ринга</span>]}
-        lead={ev.date ? [fmtDate(ev.date), fmtTime(ev.date), [ev.venue, ev.city].filter(Boolean).join(', ')].filter(Boolean).join(' · ') : `${ev.title}: дата и старт продаж — скоро. Выберите места сейчас — напишем первыми.`}
+        lead={ev.date ? [fmtDate(ev.date), fmtTime(ev.date), [ev.venue, ev.city].filter(Boolean).join(', ')].filter(Boolean).join(' · ') : `${ev.title}: старт продаж билетов — на TicketPro, анонсы — в соцсетях лиги. Ниже — схема зала и цены прошлого турнира.`}
         crumbs={[{ name: 'Билеты', path: '/tickets/' }]}
         compact
       />

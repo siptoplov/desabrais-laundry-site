@@ -37,7 +37,6 @@ export const events: FightEvent[] = [
     status: 'past',
     venue: 'Prime Hall',
     city: 'Минск',
-    address: 'пр-т Победителей, 65',
     age: '6+',
     poster: '/img/posters/osminog-10/anons',
     posters: [
@@ -64,6 +63,7 @@ export const events: FightEvent[] = [
     bouts: [
       {
         id: 'o10-main',
+        rutube: '79a9fdf6f676bf8989198d7c75807751',
         result: { winner: 'red', method: 'KO', round: 1, note: 'Хай-кик в первом раунде' },
         red: 'mamedov',
         blue: 'totmyanin',
@@ -76,6 +76,7 @@ export const events: FightEvent[] = [
       },
       {
         id: 'o10-comain',
+        rutube: 'b3592908f2fab2555ea3a025ebb9c7cc',
         result: { winner: 'red', method: 'UD' },
         red: 'bobko',
         blue: 'bashirov',
@@ -88,6 +89,7 @@ export const events: FightEvent[] = [
       },
       {
         id: 'o10-yak-erm',
+        rutube: 'cd180d8cad0b6e4ffa83202740f4ca2d',
         result: { winner: 'red', method: 'DEC', round: 4, note: 'Решение по экстра-раунду. Якимович — лучший боец вечера; после боя увезён в больницу с рассечением' },
         red: 'yakimovich',
         blue: 'ermolenko',
@@ -100,6 +102,7 @@ export const events: FightEvent[] = [
       },
       {
         id: 'o10-ban-elh',
+        rutube: '2bf5cd6da44d76ef89d77934b6fd711a',
         result: { winner: 'red', method: 'UD' },
         red: 'bangura',
         blue: 'elhami',
@@ -187,11 +190,10 @@ export const events: FightEvent[] = [
     status: 'past',
     venue: 'Prime Hall',
     city: 'Минск',
-    address: 'пр-т Победителей, 65',
-    stats: { bouts: 12, fighters: 24, disciplines: 2 },
+    stats: { bouts: 11, fighters: 22, disciplines: 2 },
     disciplines: ['k1', 'mma'],
     story: [
-      'Две лиги — один ринг. Двенадцать поединков: шесть по правилам К-1 и шесть по ММА, двадцать четыре бойца из стран Европы и Азии.',
+      'Две лиги — один ринг. Одиннадцать поединков: шесть по правилам К-1 и пять по ММА, двадцать два бойца из стран Европы и Азии.',
       'Вечер силы и эмоций под живой звук рок-группы KORBUT.',
       'Лучшим бойцом вечера признан Эльдар Мадаев, лучшим боем — Евгений Федоринчик против Ростислава Варнавского. Федерация кикбоксинга России опротестовала два решения судей, в том числе в бою Георгия Фокина и Артёма Штыркова.',
     ],
@@ -214,7 +216,6 @@ export const events: FightEvent[] = [
     status: 'past',
     venue: 'Prime Hall',
     city: 'Минск',
-    address: 'пр-т Победителей, 65',
     disciplines: ['k1', 'mma', 'boxing', 'muaythai'],
     story: [
       'Четыре дисциплины и титульный поединок: в ринге «Осьминога» разыграли пояс чемпиона мира среди профессионалов по версии WTKF в ММА.',
@@ -235,7 +236,6 @@ export const events: FightEvent[] = [
     status: 'past',
     venue: 'Prime Hall',
     city: 'Минск',
-    address: 'пр-т Победителей, 65',
     disciplines: ['k1', 'muaythai', 'eurothai', 'mma'],
     story: [
       'Главное событие — К-1 до 86 кг: Никита Кокош из клуба «Чинук» против Мансура «Монстра» Вадуева из Грозного.',
@@ -254,7 +254,6 @@ export const events: FightEvent[] = [
     status: 'past',
     venue: 'Astro Club',
     city: 'Минск',
-    address: 'пр-т Машерова, 17/4',
     disciplines: ['k1', 'boxing', 'muaythai'],
     story: [
       'Реванш Владислава Роголевича и Ростислава Варнавского — лучшего кикбоксёра Федерации кикбоксинга России 2023 и 2024 годов. О нём лига «Осьминог» и ФКР договорились ещё до первого боя в Москве.',
@@ -274,7 +273,6 @@ export const events: FightEvent[] = [
     status: 'past',
     venue: 'Astro Club',
     city: 'Минск',
-    address: 'пр-т Машерова, 17/4',
     disciplines: ['k1', 'boxing'],
     story: ['Предновогодний вечер в Astro Club: кикбоксинг, тайский бокс и ММА. Партер разобрали почти полностью.'],
     bouts: archiveBouts['osminog-4'],
@@ -290,7 +288,6 @@ export const events: FightEvent[] = [
     status: 'past',
     venue: 'Astro Club',
     city: 'Минск',
-    address: 'пр-т Машерова, 17/4',
     disciplines: ['k1', 'boxing', 'muaythai', 'eurothai', 'mma'],
     story: ['Камерный зал, столы у ринга, угощения и напитки в цене билета. Все места — проданы.'],
     bouts: archiveBouts['osminog-3'],
@@ -343,7 +340,6 @@ export const events: FightEvent[] = [
     status: 'past',
     venue: 'Prime Hall',
     city: 'Минск',
-    address: 'пр-т Победителей, 65',
     story: [
       '11 профессиональных поединков: бойцы из Польши, Литвы, России, Румынии, Казахстана, Молдовы и Украины против белорусов. Участие подтверждали Секу Бангура, Эмиль Элазов, Данила Ермоленко, Павел Правошинский, Артём Аванесов, Павел Шелест и Мурат Азербиев.',
       'В программе — «Рубаха-парень»: любой зритель выходит в ринг. Билеты стоили 13–53 рубля.',
@@ -445,7 +441,7 @@ export const chronicle = [
   { year: '2025', title: 'ОСЬМИНОГ-5', text: 'Реванш Роголевич — Варнавский и Джефф Монсон в боксе. Эфир «Беларусь-5».', event: 'osminog-5' },
   { year: '2025', title: 'ОСЬМИНОГ-6', text: 'Кокош против «Монстра» Вадуева и бойцы из пяти стран.', event: 'osminog-6' },
   { year: '2025', title: 'ОСЬМИНОГ-7', text: 'Пояс чемпиона мира WTKF разыгран в ринге «Осьминога».', event: 'osminog-7' },
-  { year: '2026', title: 'Союз лиг × BFC', text: 'ОСЬМИНОГ-8 и BFC 86: 12 боёв, 24 бойца, Prime Hall.', event: 'osminog-8' },
+  { year: '2026', title: 'Союз лиг × BFC', text: 'ОСЬМИНОГ-8 и BFC 86: 11 боёв, 22 бойца, Prime Hall.', event: 'osminog-8' },
   { year: '2026', title: 'ОСЬМИНОГ-9 × UralFC', text: 'Беларусь против Урала. Быбочкин побеждает и уходит красиво.', event: 'osminog-9' },
   { year: '2026', title: 'Юбилей. ОСЬМИНОГ-10', text: '11 боёв, 22 бойца, 4 дисциплины. Возвращение «Рубахи-парня».', event: 'osminog-10' },
   { year: 'Скоро', title: 'ОСЬМИНОГ-11', text: 'Глубина уже готовит следующий выпуск.', event: 'osminog-11' },

@@ -14,11 +14,13 @@ import { Flag } from '@/components/ui/Primitives';
 import { LogoMark } from '@/components/brand/Logo';
 import { getLenis } from '@/components/fx/SmoothScroll';
 import { FanPicker, FighterAvatar } from '@/components/sections/FanPicker';
-import { fullName } from '@/lib/cms';
+import { fullName, recordStr } from '@/lib/cms';
 import { read, write } from '@/lib/storage';
 import { analyticsOf, boutsOf, statsOf } from '@/lib/stats';
 import { play } from '@/lib/sound';
 import { site } from '@/content/site';
+import { plural } from '@/lib/format';
+import { ShareButton } from '@/components/ui/Actions';
 
 function QR({ text }: { text: string }) {
   const [svg, setSvg] = useState('');
@@ -91,10 +93,17 @@ export function FanZone({ fighters, events, videos, compact = false }: { fighter
       else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   };
+  /** Сердечко = «мой боец»: поставить — закрепить, снять — вернуть карту к выбору */
   const toggleHeart = () => {
     if (!fanF) return setPicking(true);
-    setFavList(hearted ? favs.filter((s) => s !== fanF.slug) : [fanF.slug, ...favs]);
-    if (!hearted) play('punch');
+    if (hearted) {
+      setFavList(favs.filter((s) => s !== fanF.slug));
+      setFan('');
+      write('fanFighter', '');
+    } else {
+      setFavList([fanF.slug, ...favs]);
+      play('punch');
+    }
   };
 
   if (!ready) return <div className="h-[60vh]" aria-busy="true" />;
@@ -125,13 +134,17 @@ export function FanZone({ fighters, events, videos, compact = false }: { fighter
                 <span className="display-upright truncate text-[clamp(1.4rem,4vw,2.4rem)] leading-none">{name || 'Ваше имя'}</span>
                 <span className="mono text-[11px] tracking-[0.2em] text-accent sm:text-[12px]">{id}</span>
                 {fanF ? (
-                  <span className="mt-2 flex items-center gap-2.5">
-                    <FighterAvatar f={fanF} className="h-10 w-9 shrink-0 overflow-hidden rounded-[4px] border border-line" text="text-[15px]" />
-                    <span className="flex min-w-0 flex-col">
+                  <span className="mt-2 flex items-center gap-3">
+                    <FighterAvatar f={fanF} className="h-14 w-11 shrink-0 overflow-hidden rounded-[5px] border border-ice/30 sm:h-[72px] sm:w-[58px]" text="text-[18px]" />
+                    <span className="flex min-w-0 flex-col gap-0.5">
                       <span className="mono flex items-center gap-1 text-[9px] uppercase tracking-[0.18em] text-faint">
                         <Heart on className="h-3 w-3" /> Мой боец
                       </span>
-                      <span className="display-upright truncate text-[18px] leading-none group-hover:text-accent sm:text-[20px]">{fullName(fanF)}</span>
+                      <span className="display-upright truncate text-[18px] leading-none group-hover:text-accent sm:text-[22px]">{fullName(fanF)}</span>
+                      <span className="mono text-[10px] uppercase tracking-[0.14em] text-mute">
+                        {fanF.record ? `рекорд ${recordStr(fanF)} · ` : ''}
+                        {st.fights} {plural(st.fights, ['бой', 'боя', 'боёв'])} в лиге
+                      </span>
                     </span>
                   </span>
                 ) : (
@@ -195,6 +208,7 @@ export function FanZone({ fighters, events, videos, compact = false }: { fighter
                 <Btn href={`/fighters/${fanF.slug}/`} variant="ghost" size="sm">
                   Профиль бойца
                 </Btn>
+                <ShareButton title={`${fullName(fanF)} — мой боец «Осьминога»`} path={`/fighters/${fanF.slug}/`} />
                 <Btn variant="ghost" size="sm" icon="none" onClick={() => setPicking(true)}>
                   Сменить
                 </Btn>
@@ -226,7 +240,7 @@ export function FanZone({ fighters, events, videos, compact = false }: { fighter
         )}
       </section>
 
-      {picking && <FanPicker fighters={fighters} events={events} current={fan} onPick={pick} onClose={closePicker} />}
+      {picking && <FanPicker fighters={fighters} events={events} current={fan} favs={favs} onPick={pick} onClose={closePicker} />}
     </div>
   );
 }

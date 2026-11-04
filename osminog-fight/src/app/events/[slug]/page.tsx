@@ -54,6 +54,8 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
   const extraVids = vids.filter((v) => v.kind !== 'fight');
   const lastPast = getPastEvents()[0];
   const upcoming = e.status === 'upcoming';
+  const year = e.date ? Number(e.date.slice(0, 4)) : 0;
+  const kinds = e.disciplines ?? Array.from(new Set(e.bouts.map((b) => b.discipline)));
   const sections = [
     e.bouts.length && { id: 'card', label: 'Кард' },
     e.schedule && { id: 'schedule', label: 'Расписание' },
@@ -62,7 +64,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
     { id: 'watch', label: 'Эфир' },
     e.posters && { id: 'press', label: 'Пресс' },
   ].filter(Boolean) as { id: string; label: string }[];
-  const mapQuery = encodeURIComponent([e.venue, e.address, e.city].filter(Boolean).join(', '));
+  const mapQuery = encodeURIComponent([e.venue, e.city].filter(Boolean).join(', '));
 
   return (
     <>
@@ -98,17 +100,21 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
               </div>
               <div>
                 <dt className="label">Место</dt>
-                <dd className="display-upright text-[26px] leading-tight">{e.venue ?? 'Объявим'}</dd>
-                <dd className="text-[13px] text-mute">{[e.address, e.city].filter(Boolean).join(', ')}</dd>
+                <dd className="display-upright text-[26px] leading-tight">{e.venue ?? (upcoming ? 'Объявим' : e.city)}</dd>
+                {e.venue && <dd className="text-[13px] text-mute">{e.city}</dd>}
               </div>
-              <div>
-                <dt className="label">Дисциплины</dt>
-                <dd className="text-[15px] leading-snug">{e.disciplines?.map((d) => disciplines[d].label).join(', ') ?? '—'}</dd>
-              </div>
-              <div>
-                <dt className="label">Возраст</dt>
-                <dd className="display-upright text-[26px] leading-tight">{e.age ?? '6+'}</dd>
-              </div>
+              {kinds.length > 0 && (
+                <div>
+                  <dt className="label">Дисциплины</dt>
+                  <dd className="text-[15px] leading-snug">{kinds.map((d) => disciplines[d].label).join(', ')}</dd>
+                </div>
+              )}
+              {(e.age || year >= 2024) && (
+                <div>
+                  <dt className="label">Возраст</dt>
+                  <dd className="display-upright text-[26px] leading-tight">{e.age ?? '6+'}</dd>
+                </div>
+              )}
             </dl>
             <div className="flex flex-wrap gap-4">
               {upcoming ? (
@@ -262,7 +268,8 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         </section>
       )}
 
-      {/* ── Арена ── */}
+      {/* ── Арена: у старых вечеров без известной площадки блока нет ── */}
+      {(e.venue || upcoming) && (
       <section id="venue" className="section-tight scroll-mt-20" aria-labelledby="venue-title">
         <div className="wrap grid gap-10 lg:grid-cols-2 lg:items-center">
           <div className="flex flex-col gap-6">
@@ -270,7 +277,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
               Арена
             </h2>
             <p className="display-upright text-[40px] leading-none">{e.venue ?? 'Площадка объявляется'}</p>
-            <p className="lead">{[e.address, e.city].filter(Boolean).join(', ')}</p>
+            <p className="lead">{e.city}</p>
             {e.venue && (
               <div className="flex flex-wrap gap-3">
                 <Btn href={`https://yandex.by/maps/?text=${mapQuery}`} variant="ghost" external>
@@ -281,11 +288,13 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                 </Btn>
               </div>
             )}
-            <ul className="grid gap-3 text-mute">
-              <li>— Приходите за 30–40 минут до старта: досмотр на входе.</li>
-              <li>— Билет — электронный, на экране телефона.</li>
-              <li>— Детям до 14 лет — только со взрослыми.</li>
-            </ul>
+            {upcoming && (
+              <ul className="grid gap-3 text-mute">
+                <li>— Приходите за 30–40 минут до старта: досмотр на входе.</li>
+                <li>— Билет — электронный, на экране телефона.</li>
+                <li>— Детям до 14 лет — только со взрослыми.</li>
+              </ul>
+            )}
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius)] border border-line" aria-hidden="true" style={{ background: 'radial-gradient(60% 60% at 50% 50%, var(--deep-2), var(--abyss))' }}>
             {/* стилизованная «карта»: сетка улиц и маркер */}
@@ -310,8 +319,10 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           </div>
         </div>
       </section>
+      )}
 
-      {/* ── Билеты ── */}
+      {/* ── Билеты: у старых вечеров без данных о продаже блока нет ── */}
+      {(upcoming || e.tickets) && (
       <section id="tickets" className="section-tight scroll-mt-20" aria-labelledby="tix-title">
         <div className="wrap">
           <div className="grid gap-8 rounded-[var(--radius)] border border-line p-6 md:grid-cols-[1fr_auto] md:items-center md:p-12" style={{ background: 'radial-gradient(70% 120% at 100% 0%, rgba(255,43,58,.14), transparent 60%), var(--abyss-2)' }}>
@@ -346,6 +357,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           </div>
         </div>
       </section>
+      )}
 
       {/* ── Эфир ── */}
       <section id="watch" className="section-tight scroll-mt-20" aria-labelledby="w-title">

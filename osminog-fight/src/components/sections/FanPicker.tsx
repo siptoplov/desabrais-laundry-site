@@ -28,10 +28,11 @@ export function FighterAvatar({ f, className = '', text = 'text-[clamp(1.6rem,4v
 
 const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е');
 
-export function FanPicker({ fighters, events, current, onPick, onClose }: { fighters: Fighter[]; events: FightEvent[]; current: string; onPick: (slug: string) => void; onClose: () => void }) {
+export function FanPicker({ fighters, events, current, favs = [], onPick, onClose }: { fighters: Fighter[]; events: FightEvent[]; current: string; favs?: string[]; onPick: (slug: string) => void; onClose: () => void }) {
   const [q, setQ] = useState('');
   const [d, setD] = useState<Discipline | ''>('');
   const [sort, setSort] = useState<'fights' | 'az'>('fights');
+  const [onlyPhoto, setOnlyPhoto] = useState(false);
   const search = useRef<HTMLInputElement>(null);
 
   const count = useMemo(() => Object.fromEntries(fighters.map((f) => [f.slug, boutsOf(events, f.slug).filter((b) => b.outcome !== 'upcoming').length])), [fighters, events]);
@@ -42,11 +43,12 @@ export function FanPicker({ fighters, events, current, onPick, onClose }: { figh
     return fighters
       .filter((f) => {
         if (d && !f.disciplines.includes(d)) return false;
+        if (onlyPhoto && !f.photo && !f.headshot) return false;
         const hay = norm([f.firstName, f.lastName, f.nickname, f.city].filter(Boolean).join(' '));
         return words.every((w) => hay.includes(w));
       })
       .sort((a, b) => (sort === 'fights' ? count[b.slug] - count[a.slug] : 0) || a.lastName.localeCompare(b.lastName, 'ru'));
-  }, [fighters, q, d, sort, count]);
+  }, [fighters, q, d, sort, count, onlyPhoto]);
 
   useEffect(() => {
     const prev = document.activeElement as HTMLElement | null;
@@ -92,6 +94,9 @@ export function FanPicker({ fighters, events, current, onPick, onClose }: { figh
               </button>
             ))}
           </div>
+          <button type="button" aria-pressed={onlyPhoto} onClick={() => setOnlyPhoto((v) => !v)} className={`chip ${onlyPhoto ? 'chip-cyan' : 'hover:text-ice'}`}>
+            Только с фото
+          </button>
           <label className="mono flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-mute md:ml-auto">
             Порядок
             <select value={sort} onChange={(e) => setSort(e.target.value as 'fights' | 'az')} className="rounded border border-ice/25 bg-abyss px-2 py-1.5 text-ice">
@@ -117,7 +122,14 @@ export function FanPicker({ fighters, events, current, onPick, onClose }: { figh
                   aria-pressed={on}
                   className={`group flex w-full items-center gap-3 rounded-[var(--radius)] border p-2 text-left transition-colors ${on ? 'border-accent bg-accent/10' : 'border-line hover:border-ice/40 hover:bg-deep-2/40'}`}
                 >
-                  <FighterAvatar f={f} className="h-16 w-14 shrink-0 overflow-hidden rounded-[calc(var(--radius)/2)]" />
+                  <span className="relative shrink-0">
+                    <FighterAvatar f={f} className="h-16 w-14 overflow-hidden rounded-[calc(var(--radius)/2)]" />
+                    {favs.includes(f.slug) && (
+                      <svg viewBox="0 0 24 24" className="absolute -right-1.5 -top-1.5 h-5 w-5 text-blood [filter:drop-shadow(0_0_4px_rgba(255,43,58,.7))]" aria-label="В избранном" role="img">
+                        <path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 5.3 3.1 1.7-1.9 3.2-3.1 5.3-3.1 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z" fill="currentColor" />
+                      </svg>
+                    )}
+                  </span>
                   <span className="flex min-w-0 flex-col gap-0.5">
                     {f.firstName && <span className="truncate text-[12px] text-mute">{f.firstName}</span>}
                     <span className="display-upright truncate text-[20px] leading-none group-hover:text-accent">{f.lastName}</span>

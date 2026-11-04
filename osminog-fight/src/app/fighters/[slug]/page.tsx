@@ -11,7 +11,7 @@ import { Gallery } from '@/components/ui/Gallery';
 import { BoutHistory, StatsGrid } from '@/components/ui/BoutHistory';
 import { fullName, getFighter, getFighterBouts, getFighterStats, getFighterVideos, getFighters, getUpcoming, recordStr, resolveCorner, totalFights } from '@/lib/cms';
 import { asset, photoSrcSet } from '@/lib/asset';
-import { fmtShort, plural } from '@/lib/format';
+import { fmtDate, fmtShort, plural } from '@/lib/format';
 import { breadcrumbs, JsonLd, personJsonLd } from '@/lib/seo';
 import { countries, disciplines, site } from '@/content/site';
 
@@ -204,8 +204,17 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
                 </Link>
               ) : (
                 <>
-                  <p className="display-upright text-[30px] leading-tight">Объявим в {upcoming?.title ?? 'следующем турнире'}</p>
-                  <p className="mt-2 text-mute">Добавьте бойца в избранное — напомним, когда он выйдет в ринг.</p>
+                  <p className="display-upright text-[30px] leading-tight">Пока не объявлен</p>
+                  <p className="mt-2 text-mute">
+                    {upcoming ? (
+                      <>
+                        Кард {upcoming.title}
+                        {upcoming.date ? ` (${fmtDate(upcoming.date, { day: 'numeric', month: 'long' })})` : ''} формируется — пары объявляют в соцсетях лиги.
+                      </>
+                    ) : (
+                      'Пары следующего турнира объявляют в соцсетях лиги.'
+                    )}
+                  </p>
                 </>
               )}
             </div>

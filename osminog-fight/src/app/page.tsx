@@ -206,7 +206,7 @@ export default function Home() {
               <div>
                 <p className="eyebrow mb-6">Билеты</p>
                 <SplitTitle lines={['Сядь так близко,', <span key="s" className="text-blood">чтобы слышать удар</span>]} className="display t-2" />
-                <p className="lead mt-6">Ringside, VIP-столы, ложи Lounge, партер и трибуна. Выберите место на схеме зала — мы напомним, когда откроются продажи.</p>
+                <p className="lead mt-6">Ringside, VIP, ложи Lounge, партер и трибуна. Посмотрите схему зала Prime Hall и цены — билеты продаёт TicketPro.</p>
                 <div className="mt-10 flex flex-wrap gap-4">
                   <Btn href="/tickets/" impact>
                     Выбрать место
