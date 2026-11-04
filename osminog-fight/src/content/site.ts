@@ -118,7 +118,7 @@ export const partners = {
     'Principium',
     'Chinuk Gym',
     'Team Fighting Grodno',
-    'ООО «Промстройэлектро»',
+    'Промстройэлектро',
   ],
   federations: ['Федерация бокса России', 'Федерация профессионального бокса (ФПБ)'],
 };
