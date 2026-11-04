@@ -9,6 +9,7 @@ export const site = {
   legalName: 'ООО «Октопус файтинг»',
   /** Изготовитель сайта */
   builder: 'VORQEN',
+  builderTelegram: 'https://t.me/vorqenofficial',
   /** Адрес сайта для поисковиков (canonical, sitemap, OG). Свой домен — задать NEXT_PUBLIC_SITE_URL в netlify.toml */
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://osminog-fight.netlify.app',
   since: 2009,
