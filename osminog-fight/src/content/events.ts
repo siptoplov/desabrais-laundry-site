@@ -1,5 +1,6 @@
 import type { FightEvent } from './types';
 import { archiveBouts } from './archive';
+import { partners } from './site';
 
 /**
  * Турниры лиги.
@@ -26,6 +27,7 @@ export const events: FightEvent[] = [
       '11 февраля 2027 года, Минск. Площадка, время и кард — в анонсах лиги в Instagram, билеты — на TicketPro.',
     ],
     bouts: [],
+    partners: [partners.general.name, partners.tv.name, ...partners.list, ...partners.federations],
     tickets: { status: 'soon', vendor: 'TicketPro', currency: 'BYN' },
   },
   {
