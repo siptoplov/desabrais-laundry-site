@@ -46,7 +46,6 @@ export const site = {
     heroArtFocus: 44,
   },
   /** Куда отправлять формы (Formspree, Getform, свой воркер с Telegram-ботом…). Пусто — режим «через Direct». */
-  formsEndpoint: process.env.NEXT_PUBLIC_FORMS_ENDPOINT || '',
 };
 
 export const nav = [

@@ -21,16 +21,12 @@ export function Cabinet({ fighters, events, videos }: { fighters: Fighter[]; eve
   const [favs, setFavs] = useState<string[]>([]);
   const [votes, setVotes] = useState<Vote[]>([]);
   const [seats, setSeats] = useState<{ event: string; seats: string[] } | null>(null);
-  const [sub, setSub] = useState<{ channel: string; contact: string } | null>(null);
   const [cart, setCart] = useState<{ slug: string; qty: number }[]>([]);
-  const [reminders, setReminders] = useState<string[]>([]);
-
+  
   useEffect(() => {
     setFavs(read<string[]>('favs', []));
     setSeats(read('seats', null));
-    setSub(read('subscribed', null));
     setCart(read('cart', []));
-    setReminders(read('reminders', []));
     const v: Vote[] = [];
     try {
       for (let i = 0; i < localStorage.length; i++) {
@@ -126,12 +122,6 @@ export function Cabinet({ fighters, events, videos }: { fighters: Fighter[]; eve
               Выберите места на <Link href="/tickets/" className="text-ice underline underline-offset-4">схеме зала</Link>.
             </p>
           )}
-        </div>
-        {/* подписка и напоминания */}
-        <div className="panel p-6">
-          <p className="eyebrow mb-4">Уведомления</p>
-          <p className="text-mute">{sub ? `Подписка: ${sub.channel === 'email' ? 'e-mail' : 'Telegram'} · ${sub.contact}` : 'Подписки нет — оформите в футере сайта.'}</p>
-          {reminders.length > 0 && <p className="mt-2 text-mute">В календаре: {reminders.map((r) => ev(r)?.title ?? r).join(', ')}</p>}
         </div>
         {/* корзина */}
         <div className="panel p-6">

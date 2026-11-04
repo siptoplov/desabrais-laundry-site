@@ -7,6 +7,9 @@
   # Адрес сайта для canonical, sitemap и соцсетей. Подключите свой домен — поменяйте здесь.
   NEXT_PUBLIC_SITE_URL = "https://osminog-fight.netlify.app"
 
+[functions]
+  directory = "netlify/functions"
+
 # Старые и типовые адреса — на актуальные страницы
 [[redirects]]
   from = "/index.html"

@@ -49,7 +49,7 @@ export default function RubahaPage() {
         <div className="wrap grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           <div className="flex flex-col gap-4">
             <h2 className="display t-2">Анкета смельчака</h2>
-            <p className="text-mute">Без подготовки — но с головой. Участие только с 18 лет и при отсутствии медицинских противопоказаний. Отбор — на усмотрение организаторов.</p>
+            <p className="text-mute">Без подготовки — но с головой. Участвовать могут те, кому исполнилось 18 лет, кто не был профессиональным спортсменом в единоборствах и нигде не выступает. Заниматься в зале можно. Отбор — на усмотрение организаторов.</p>
             <p className="text-[14px] text-faint">Официальная анкета также — в шапке профиля {site.socials.instagramHandle}.</p>
           </div>
           <div className="panel p-6 md:p-10">
@@ -58,13 +58,14 @@ export default function RubahaPage() {
               title="Анкета «Рубаха-парень»"
               fields={[
                 { name: 'name', label: 'Имя и фамилия', required: true, autoComplete: 'name' },
-                { name: 'age', label: 'Возраст', type: 'number', required: true },
+                { name: 'age', label: 'Возраст (от 18)', type: 'number', required: true },
                 { name: 'weight', label: 'Вес, кг', type: 'number', required: true },
-                { name: 'height', label: 'Рост, см', type: 'number' },
+                { name: 'profession', label: 'Профессия', required: true, autoComplete: 'organization-title' },
+                { name: 'training', label: 'Занимаетесь ли спортом', type: 'select', required: true, options: ['Не занимаюсь', 'Хожу в зал, нигде не выступаю', 'Другой спорт'], span: 2 },
                 { name: 'phone', label: 'Телефон', type: 'tel', required: true, autoComplete: 'tel', placeholder: '+375 29 000-00-00' },
-                { name: 'instagram', label: 'Instagram', placeholder: '@username' },
-                { name: 'experience', label: 'Опыт единоборств', type: 'select', required: true, options: ['Никогда не дрался', 'Немного занимался', 'Любитель с опытом боёв', 'Дворовая легенда'] },
-                { name: 'why', label: 'Почему именно вы?', type: 'textarea', placeholder: 'Пара честных строк — судьи оценят' },
+                { name: 'telegram', label: 'Telegram или Instagram', placeholder: '@username' },
+                { name: 'bio', label: 'Коротко о себе', type: 'textarea', required: true, placeholder: 'Кто вы, чем живёте, почему хотите в ринг' },
+                { name: 'eligible', label: 'Подтверждаю: мне 18 лет или больше, я не был(а) профессиональным спортсменом в единоборствах и не выступаю на соревнованиях. Могу заниматься в зале.', type: 'checkbox', required: true, span: 2 },
               ]}
               submit="Хватит смелости"
               success={{ title: 'Анкета принята', text: 'Если вас отберут — организаторы позвонят. Тренируйте взгляд.' }}

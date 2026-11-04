@@ -43,8 +43,8 @@ export default function ContactsPage() {
               title="Сообщение с сайта"
               fields={[
                 { name: 'name', label: 'Имя', required: true, autoComplete: 'name' },
-                { name: 'email', label: 'E-mail', type: 'email', required: true, autoComplete: 'email' },
-                { name: 'topic', label: 'Тема', type: 'select', required: true, options: ['Вопрос о турнире', 'Аккредитация СМИ', 'Партнёрство', 'Заявка бойца', 'Другое'], span: 2 },
+                { name: 'contact', label: 'Телефон, e-mail или Telegram', required: true, autoComplete: 'off' },
+                { name: 'subject', label: 'Тема', type: 'select', options: ['Вопрос о турнире', 'Аккредитация СМИ', 'Билеты', 'Другое'], span: 2 },
                 { name: 'message', label: 'Сообщение', type: 'textarea', required: true },
               ]}
               submit="Отправить"

@@ -150,10 +150,10 @@ export function Shop({ products }: { products: Product[] }) {
             )}
             {checkout && (
               <SmartForm
-                kind="merch-preorder"
+                kind="merch"
                 compact
                 title="Предзаказ мерча"
-                extra={{ Заказ: cart.map((l) => `${byslug(l.slug).name} ${l.size ?? ''} ${l.color} ×${l.qty}`).join('; ') }}
+                extra={{ items: cart.map((l) => `${byslug(l.slug).name} ${l.size ?? ''} ${l.color} ×${l.qty}`).join('; ') }}
                 fields={[
                   { name: 'name', label: 'Имя', required: true, autoComplete: 'name' },
                   { name: 'phone', label: 'Телефон', type: 'tel', required: true, autoComplete: 'tel' },

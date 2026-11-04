@@ -8,7 +8,7 @@ export const dynamic = 'force-static';
  * ИИ-поисковики (ChatGPT, Claude, Perplexity, Gemini, Яндекс-нейро) допущены явно —
  * чтобы лига попадала в ответы ИИ (GEO); краткая справка для них — /llms.txt.
  */
-const closed = ['/me/', '/__forms.html'];
+const closed = ['/me/'];
 const aiBots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-User', 'Claude-SearchBot', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'YandexAdditional', 'YandexAdditionalBot'];
 
 export default function robots(): MetadataRoute.Robots {
