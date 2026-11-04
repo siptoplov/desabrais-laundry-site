@@ -95,8 +95,12 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {site.nameLatin} · {site.legalName}. {site.slogan}
             <span className="mt-1 block">
-              Разработка сайта — <span className="text-mute">{site.builder}</span> ·{' '}
-              <a href={site.builderTelegram} target="_blank" rel="noopener noreferrer" className="hover:text-ice">
+              Разработка сайта —{' '}
+              <a href={site.builderTelegram} target="_blank" rel="noopener noreferrer" className="text-mute underline underline-offset-4 hover:text-ice">
+                {site.builder}
+              </a>{' '}
+              ·{' '}
+              <a href={site.builderTelegram} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-ice">
                 Telegram @vorqenofficial
               </a>
             </span>
