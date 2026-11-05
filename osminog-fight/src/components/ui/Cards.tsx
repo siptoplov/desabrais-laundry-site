@@ -148,7 +148,7 @@ export function NewsCard({ n, featured }: { n: NewsItem; featured?: boolean }) {
           <img src={asset(`${n.image}-560.webp`)} srcSet={posterSrcSet(n.image)} sizes={featured ? '(min-width:768px) 60vw, 90vw' : '(min-width:768px) 30vw, 90vw'} alt="" loading="lazy" decoding="async" width={560} height={700} className="h-full w-full object-cover object-top transition-transform duration-[1400ms] group-hover:scale-105" />
         ) : (
           <div className="relative grid h-full w-full place-items-center" style={{ background: 'radial-gradient(70% 70% at 30% 20%, var(--deep-2), var(--abyss))' }}>
-            <span className="display text-outline px-6 text-center text-[clamp(2rem,4vw,3.4rem)] leading-[0.85] opacity-70">{n.tag}</span>
+            <span className="display text-outline-ghost px-6 text-center text-[clamp(2rem,4vw,3.4rem)] leading-[0.85] opacity-70">{n.tag}</span>
           </div>
         )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-abyss/90 via-transparent to-transparent" />

@@ -23,7 +23,7 @@ export function Footer() {
             <p className="lead">Анонсы {next?.title ?? 'следующего турнира'}, кард, видео боёв и старт продаж билетов.</p>
             <FollowLinks />
           </div>
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
             <div>
               <p className="mono mb-4 text-[11px] uppercase tracking-[0.2em] text-faint">Лига</p>
               <ul className="flex flex-col gap-2.5">
@@ -52,13 +52,13 @@ export function Footer() {
               <p className="mono mb-4 text-[11px] uppercase tracking-[0.2em] text-faint">На связи</p>
               <ul className="flex flex-col gap-2.5">
                 <li>
-                  <a href={site.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-mute hover:text-ice">
-                    Instagram {site.socials.instagramHandle} ↗
+                  <a href={site.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-mute transition-colors hover:text-ice" title={site.socials.instagramHandle}>
+                    Instagram ↗
                   </a>
                 </li>
                 <li>
-                  <a href={site.socials.youtube} target="_blank" rel="noopener noreferrer" className="text-mute hover:text-ice">
-                    YouTube · Chinuk Gym ↗
+                  <a href={site.socials.youtube} target="_blank" rel="noopener noreferrer" className="text-mute transition-colors hover:text-ice" title="Chinuk Gym">
+                    YouTube ↗
                   </a>
                 </li>
                 <li className="pt-3 text-[13px] text-faint">

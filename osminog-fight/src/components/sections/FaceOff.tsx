@@ -107,7 +107,7 @@ export function FaceOff({ red, blue, bout, title, eventTitle, eventHref }: { red
         <div className="relative order-last col-span-2 flex flex-col justify-center gap-4 px-0 py-10 lg:order-none lg:col-span-1 lg:px-8">
           <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-line-strong to-transparent lg:block" style={{ background: 'linear-gradient(transparent, rgba(242,242,243,.18), transparent)' }} />
           <div className="relative mb-2 flex items-center justify-center" aria-hidden="true">
-            <span className="display-upright text-outline text-[clamp(4rem,8vw,7rem)] leading-none">VS</span>
+            <span className="display-upright text-outline-ghost text-[clamp(4rem,8vw,7rem)] leading-none">VS</span>
           </div>
           <table className="relative w-full border-separate border-spacing-y-3">
             <caption className="sr-only">Сравнение бойцов</caption>
