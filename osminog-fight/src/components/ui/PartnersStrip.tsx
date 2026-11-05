@@ -1,35 +1,27 @@
 import { partnerLogos } from '@/content/site';
-import { PartnerLogo } from './PartnerLogo';
+import { asset } from '@/lib/asset';
 
 /**
- * Партнёры в два ряда: сначала только логотипы (крупно, без серого фильтра),
- * ниже — названия тех, у кого логотипа пока нет.
+ * Все партнёры одной сеткой одинаковых плиток: логотип подогнан по высоте и ширине плитки,
+ * у кого логотипа ещё нет — название тем же «весом», чтобы никто не выглядел лишним.
  */
-export function PartnersStrip({ names, size = 'h-12', align = 'start' }: { names: string[]; size?: string; align?: 'start' | 'center' }) {
-  const withLogo = names.filter((n) => partnerLogos[n]);
-  const without = names.filter((n) => !partnerLogos[n]);
-  const justify = align === 'center' ? 'justify-center text-center' : '';
+export function PartnersStrip({ names, size = 'md' }: { names: string[]; size?: 'md' | 'lg' }) {
+  const box = size === 'lg' ? 'h-24 w-full sm:w-[12.5rem]' : 'h-20 w-full sm:w-[11rem]';
+  const img = size === 'lg' ? 'max-h-12' : 'max-h-10';
   return (
-    <div className="flex flex-col gap-6">
-      {withLogo.length > 0 && (
-        <ul className={`flex flex-wrap items-center gap-x-10 gap-y-6 ${justify}`}>
-          {withLogo.map((p) => (
-            <li key={p} className="flex items-center">
-              <PartnerLogo name={p} className={size} vivid />
-            </li>
-          ))}
-        </ul>
-      )}
-      {without.length > 0 && (
-        <p className={`display-upright flex flex-wrap gap-x-5 gap-y-2 text-[1.1rem] leading-tight text-mute ${justify}`}>
-          {without.map((p, i) => (
-            <span key={p}>
-              {p}
-              {i < without.length - 1 && <span className="ml-5 text-faint" aria-hidden="true">·</span>}
-            </span>
-          ))}
-        </p>
-      )}
-    </div>
+    <ul className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
+      {names.map((n) => {
+        const logo = partnerLogos[n];
+        return (
+          <li key={n} className={`flex items-center justify-center rounded-[var(--radius)] border border-line bg-abyss-2/60 px-4 ${box}`} title={n}>
+            {logo ? (
+              <img src={asset(logo)} alt={n} loading="lazy" decoding="async" className={`h-auto w-auto max-w-full object-contain ${n === 'Chinuk Gym' ? '[filter:brightness(2)_contrast(1.1)]' : '[filter:brightness(1.15)_contrast(1.05)]'} ${img}`} />
+            ) : (
+              <span className="display-upright text-center text-[1.05rem] leading-[1.05] text-ice/85">{n}</span>
+            )}
+          </li>
+        );
+      })}
+    </ul>
   );
 }

@@ -163,7 +163,7 @@ export default function JoinPage() {
               <p className="eyebrow">Для партнёров</p>
               <h2 className="display t-2">Бренд в свете ринга</h2>
               <p className="text-mute">Оставьте контакты — расскажем про аудиторию, охваты и форматы. С лигой уже работают:</p>
-              <PartnersStrip names={[partners.general.name, partners.tv.name, ...partners.list]} size="h-11" />
+              <PartnersStrip names={[partners.general.name, partners.tv.name, ...partners.list]} />
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {sponsorFormats.map((f, i) => (

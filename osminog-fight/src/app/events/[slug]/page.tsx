@@ -399,7 +399,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <h2 id="ep-title" className="mono mb-6 text-[11px] uppercase tracking-[0.2em] text-faint">
               Партнёры турнира
             </h2>
-            <PartnersStrip names={e.partners} size="h-12" />
+            <PartnersStrip names={e.partners} size="lg" />
             {e.sources && (
               <p className="mt-8 text-[13px] text-faint">
                 Источники:{' '}
