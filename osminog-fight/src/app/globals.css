@@ -724,8 +724,8 @@
   .split-line {
     display: block;
     overflow: hidden;
-    padding-bottom: 0.06em;
-    margin-bottom: -0.06em;
+    padding: 0 0.14em 0.06em;
+    margin: 0 -0.14em -0.06em;
   }
   .split-line > span {
     display: block;
