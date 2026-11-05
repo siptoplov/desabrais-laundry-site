@@ -14,7 +14,7 @@ export default function RubahaPage() {
   return (
     <>
       <PageHero eyebrow="Спецпроект" title={['Рубаха-', <span key="s" className="text-blood glow-blood">парень</span>]} lead={rubaha.lead} crumbs={[{ name: 'Рубаха-парень', path: '/rubaha-paren/' }]}>
-        <dl className="grid max-w-2xl grid-cols-2 gap-6 md:grid-cols-4">
+        <dl className="grid max-w-2xl grid-cols-2 gap-6 md:grid-cols-3">
           {rubaha.format.map((r) => (
             <div key={r.k} className="border-l border-blood/60 pl-4">
               <dt className="label">{r.k}</dt>
