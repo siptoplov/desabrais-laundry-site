@@ -216,7 +216,7 @@ export function FanZone({ fighters, events, videos, compact = false }: { fighter
             </div>
 
             <StatsGrid f={fanF} bouts={bouts} st={st} />
-            <FighterAnalyticsPanel a={an} />
+            <FighterAnalyticsPanel a={an} record={fanF?.record} />
 
             <div>
               <h3 className="display t-3 mb-6">Все бои · {bouts.length}</h3>

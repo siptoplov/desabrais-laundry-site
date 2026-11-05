@@ -26,16 +26,23 @@ export const getLatestPast = () => events.find((e) => e.status === 'past' && e.b
  * к нему прибавляются итоги всех боёв лиги с этой даты (спарринги не в счёт).
  * recordAsOf становится датой последнего учтённого боя.
  */
+/** Доля побед — всегда из рекорда: победы / все бои (ничья считается боем) */
+const rateOf = (r: { w: number; l: number; d?: number }) => {
+  const t = r.w + r.l + (r.d ?? 0);
+  return t ? Math.round((r.w / t) * 100) : undefined;
+};
+
 function withLeagueResults(f: Fighter): Fighter {
+  if (f.record && !f.recordAsOf) return { ...f, winRate: rateOf(f.record) };
   if (!f.record || !f.recordAsOf) return f;
   const from = f.recordAsOf.slice(0, 10);
   const counted = boutsOf(events, f.slug).filter((b) => !b.exhibition && b.event.date && b.event.date.slice(0, 10) >= from && (b.outcome === 'win' || b.outcome === 'loss' || b.outcome === 'draw'));
-  if (!counted.length) return f;
+  if (!counted.length) return { ...f, winRate: rateOf(f.record) };
   const r = { ...f.record, d: f.record.d ?? 0 };
   for (const b of counted) b.outcome === 'win' ? r.w++ : b.outcome === 'loss' ? r.l++ : r.d++;
   const last = counted.map((b) => b.event.date!.slice(0, 10)).sort().at(-1)!;
   const total = r.w + r.l + r.d;
-  return { ...f, record: r.d ? r : { w: r.w, l: r.l }, recordAsOf: last, ...(f.winRate !== undefined && total ? { winRate: Math.round((r.w / total) * 100) } : {}) };
+  return { ...f, record: r.d ? r : { w: r.w, l: r.l }, recordAsOf: last, winRate: total ? Math.round((r.w / total) * 100) : f.winRate };
 }
 
 /** У бойцов из архива дисциплины не заполнены вручную — берём их из боёв; клуб и тренер — из clubs.ts */

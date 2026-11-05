@@ -98,8 +98,11 @@ const formDot: Record<Outcome, string> = { win: 'bg-cyan', loss: 'bg-blood', dra
 const formLetter: Record<Outcome, string> = { win: 'П', loss: 'П', draw: 'Н', unknown: '?', upcoming: '·' };
 
 /** Аналитика бойца: доля побед, как побеждает, серия, форма и итоги по дисциплинам */
-export function FighterAnalyticsPanel({ a }: { a: FighterAnalytics }) {
+export function FighterAnalyticsPanel({ a, record }: { a: FighterAnalytics; record?: { w: number; l: number; d?: number } }) {
   const R = 52;
+  // доля побед — по полному рекорду бойца (победы / все бои); по итогам лиги — отдельной строкой
+  const rt = record ? record.w + record.l + (record.d ?? 0) : 0;
+  const rate = record && rt ? Math.round((record.w / rt) * 100) : a.winRate;
   const C = 2 * Math.PI * R;
   const wins = a.finishes + a.decisions;
   return (
@@ -108,14 +111,17 @@ export function FighterAnalyticsPanel({ a }: { a: FighterAnalytics }) {
       <div className="flex items-center gap-5 bg-abyss-2 p-5">
         <svg viewBox="0 0 120 120" className="h-28 w-28 shrink-0 -rotate-90" aria-hidden="true">
           <circle cx="60" cy="60" r={R} fill="none" stroke="currentColor" strokeWidth="8" className="text-line" />
-          {a.winRate !== null && (
-            <circle cx="60" cy="60" r={R} fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" className="text-blood [filter:drop-shadow(0_0_6px_rgba(255,43,58,.6))]" strokeDasharray={`${(C * a.winRate) / 100} ${C}`} />
+          {rate !== null && (
+            <circle cx="60" cy="60" r={R} fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" className="text-blood [filter:drop-shadow(0_0_6px_rgba(255,43,58,.6))]" strokeDasharray={`${(C * rate) / 100} ${C}`} />
           )}
         </svg>
         <div className="flex flex-col gap-1">
           <span className="label">Доля побед</span>
-          <span className="display-upright text-[clamp(2.2rem,3.6vw,3rem)] leading-none">{a.winRate === null ? '—' : `${a.winRate}%`}</span>
-          <span className="mono text-[10px] uppercase tracking-[0.12em] text-faint">по известным итогам лиги</span>
+          <span className="display-upright text-[clamp(2.2rem,3.6vw,3rem)] leading-none">{rate === null ? '—' : `${rate}%`}</span>
+          <span className="mono text-[10px] uppercase tracking-[0.12em] text-faint">
+            {record && rt ? `по рекорду ${record.w}-${record.l}${record.d ? `-${record.d}` : ''}` : 'по известным итогам лиги'}
+          </span>
+          {record && rt > 0 && a.winRate !== null && <span className="mono text-[10px] uppercase tracking-[0.12em] text-faint">в боях лиги: {a.winRate}%</span>}
         </div>
       </div>
       {/* как побеждает + серия */}
