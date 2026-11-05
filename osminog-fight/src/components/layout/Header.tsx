@@ -45,7 +45,7 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-[80] transition-[transform,background,border-color] duration-500 ${hidden && !open ? '-translate-y-full' : ''} ${scrolled || open ? 'border-b border-line bg-abyss/70 backdrop-blur-xl' : 'border-b border-transparent'}`}
+        className={`fixed inset-x-0 top-0 z-[80] transition-[transform,background,border-color] duration-500 ${hidden && !open ? '-translate-y-full' : ''} ${scrolled || open ? 'border-b border-line bg-abyss/70 backdrop-blur-xl' : 'border-b border-transparent bg-gradient-to-b from-abyss/90 via-abyss/45 to-transparent'}`}
       >
         <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
           <Link href="/" className="group flex items-center gap-3" aria-label={`${site.name} — на главную`}>

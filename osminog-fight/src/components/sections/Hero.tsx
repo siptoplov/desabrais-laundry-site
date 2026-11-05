@@ -22,14 +22,15 @@ export function Hero() {
       <div className="absolute inset-0 -z-20" style={{ background: 'radial-gradient(80% 70% at 70% 30%, #1C1C21 0%, #121215 30%, #060607 75%)' }} />
       <div className="godrays -z-10" />
       <HeroVisual className="absolute inset-0 -z-10" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-abyss via-abyss/60 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[68%] bg-gradient-to-t from-abyss via-abyss/75 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-[70%] bg-gradient-to-r from-abyss/75 via-abyss/30 to-transparent" />
 
       <div className="wrap flex flex-1 flex-col justify-end pb-10 md:pb-14">
         <p className="eyebrow mb-6" data-reveal="load" data-hero-text>
           <span className="max-md:hidden">{site.league} · </span>Минск · с {site.since}
         </p>
 
-        <h1 id="hero-title" className="relative">
+        <h1 id="hero-title" className="relative drop-shadow-[0_10px_36px_rgba(0,0,0,.65)]">
           <span className="sr-only">
             {site.name} — {headline}
           </span>

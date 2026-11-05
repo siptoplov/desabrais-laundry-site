@@ -88,8 +88,8 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
             <Silhouette f={f} className="absolute right-0 top-0 h-full w-full lg:w-[55%]" />
           )}
           <div className="absolute inset-0 mix-blend-screen" style={{ background: 'radial-gradient(50% 60% at 95% 30%, rgba(236,238,241,.28), transparent 70%), radial-gradient(40% 50% at 40% 40%, rgba(255,43,58,.18), transparent 70%)' }} />
-          <div className="absolute inset-0 bg-gradient-to-r from-abyss via-abyss/70 to-transparent lg:via-abyss/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-abyss via-transparent to-abyss/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-abyss via-abyss/85 to-abyss/20 lg:via-abyss/65" />
+          <div className="absolute inset-0 bg-gradient-to-t from-abyss via-abyss/30 to-abyss/40" />
           <div className="caustics" />
         </div>
 
@@ -112,7 +112,7 @@ export default async function FighterPage({ params }: { params: Promise<{ slug: 
             {f.badges?.includes('replacement') && <span className="chip chip-blood">Замена</span>}
           </div>
           {f.nickname && <p className="mono mt-6 text-[14px] uppercase tracking-[0.2em] text-accent">«{f.nickname}»</p>}
-          <SplitTitle as="h1" lines={[...(f.firstName ? [<span key="f" className="text-[0.36em] leading-none text-mute">{f.firstName}</span>] : []), f.lastName]} className="display t-mega mt-4 leading-[0.8]" instant />
+          <SplitTitle as="h1" lines={[...(f.firstName ? [<span key="f" className="text-[0.36em] leading-none text-mute">{f.firstName}</span>] : []), f.lastName]} className="display t-mega mt-4 leading-[0.8] drop-shadow-[0_8px_40px_rgba(0,0,0,.7)]" instant />
           <dl className="mt-10 grid max-w-3xl grid-cols-2 gap-6 border-t border-line pt-8 sm:grid-cols-4">
             {[
               ['Рекорд', recordStr(f)],

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/ui/PageHero";
 import { SmartForm } from "@/components/forms/FormKit";
 import { sponsorFormats } from "@/content/pages";
+import { PartnerLogo } from '@/components/ui/PartnerLogo';
 import { partners } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -161,12 +162,14 @@ export default function JoinPage() {
             <div className="flex flex-col gap-6">
               <p className="eyebrow">Для партнёров</p>
               <h2 className="display t-2">Бренд в свете ринга</h2>
-              <p className="text-mute">
-                С нами — {partners.general.name} (генеральный партнёр),{" "}
-                {partners.tv.name} (ТВ), {partners.list.slice(1, 6).join(", ")}{" "}
-                и другие. Оставьте контакты — расскажем про аудиторию, охваты и
-                форматы.
-              </p>
+              <p className="text-mute">Оставьте контакты — расскажем про аудиторию, охваты и форматы. С лигой уже работают:</p>
+              <ul className="flex flex-wrap items-center gap-x-8 gap-y-5">
+                {[partners.general.name, partners.tv.name, ...partners.list].map((p) => (
+                  <li key={p} className="flex min-h-8 items-center">
+                    <PartnerLogo name={p} className="h-9" caption />
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {sponsorFormats.map((f, i) => (
