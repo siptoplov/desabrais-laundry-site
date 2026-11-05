@@ -93,7 +93,7 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col gap-6 text-[13px] text-faint md:flex-row md:items-center md:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.nameLatin} · {site.legalName}. {site.slogan}
+            © {new Date().getFullYear()} {site.nameLatin} · {site.legalName}, УНП {site.legal.unp}. {site.slogan}
             <span className="mt-1 block">
               Разработка сайта —{' '}
               <a href={site.builderTelegram} target="_blank" rel="noopener noreferrer" className="text-mute underline underline-offset-4 hover:text-ice">

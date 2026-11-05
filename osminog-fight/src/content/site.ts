@@ -6,7 +6,9 @@ export const site = {
   name: 'ОСЬМИНОГ',
   nameLatin: 'OSMINOG FIGHT',
   league: 'Belarusian Fight League',
-  legalName: 'ООО «Октопус файтинг»',
+  legalName: 'ООО «Октопус Файтинг»',
+  /** Реквизиты оператора (из договора). Расчётный счёт на сайте не публикуем */
+  legal: { unp: '193959439', address: 'Республика Беларусь, г. Минск, ул. Скрыганова, д. 6, пом. 7' },
   /** Изготовитель сайта */
   builder: 'VORQEN',
   builderTelegram: 'https://t.me/vorqenofficial',

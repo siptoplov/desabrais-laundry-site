@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <section className="pb-24">
         <div className="wrap prose-osm max-w-3xl">
           <p>
-            Оператор персональных данных — {site.legalName} (далее — «Лига»). Связь по вопросам данных — {site.socials.instagramHandle} в Instagram{site.contacts.email ? ` или ${site.contacts.email}` : ''}. Политика действует для сайта {site.url}.
+            Оператор персональных данных — {site.legalName}, УНП {site.legal.unp}, {site.legal.address} (далее — «Лига»). Связь по вопросам данных — {site.socials.instagramHandle} в Instagram{site.contacts.email ? ` или ${site.contacts.email}` : ''}. Политика действует для сайта {site.url}.
           </p>
 
           <h2>1. Какие данные мы получаем</h2>
