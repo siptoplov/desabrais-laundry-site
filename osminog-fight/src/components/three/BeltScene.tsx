@@ -191,8 +191,8 @@ function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; activ
   const gold = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#ecc561', metalness: 1, roughness: 0.18, clearcoat: 0.5, clearcoatRoughness: 0.2 }), []);
   const goldDark = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#a8812f', metalness: 1, roughness: 0.32 }), []);
   const leather = useMemo(() => new THREE.MeshStandardMaterial({ map, bumpMap, bumpScale: 1.6, color: '#ffffff', metalness: 0.05, roughness: 0.62, side: THREE.DoubleSide }), [map, bumpMap]);
-  const gem = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#e0141f', emissive: '#8a0812', emissiveIntensity: 0.7, metalness: 0.2, roughness: 0.04, clearcoat: 1, flatShading: true }), []);
-  const reliefMat = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#ecc561', metalness: 1, roughness: 0.28, clearcoat: 0.3, side: THREE.DoubleSide }), []);
+  const gem = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#9b0a14', emissive: '#4a0007', emissiveIntensity: 0.6, metalness: 0.05, roughness: 0.12, clearcoat: 0.6, flatShading: true }), []);
+  const reliefMat = useMemo(() => new THREE.MeshStandardMaterial({ color: '#f2c14e', emissive: '#7a5200', emissiveIntensity: 0.55, metalness: 0.85, roughness: 0.34, side: THREE.DoubleSide }), []);
   const enamel = useMemo(() => new THREE.MeshStandardMaterial({ map: emblem, metalness: 0.35, roughness: 0.28 }), [emblem]);
   const plateFrame = useFrameGeometry(1.32, 1.0, 0.1, 0.05);
   const plateInner = useFrameGeometry(1.0, 0.93, 0.05, 0.02);
@@ -214,10 +214,10 @@ function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; activ
     <group ref={group} scale={0.88}>
       {/* ремень */}
       <mesh material={leather}>
-        <cylinderGeometry args={[2.1, 2.1, 0.95, 192, 1, true, 0, Math.PI * 2]} />
+        <cylinderGeometry args={[2.1, 2.1, 1.2, 192, 1, true, 0, Math.PI * 2]} />
       </mesh>
       {/* кант-окантовка сверху и снизу */}
-      {[-0.475, 0.475].map((y) => (
+      {[-0.6, 0.6].map((y) => (
         <group key={y} position={[0, y, 0]}>
           <mesh material={goldDark} rotation={[Math.PI / 2, 0, 0]}>
             <torusGeometry args={[2.1, 0.018, 8, 192]} />
@@ -317,7 +317,8 @@ export default function BeltScene({ className = '' }: { className?: string }) {
       <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0.5, 12], fov: 28 }} gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping }}>
         <Env />
         <ambientLight intensity={0.2} />
-        <directionalLight position={[-3, 4, 5]} intensity={2.2} color="#fff3e0" />
+        <directionalLight position={[-3, 4, 6]} intensity={3} color="#fff0d0" />
+        <directionalLight position={[4, 1, 6]} intensity={1.6} color="#ffd89a" />
         <pointLight position={[3, -1, 3]} intensity={18} color="#ECEEF1" />
         <pointLight position={[-4, 1, -2]} intensity={14} color="#ff2b3a" />
         <Belt drag={drag} />
