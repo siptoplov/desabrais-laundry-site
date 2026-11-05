@@ -70,14 +70,112 @@ function useEmblemTexture() {
   }, []);
 }
 
+/** Кожа: зерно + красная строчка вдоль обоих краёв */
+function useLeatherTextures() {
+  return useMemo(() => {
+    const W = 2048;
+    const H = 256;
+    const mk = () => {
+      const c = document.createElement('canvas');
+      c.width = W;
+      c.height = H;
+      return c;
+    };
+    const col = mk();
+    const bump = mk();
+    const g = col.getContext('2d')!;
+    const gb = bump.getContext('2d')!;
+    g.fillStyle = '#0d0f14';
+    g.fillRect(0, 0, W, H);
+    gb.fillStyle = '#808080';
+    gb.fillRect(0, 0, W, H);
+    for (let i = 0; i < 26000; i++) {
+      const x = Math.random() * W;
+      const y = Math.random() * H;
+      const r = 1 + Math.random() * 2.2;
+      const v = Math.random();
+      g.fillStyle = `rgba(${v > 0.5 ? 40 : 0},${v > 0.5 ? 44 : 0},${v > 0.5 ? 52 : 0},${0.25 + Math.random() * 0.35})`;
+      g.beginPath();
+      g.arc(x, y, r, 0, Math.PI * 2);
+      g.fill();
+      gb.fillStyle = `rgba(${v > 0.5 ? 255 : 0},${v > 0.5 ? 255 : 0},${v > 0.5 ? 255 : 0},0.35)`;
+      gb.beginPath();
+      gb.arc(x, y, r, 0, Math.PI * 2);
+      gb.fill();
+    }
+    // строчка
+    g.strokeStyle = '#ff2b3a';
+    g.lineWidth = 5;
+    g.setLineDash([22, 14]);
+    [26, H - 26].forEach((y) => {
+      g.beginPath();
+      g.moveTo(0, y);
+      g.lineTo(W, y);
+      g.stroke();
+    });
+    gb.strokeStyle = '#000';
+    gb.lineWidth = 7;
+    gb.setLineDash([22, 14]);
+    [26, H - 26].forEach((y) => {
+      gb.beginPath();
+      gb.moveTo(0, y);
+      gb.lineTo(W, y);
+      gb.stroke();
+    });
+    // кант по краю
+    g.setLineDash([]);
+    g.fillStyle = '#050608';
+    g.fillRect(0, 0, W, 10);
+    g.fillRect(0, H - 10, W, 10);
+    const map = new THREE.CanvasTexture(col);
+    map.colorSpace = THREE.SRGBColorSpace;
+    map.anisotropy = 8;
+    const bumpMap = new THREE.CanvasTexture(bump);
+    bumpMap.anisotropy = 8;
+    return { map, bumpMap };
+  }, []);
+}
+
+const octShape = (r: number, rot = Math.PI / 8) => {
+  const s = new THREE.Shape();
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2 + rot;
+    const x = Math.cos(a) * r;
+    const y = Math.sin(a) * r;
+    if (i === 0) s.moveTo(x, y);
+    else s.lineTo(x, y);
+  }
+  s.closePath();
+  return s;
+};
+
+/** Восьмиугольная рамка с фаской (внешний радиус R, внутренний r) */
+function useFrameGeometry(R: number, r: number, depth: number, bevel: number) {
+  return useMemo(() => {
+    const shape = octShape(R);
+    shape.holes.push(octShape(r) as unknown as THREE.Path);
+    return new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 3, curveSegments: 1 });
+  }, [R, r, depth, bevel]);
+}
+
+function useSolidOctGeometry(R: number, depth: number, bevel: number) {
+  return useMemo(() => new THREE.ExtrudeGeometry(octShape(R), { depth, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 3, curveSegments: 1 }), [R, depth, bevel]);
+}
+
 function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; active: boolean }> }) {
   const group = useRef<THREE.Group>(null);
   const emblem = useEmblemTexture();
-  const gold = useMemo(() => new THREE.MeshStandardMaterial({ color: '#d9b25a', metalness: 1, roughness: 0.22 }), []);
-  const goldDark = useMemo(() => new THREE.MeshStandardMaterial({ color: '#a8812f', metalness: 1, roughness: 0.35 }), []);
-  const leather = useMemo(() => new THREE.MeshStandardMaterial({ color: '#0c0f14', metalness: 0.1, roughness: 0.55, side: THREE.DoubleSide }), []);
-  const red = useMemo(() => new THREE.MeshStandardMaterial({ color: '#ff2b3a', emissive: '#ff2b3a', emissiveIntensity: 0.4, roughness: 0.4 }), []);
-  const enamel = useMemo(() => new THREE.MeshStandardMaterial({ map: emblem, metalness: 0.3, roughness: 0.25 }), [emblem]);
+  const { map, bumpMap } = useLeatherTextures();
+  const gold = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#e0b95f', metalness: 1, roughness: 0.2, clearcoat: 0.4, clearcoatRoughness: 0.2 }), []);
+  const goldDark = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#a8812f', metalness: 1, roughness: 0.32 }), []);
+  const leather = useMemo(() => new THREE.MeshStandardMaterial({ map, bumpMap, bumpScale: 1.6, color: '#ffffff', metalness: 0.05, roughness: 0.62, side: THREE.DoubleSide }), [map, bumpMap]);
+  const gem = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#d1121f', emissive: '#7a0710', emissiveIntensity: 0.55, metalness: 0.1, roughness: 0.06, clearcoat: 1 }), []);
+  const enamel = useMemo(() => new THREE.MeshStandardMaterial({ map: emblem, metalness: 0.35, roughness: 0.28 }), [emblem]);
+  const plateFrame = useFrameGeometry(1.32, 1.0, 0.1, 0.05);
+  const plateInner = useFrameGeometry(1.0, 0.93, 0.05, 0.02);
+  const sideSolid = useSolidOctGeometry(0.5, 0.06, 0.03);
+  const sideRing = useFrameGeometry(0.36, 0.3, 0.04, 0.015);
+  const plateBase = useSolidOctGeometry(1.32, 0.04, 0.03);
 
   useFrame(({ clock }, dt) => {
     const d = drag.current!;
@@ -85,59 +183,86 @@ function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; activ
     d.rot += d.vx * dt;
     const g = group.current!;
     g.rotation.y = d.rot;
-    g.position.y = Math.sin(clock.elapsedTime * 0.9) * 0.06;
-    g.rotation.x = Math.sin(clock.elapsedTime * 0.5) * 0.05 + 0.08;
+    g.position.y = Math.sin(clock.elapsedTime * 0.9) * 0.05;
+    g.rotation.x = Math.sin(clock.elapsedTime * 0.5) * 0.04 + 0.07;
   });
 
   return (
-    <group ref={group}>
-      {/* ремень: открытый цилиндр-сегмент */}
+    <group ref={group} scale={0.88}>
+      {/* ремень */}
       <mesh material={leather}>
-        <cylinderGeometry args={[2.1, 2.1, 0.95, 96, 1, true, -2.3, 4.6]} />
+        <cylinderGeometry args={[2.1, 2.1, 0.95, 192, 1, true, 0, Math.PI * 2]} />
       </mesh>
-      {/* красная строчка */}
-      {[-0.42, 0.42].map((y) => (
-        <mesh key={y} material={red} position={[0, y, 0]}>
-          <cylinderGeometry args={[2.115, 2.115, 0.02, 96, 1, true, -2.3, 4.6]} />
-        </mesh>
+      {/* кант-окантовка сверху и снизу */}
+      {[-0.475, 0.475].map((y) => (
+        <group key={y} position={[0, y, 0]}>
+          <mesh material={goldDark} rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[2.1, 0.018, 8, 192]} />
+          </mesh>
+        </group>
       ))}
+      {/* отверстия для застёжки на задней части */}
+      {Array.from({ length: 5 }, (_, i) => {
+        const a = Math.PI + (i - 2) * 0.12;
+        return (
+          <mesh key={i} material={goldDark} position={[Math.sin(a) * 2.1, 0, Math.cos(a) * 2.1]} rotation={[0, a, 0]}>
+            <torusGeometry args={[0.05, 0.015, 8, 16]} />
+          </mesh>
+        );
+      })}
       {/* центральная пластина */}
-      <group position={[0, 0, 2.18]}>
-        <mesh material={goldDark} rotation={[Math.PI / 2, Math.PI / 8, 0]}>
-          <cylinderGeometry args={[1.25, 1.25, 0.14, 8]} />
+      <group position={[0, 0, 2.14]}>
+        {/* кожаная подкладка с обратной стороны */}
+        <mesh material={leather} position={[0, 0, -0.07]} rotation={[0, Math.PI, 0]}>
+          <circleGeometry args={[1.34, 8, Math.PI / 8]} />
         </mesh>
-        <mesh material={gold} position={[0, 0, 0.08]} rotation={[Math.PI / 2, Math.PI / 8, 0]}>
-          <cylinderGeometry args={[1.12, 1.18, 0.06, 8]} />
+        {/* подложка пластины */}
+        <mesh material={goldDark} position={[0, 0, -0.02]}>
+          <primitive object={plateBase} attach="geometry" />
         </mesh>
-        <mesh material={enamel} position={[0, 0, 0.115]}>
-          <circleGeometry args={[0.92, 8, Math.PI / 8]} />
+        <mesh material={gold} position={[0, 0, 0.02]} geometry={plateFrame} />
+        <mesh material={goldDark} position={[0, 0, 0.1]} geometry={plateInner} />
+        <mesh material={enamel} position={[0, 0, 0.075]}>
+          <circleGeometry args={[0.94, 8, Math.PI / 8]} />
         </mesh>
-        {/* камни по краю */}
+        {/* камни по рамке */}
         {Array.from({ length: 8 }, (_, i) => {
-          const a = (i / 8) * Math.PI * 2 + Math.PI / 8;
+          const a = (i / 8) * Math.PI * 2;
           return (
-            <mesh key={i} material={red} position={[Math.cos(a) * 1.02, Math.sin(a) * 1.02, 0.13]}>
-              <sphereGeometry args={[0.045, 12, 8]} />
-            </mesh>
+            <group key={i} position={[Math.cos(a) * 1.16, Math.sin(a) * 1.16, 0.18]}>
+              <mesh material={goldDark}>
+                <cylinderGeometry args={[0.075, 0.085, 0.04, 20]} />
+              </mesh>
+              <mesh material={gem} position={[0, 0, 0.035]} rotation={[Math.PI / 2, 0, 0]} scale={[1, 0.75, 1]}>
+                <sphereGeometry args={[0.062, 24, 16]} />
+              </mesh>
+            </group>
           );
         })}
       </group>
       {/* боковые пластины */}
-      {[-1, 1].map((s) => {
-        const a = s * 0.95;
+      {[-1, 1].map((sgn) => {
+        const a = sgn * 0.98;
         return (
-          <group key={s} position={[Math.sin(a) * 2.16, 0, Math.cos(a) * 2.16]} rotation={[0, a, 0]}>
-            <mesh material={gold} rotation={[Math.PI / 2, Math.PI / 8, 0]}>
-              <cylinderGeometry args={[0.46, 0.46, 0.08, 8]} />
+          <group key={sgn} position={[Math.sin(a) * 2.12, 0, Math.cos(a) * 2.12]} rotation={[0, a, 0]}>
+            <mesh material={gold} geometry={sideSolid} position={[0, 0, 0.0]} />
+            <mesh material={goldDark} geometry={sideRing} position={[0, 0, 0.09]} />
+            <mesh material={leather} position={[0, 0, 0.1]}>
+              <circleGeometry args={[0.29, 8, Math.PI / 8]} />
             </mesh>
-            <mesh material={leather} position={[0, 0, 0.045]}>
-              <circleGeometry args={[0.32, 8, Math.PI / 8]} />
+            {Array.from({ length: 4 }, (_, i) => {
+              const aa = (i / 4) * Math.PI * 2 + Math.PI / 4;
+              return (
+                <mesh key={i} material={gold} position={[Math.cos(aa) * 0.4, Math.sin(aa) * 0.4, 0.1]}>
+                  <sphereGeometry args={[0.035, 14, 10]} />
+                </mesh>
+              );
+            })}
+            <mesh material={gold} position={[0, 0, 0.11]}>
+              <torusGeometry args={[0.14, 0.03, 12, 40]} />
             </mesh>
-            <mesh material={gold} position={[0, 0, 0.05]}>
-              <torusGeometry args={[0.15, 0.035, 10, 32]} />
-            </mesh>
-            <mesh material={gold} position={[0, 0.0, 0.05]} scale={[1, 1, 1]}>
-              <torusGeometry args={[0.08, 0.03, 8, 24]} />
+            <mesh material={goldDark} position={[0, 0, 0.115]}>
+              <torusGeometry args={[0.07, 0.025, 10, 32]} />
             </mesh>
           </group>
         );
@@ -169,7 +294,7 @@ export default function BeltScene({ className = '' }: { className?: string }) {
       onPointerUp={() => (drag.current.active = false)}
       onPointerCancel={() => (drag.current.active = false)}
     >
-      <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0.5, 10.5], fov: 30 }} gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping }}>
+      <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0.5, 12], fov: 28 }} gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping }}>
         <Env />
         <ambientLight intensity={0.2} />
         <directionalLight position={[-3, 4, 5]} intensity={2.2} color="#fff3e0" />
