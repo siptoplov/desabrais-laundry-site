@@ -25,5 +25,5 @@ export function PartnerLogo({ name, logo = partnerLogos[name], className = 'h-9'
       </span>
     );
   }
-  return <span className="display-upright whitespace-nowrap text-[clamp(1.3rem,2.2vw,1.7rem)] leading-none text-mute">{name}</span>;
+  return <span className={`display-upright text-mute ${name.length > 22 ? 'max-w-[14rem] text-[1.15rem] leading-tight' : 'whitespace-nowrap text-[clamp(1.3rem,2.2vw,1.7rem)] leading-none'}`}>{name}</span>;
 }

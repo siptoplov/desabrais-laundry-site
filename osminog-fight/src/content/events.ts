@@ -149,7 +149,7 @@ export const events: FightEvent[] = [
       'Chinuk Gym',
       'Team Fighting Grodno',
       'Федерация кикбоксинга России',
-      'Федерация профессионального бокса',
+      'Федерация профессионального бокса (ФПБ)',
     ],
     sources: [
       { label: 'TicketPro', url: 'https://www.ticketpro.by/bilety-na-sportivnye-meropriyatiya/osminog-10-09-oktyabrya-2026/' },

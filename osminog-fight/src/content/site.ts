@@ -145,3 +145,9 @@ export const partnerLogos: Record<string, string> = {
 };
 /** Логотипы-надписи: название уже на логотипе, подпись не нужна */
 export const partnerWordmarks = new Set(['Rutube', 'Алютех', 'Geely · Лакшери Моторс', 'Fightershop.by', 'Hongqi']);
+
+/** Координаты площадок [широта, долгота] — для карты на странице турнира (по данным OpenStreetMap) */
+export const venueGeo: Record<string, [number, number]> = {
+  'Prime Hall': [53.9260062, 27.5190539],
+  'Astro Club': [53.9158897, 27.5672142],
+};

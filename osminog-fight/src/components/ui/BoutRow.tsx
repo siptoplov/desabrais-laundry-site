@@ -24,9 +24,9 @@ function Avatar({ c, side }: { c: ResolvedCorner; side: 'red' | 'blue' }) {
   const f = c.fighter;
   const src = f?.photo ? asset(`${f.photo}-480.webp`) : f?.headshot ? asset(f.headshot) : null;
   return (
-    <div className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-full border md:h-16 md:w-16 ${side === 'red' ? 'border-blood/60' : 'border-cyan/60'}`}>
+    <div className={`relative h-[4.4rem] w-14 shrink-0 overflow-hidden rounded-[10px] border md:h-20 md:w-16 ${side === 'red' ? 'border-blood/60' : 'border-cyan/60'}`}>
       {src ? (
-        <img src={src} alt="" width={64} height={64} loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
+        <img src={src} alt="" width={64} height={80} loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
       ) : (
         <span className="display grid h-full w-full place-items-center bg-deep text-[22px] text-ice/50">{c.short.slice(0, 1)}</span>
       )}

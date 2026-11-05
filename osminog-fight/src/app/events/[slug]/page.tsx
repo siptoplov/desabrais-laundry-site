@@ -12,11 +12,12 @@ import { VideoCard } from '@/components/ui/VideoCard';
 import { AddToCalendar, ShareButton } from '@/components/ui/Actions';
 import { Stat, SplitTitle } from '@/components/ui/Primitives';
 import { FollowLinks } from '@/components/ui/FollowLinks';
+import { PartnerLogo } from '@/components/ui/PartnerLogo';
 import { getEvent, getEvents, getPastEvents, getVideos, positionRank } from '@/lib/cms';
 import { asset, posterSrcSet } from '@/lib/asset';
 import { fmtDate, fmtMoney, fmtTime, fmtWeekday } from '@/lib/format';
 import { breadcrumbs, eventJsonLd, JsonLd } from '@/lib/seo';
-import { disciplines, site } from '@/content/site';
+import { disciplines, site, venueGeo } from '@/content/site';
 import type { Bout } from '@/content/types';
 
 export const dynamicParams = false;
@@ -65,6 +66,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
     e.posters && { id: 'press', label: 'Пресс' },
   ].filter(Boolean) as { id: string; label: string }[];
   const mapQuery = encodeURIComponent([e.venue, e.city].filter(Boolean).join(', '));
+  const geo = e.venue ? venueGeo[e.venue] : undefined;
 
   return (
     <>
@@ -180,22 +182,6 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                 </div>
               )
             )}
-            {(e.guest || e.host) && (
-              <div className="grid gap-4">
-                {e.guest && (
-                  <div className="border-l-2 border-blood pl-5">
-                    <p className="label">{e.guest.role}</p>
-                    <p className="display-upright text-[32px] leading-tight">{e.guest.name}</p>
-                  </div>
-                )}
-                {e.host && (
-                  <div className="border-l-2 border-cyan pl-5">
-                    <p className="label">Ведущий «Рубахи-парня»</p>
-                    <p className="display-upright text-[32px] leading-tight">{e.host}</p>
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </div>
       </section>
@@ -296,26 +282,20 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
               </ul>
             )}
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius)] border border-line" aria-hidden="true" style={{ background: 'radial-gradient(60% 60% at 50% 50%, var(--deep-2), var(--abyss))' }}>
-            {/* стилизованная «карта»: сетка улиц и маркер */}
-            <svg viewBox="0 0 400 300" className="absolute inset-0 h-full w-full">
-              {Array.from({ length: 14 }, (_, i) => (
-                <line key={`h${i}`} x1="0" y1={i * 24 + 6} x2="400" y2={i * 24 - 30} stroke="rgba(242,242,243,.06)" />
-              ))}
-              {Array.from({ length: 18 }, (_, i) => (
-                <line key={`v${i}`} x1={i * 26} y1="0" x2={i * 26 + 40} y2="300" stroke="rgba(242,242,243,.05)" />
-              ))}
-              <path d="M-10 210 C 120 170, 230 190, 410 90" stroke="rgba(236,238,241,.5)" strokeWidth="6" fill="none" />
-              <text x="250" y="132" fill="rgba(242,242,243,.5)" fontSize="10" fontFamily="var(--font-mono)" transform="rotate(-18 250 132)">
-                {(e.address?.split(',')[0] ?? e.city).toUpperCase()}
-              </text>
-              <circle cx="200" cy="168" r="40" fill="rgba(255,43,58,.12)">
-                <animate attributeName="r" values="20;48;20" dur="3s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="1;0;1" dur="3s" repeatCount="indefinite" />
-              </circle>
-              <circle cx="200" cy="168" r="9" fill="#ff2b3a" />
-            </svg>
-            <span className="display-upright absolute bottom-4 left-4 text-[22px]">{e.venue ?? site.city}</span>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius)] border border-line bg-abyss-2">
+            {e.venue ? (
+              <iframe
+                title={`Карта: ${e.venue}, ${e.city}`}
+                src={geo ? `https://yandex.ru/map-widget/v1/?ll=${geo[1]}%2C${geo[0]}&z=16&pt=${geo[1]}%2C${geo[0]}%2Cpm2rdm&lang=ru_RU` : `https://yandex.ru/map-widget/v1/?text=${mapQuery}&z=15&lang=ru_RU`}
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            ) : (
+              <div className="grid h-full place-items-center p-8 text-center">
+                <p className="display-upright text-[28px] leading-tight text-mute">Площадку объявим позже: следите за анонсами лиги</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -419,7 +399,13 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <h2 id="ep-title" className="mono mb-6 text-[11px] uppercase tracking-[0.2em] text-faint">
               Партнёры турнира
             </h2>
-            <p className="display-upright text-[clamp(1.4rem,2.4vw,2rem)] leading-snug text-mute">{e.partners.join(' · ')}</p>
+            <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius)] border border-line bg-line sm:grid-cols-3 lg:grid-cols-4">
+              {e.partners.map((p) => (
+                <li key={p} className="flex min-h-[6.5rem] items-center justify-center bg-abyss-2 p-5 text-center">
+                  <PartnerLogo name={p} className="h-10" caption />
+                </li>
+              ))}
+            </ul>
             {e.sources && (
               <p className="mt-8 text-[13px] text-faint">
                 Источники:{' '}
