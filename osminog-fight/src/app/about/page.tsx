@@ -45,6 +45,15 @@ export default function AboutPage() {
                 <span className="absolute -left-[39px] top-2 h-4 w-4 rounded-full border-2 border-cyan bg-abyss shadow-[0_0_12px_rgba(236,238,241,.6)]" aria-hidden="true" />
                 <p className="display-upright text-[56px] leading-none text-accent">{h.year}</p>
                 <p className="mt-3 max-w-2xl text-[17px] leading-relaxed text-mute">{h.text}</p>
+                {h.items && (
+                  <ul className="mt-4 flex max-w-2xl flex-col gap-2 text-[16px] text-mute">
+                    {h.items.map((it) => (
+                      <li key={it} className="flex gap-3 border-l border-blood/60 pl-4">
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ol>
@@ -134,7 +143,7 @@ export default function AboutPage() {
           <h2 id="team" className="display t-2 mb-10">
             Кто за этим стоит
           </h2>
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2">
             {about.organizers.map((o) => (
               <div key={o.name} className="panel flex flex-col gap-3 p-6">
                 <p className="display-upright text-[34px] leading-none">{o.name}</p>
