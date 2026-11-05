@@ -84,14 +84,16 @@ export default function Home() {
       {/* ───────── Карточка турнира ───────── */}
       <section className="section relative" aria-labelledby="last-title">
         <div className="wrap">
+          <div className="mb-10 flex flex-col gap-4 md:mb-14">
+            <p className="eyebrow" data-reveal="">
+              Последний турнир · {fmtDate(last.date!)}
+            </p>
+            <h2 id="last-title" className="display t-2" data-reveal="">
+              {last.title}
+            </h2>
+          </div>
           <div className="grid gap-12 lg:grid-cols-[minmax(0,420px)_1fr]">
             <div className="flex flex-col gap-6">
-              <p className="eyebrow" data-reveal="">
-                Последний турнир · {fmtDate(last.date!)}
-              </p>
-              <h2 id="last-title" className="display t-2" data-reveal="">
-                {last.title}
-              </h2>
               <Link href={`/events/${last.slug}/`} className="group relative block overflow-hidden rounded-[var(--radius)] border border-line" data-reveal="" data-cursor="view" data-cursor-label="Турнир">
                 <img src={asset(`${last.poster}-560.webp`)} srcSet={posterSrcSet(last.poster!)} sizes="(min-width:1024px) 420px, 90vw" alt={`Постер ${last.title}`} width={560} height={700} loading="lazy" decoding="async" className="w-full transition-transform duration-[1400ms] group-hover:scale-105" />
               </Link>

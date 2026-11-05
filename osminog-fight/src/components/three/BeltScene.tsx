@@ -9,6 +9,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 import { logoCollar, logoHead, logoTentacles, logoFrame } from '@/components/brand/logoPaths';
 
 function Env() {
@@ -162,14 +163,36 @@ function useSolidOctGeometry(R: number, depth: number, bevel: number) {
   return useMemo(() => new THREE.ExtrudeGeometry(octShape(R), { depth, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 3, curveSegments: 1 }), [R, depth, bevel]);
 }
 
+/** Осьминог лиги в рельефе: те же контуры, что на логотипе, выдавлены из чёрной эмали */
+function useOctopusRelief() {
+  return useMemo(() => {
+    const k = 1.88 / 1024; // 1 px эмблемной текстуры в единицах сцены
+    const loader = new SVGLoader();
+    const geoms: THREE.BufferGeometry[] = [];
+    [...logoTentacles, logoCollar, logoHead].forEach((d) => {
+      const svg = loader.parse(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><path d="${d}"/></svg>`);
+      svg.paths.forEach((path) => {
+        const shapes = SVGLoader.createShapes(path);
+        const g = new THREE.ExtrudeGeometry(shapes, { depth: 0.03, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.004, bevelSegments: 2, curveSegments: 10 });
+        // координаты логотипа → плоскость пластины (как в канвасе: сдвиг 112/96, масштаб 2)
+        g.applyMatrix4(new THREE.Matrix4().set(2 * k, 0, 0, -400 * k, 0, -2 * k, 0, 416 * k, 0, 0, 1, 0, 0, 0, 0, 1));
+        geoms.push(g);
+      });
+    });
+    return geoms;
+  }, []);
+}
+
 function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; active: boolean }> }) {
   const group = useRef<THREE.Group>(null);
   const emblem = useEmblemTexture();
+  const relief = useOctopusRelief();
   const { map, bumpMap } = useLeatherTextures();
-  const gold = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#e0b95f', metalness: 1, roughness: 0.2, clearcoat: 0.4, clearcoatRoughness: 0.2 }), []);
+  const gold = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#ecc561', metalness: 1, roughness: 0.18, clearcoat: 0.5, clearcoatRoughness: 0.2 }), []);
   const goldDark = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#a8812f', metalness: 1, roughness: 0.32 }), []);
   const leather = useMemo(() => new THREE.MeshStandardMaterial({ map, bumpMap, bumpScale: 1.6, color: '#ffffff', metalness: 0.05, roughness: 0.62, side: THREE.DoubleSide }), [map, bumpMap]);
-  const gem = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#d1121f', emissive: '#7a0710', emissiveIntensity: 0.55, metalness: 0.1, roughness: 0.06, clearcoat: 1 }), []);
+  const gem = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#e0141f', emissive: '#8a0812', emissiveIntensity: 0.7, metalness: 0.2, roughness: 0.04, clearcoat: 1, flatShading: true }), []);
+  const reliefMat = useMemo(() => new THREE.MeshPhysicalMaterial({ color: '#ecc561', metalness: 1, roughness: 0.28, clearcoat: 0.3, side: THREE.DoubleSide }), []);
   const enamel = useMemo(() => new THREE.MeshStandardMaterial({ map: emblem, metalness: 0.35, roughness: 0.28 }), [emblem]);
   const plateFrame = useFrameGeometry(1.32, 1.0, 0.1, 0.05);
   const plateInner = useFrameGeometry(1.0, 0.93, 0.05, 0.02);
@@ -225,16 +248,22 @@ function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; activ
         <mesh material={enamel} position={[0, 0, 0.075]}>
           <circleGeometry args={[0.94, 8, Math.PI / 8]} />
         </mesh>
-        {/* камни по рамке */}
-        {Array.from({ length: 8 }, (_, i) => {
-          const a = (i / 8) * Math.PI * 2;
+        {/* осьминог в рельефе поверх эмали */}
+        <group position={[0, 0, 0.078]}>
+          {relief.map((g, i) => (
+            <mesh key={i} material={reliefMat} geometry={g} />
+          ))}
+        </group>
+        {/* шесть рубинов по рамке, как на образце: верх, низ и четыре по диагоналям */}
+        {[90, 30, 150, 210, 330, 270].map((deg) => {
+          const a = (deg * Math.PI) / 180;
           return (
-            <group key={i} position={[Math.cos(a) * 1.16, Math.sin(a) * 1.16, 0.18]}>
-              <mesh material={goldDark}>
-                <cylinderGeometry args={[0.075, 0.085, 0.04, 20]} />
+            <group key={deg} position={[Math.cos(a) * 1.15, Math.sin(a) * 1.15, 0.18]}>
+              <mesh material={goldDark} rotation={[Math.PI / 2, 0, 0]}>
+                <cylinderGeometry args={[0.1, 0.115, 0.05, 24]} />
               </mesh>
-              <mesh material={gem} position={[0, 0, 0.035]} rotation={[Math.PI / 2, 0, 0]} scale={[1, 0.75, 1]}>
-                <sphereGeometry args={[0.062, 24, 16]} />
+              <mesh material={gem} position={[0, 0, 0.04]} scale={[1, 1, 0.7]}>
+                <icosahedronGeometry args={[0.085, 1]} />
               </mesh>
             </group>
           );
@@ -247,9 +276,6 @@ function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; activ
           <group key={sgn} position={[Math.sin(a) * 2.12, 0, Math.cos(a) * 2.12]} rotation={[0, a, 0]}>
             <mesh material={gold} geometry={sideSolid} position={[0, 0, 0.0]} />
             <mesh material={goldDark} geometry={sideRing} position={[0, 0, 0.09]} />
-            <mesh material={leather} position={[0, 0, 0.1]}>
-              <circleGeometry args={[0.29, 8, Math.PI / 8]} />
-            </mesh>
             {Array.from({ length: 4 }, (_, i) => {
               const aa = (i / 4) * Math.PI * 2 + Math.PI / 4;
               return (
@@ -258,12 +284,6 @@ function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; activ
                 </mesh>
               );
             })}
-            <mesh material={gold} position={[0, 0, 0.11]}>
-              <torusGeometry args={[0.14, 0.03, 12, 40]} />
-            </mesh>
-            <mesh material={goldDark} position={[0, 0, 0.115]}>
-              <torusGeometry args={[0.07, 0.025, 10, 32]} />
-            </mesh>
           </group>
         );
       })}

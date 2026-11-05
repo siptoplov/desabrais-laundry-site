@@ -4,9 +4,9 @@ import type { CountryCode } from '@/content/types';
 
 /** Заголовок, который выезжает построчно (строки задаются массивом) */
 /** instant — анимация сразу при загрузке на чистом CSS (для первого экрана: не ждём JS, быстрый LCP) */
-export function SplitTitle({ lines, as: Tag = 'h2', className = '', delay = 0, instant }: { lines: ReactNode[]; as?: 'h1' | 'h2' | 'h3' | 'p'; className?: string; delay?: number; instant?: boolean }) {
+export function SplitTitle({ lines, as: Tag = 'h2', className = '', delay = 0, instant, style }: { lines: ReactNode[]; as?: 'h1' | 'h2' | 'h3' | 'p'; className?: string; delay?: number; instant?: boolean; style?: React.CSSProperties }) {
   return (
-    <Tag className={className} data-split={instant ? 'load' : ''} style={{ ['--d' as string]: `${delay}s` }}>
+    <Tag className={className} data-split={instant ? 'load' : ''} style={{ ['--d' as string]: `${delay}s`, ...style }}>
       {lines.map((l, i) => (
         <span className="split-line" key={i}>
           <span style={{ ['--i' as string]: i }}>{l}</span>
