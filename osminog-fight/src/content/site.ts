@@ -139,12 +139,14 @@ export const partnerLogos: Record<string, string> = {
   'Fightershop.by': '/img/partners/fightershop.webp',
   'Chinuk Gym': '/img/partners/chinuk.png',
   Hongqi: '/img/partners/hongqi.png',
+  'СТФ Монтаж': '/img/partners/stf-montazh.png',
+  'Промстройэлектро': '/img/partners/promstroyelektro.png',
   Zira: '/img/partners/zira.png',
   'Федерация кикбоксинга России': '/img/partners/fkr.png',
   'Федерация профессионального бокса (ФПБ)': '/img/partners/fpb.png',
 };
 /** Логотипы-надписи: название уже на логотипе, подпись не нужна */
-export const partnerWordmarks = new Set(['Rutube', 'Алютех', 'Geely · Лакшери Моторс', 'Fightershop.by', 'Hongqi']);
+export const partnerWordmarks = new Set(['Rutube', 'Алютех', 'Geely · Лакшери Моторс', 'Fightershop.by', 'Hongqi', 'СТФ Монтаж']);
 
 /** Координаты площадок [широта, долгота] — для карты на странице турнира (по данным OpenStreetMap) */
 export const venueGeo: Record<string, [number, number]> = {

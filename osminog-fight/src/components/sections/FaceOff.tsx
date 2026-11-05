@@ -55,7 +55,7 @@ function Portrait({ f, s, side, setSide }: { f: Fighter; s: 'red' | 'blue'; side
         </span>
         {f.nickname && <span className="mono text-[12px] text-mute">«{f.nickname}»</span>}
         <span className="display text-[clamp(1.4rem,2.6vw,2.4rem)] leading-[0.85] text-mute">{f.firstName}</span>
-        <span className="display text-[clamp(2.4rem,5.4vw,5.6rem)] leading-[0.82]">{f.lastName}</span>
+        <span className={`display leading-[0.82] [overflow-wrap:anywhere] ${f.lastName.length > 9 ? "text-[clamp(1.55rem,8.2vw,2.3rem)] md:text-[clamp(2rem,4.2vw,4.4rem)]" : "text-[clamp(2.1rem,11vw,3rem)] md:text-[clamp(2.4rem,5.4vw,5.6rem)]"}`}>{f.lastName}</span>
         <span className="mono text-[clamp(1.2rem,2vw,1.8rem)] font-semibold tabular">{recordStr(f)}</span>
       </div>
     </Link>
