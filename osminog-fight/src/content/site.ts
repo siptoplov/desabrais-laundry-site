@@ -131,7 +131,7 @@ export const partners = {
  */
 export const partnerLogos: Record<string, string> = {
   Rutube: '/img/partners/rutube.svg',
-  'Беларусь 5 · SPORT5.BY': '/img/partners/sport5.png',
+  'Беларусь 5 · SPORT5.BY': '/img/partners/belarus5.svg',
   belbet: '/img/partners/belbet.svg',
   'Алютех': '/img/partners/alutech.svg',
   Toyota: '/img/partners/toyota.svg',
