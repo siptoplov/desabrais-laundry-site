@@ -183,6 +183,9 @@ function useOctopusRelief() {
   }, []);
 }
 
+const A = 2.7; // полуось ремня по ширине
+const B = 1.45; // и по глубине: пояс вытянут, как настоящий, а не ровное кольцо
+
 function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; active: boolean }> }) {
   const group = useRef<THREE.Group>(null);
   const emblem = useEmblemTexture();
@@ -211,30 +214,32 @@ function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; activ
   });
 
   return (
-    <group ref={group} scale={0.88}>
-      {/* ремень */}
-      <mesh material={leather}>
-        <cylinderGeometry args={[2.1, 2.1, 1.2, 192, 1, true, 0, Math.PI * 2]} />
-      </mesh>
-      {/* кант-окантовка сверху и снизу */}
-      {[-0.6, 0.6].map((y) => (
-        <group key={y} position={[0, y, 0]}>
-          <mesh material={goldDark} rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[2.1, 0.018, 8, 192]} />
-          </mesh>
-        </group>
-      ))}
+    <group ref={group} scale={0.8}>
+      {/* ремень: овальное кольцо */}
+      <group scale={[A / 2.1, 1, B / 2.1]}>
+        <mesh material={leather}>
+          <cylinderGeometry args={[2.1, 2.1, 1.2, 192, 1, true, 0, Math.PI * 2]} />
+        </mesh>
+        {[-0.6, 0.6].map((y) => (
+          <group key={y} position={[0, y, 0]}>
+            <mesh material={goldDark} rotation={[Math.PI / 2, 0, 0]}>
+              <torusGeometry args={[2.1, 0.018, 8, 192]} />
+            </mesh>
+          </group>
+        ))}
+      </group>
       {/* отверстия для застёжки на задней части */}
       {Array.from({ length: 5 }, (_, i) => {
-        const a = Math.PI + (i - 2) * 0.12;
+        const t = Math.PI + (i - 2) * 0.1;
+        const psi = Math.atan2(Math.sin(t) / A, Math.cos(t) / B);
         return (
-          <mesh key={i} material={goldDark} position={[Math.sin(a) * 2.1, 0, Math.cos(a) * 2.1]} rotation={[0, a, 0]}>
+          <mesh key={i} material={goldDark} position={[Math.sin(t) * A, 0, Math.cos(t) * B]} rotation={[0, psi, 0]}>
             <torusGeometry args={[0.05, 0.015, 8, 16]} />
           </mesh>
         );
       })}
       {/* центральная пластина */}
-      <group position={[0, 0, 2.14]}>
+      <group position={[0, 0, B + 0.04]}>
         {/* кожаная подкладка с обратной стороны */}
         <mesh material={leather} position={[0, 0, -0.07]} rotation={[0, Math.PI, 0]}>
           <circleGeometry args={[1.34, 8, Math.PI / 8]} />
@@ -271,9 +276,10 @@ function Belt({ drag }: { drag: React.RefObject<{ vx: number; rot: number; activ
       </group>
       {/* боковые пластины */}
       {[-1, 1].map((sgn) => {
-        const a = sgn * 0.98;
+        const t = sgn * 1.0;
+        const psi = Math.atan2(Math.sin(t) / A, Math.cos(t) / B);
         return (
-          <group key={sgn} position={[Math.sin(a) * 2.12, 0, Math.cos(a) * 2.12]} rotation={[0, a, 0]}>
+          <group key={sgn} position={[Math.sin(sgn) * A, 0, Math.cos(sgn) * B + 0.02]} rotation={[0, psi, 0]}>
             <mesh material={gold} geometry={sideSolid} position={[0, 0, 0.0]} />
             <mesh material={goldDark} geometry={sideRing} position={[0, 0, 0.09]} />
             {Array.from({ length: 4 }, (_, i) => {
