@@ -12,7 +12,7 @@ import { VideoCard } from '@/components/ui/VideoCard';
 import { AddToCalendar, ShareButton } from '@/components/ui/Actions';
 import { Stat, SplitTitle } from '@/components/ui/Primitives';
 import { FollowLinks } from '@/components/ui/FollowLinks';
-import { PartnerLogo } from '@/components/ui/PartnerLogo';
+import { PartnersStrip } from '@/components/ui/PartnersStrip';
 import { getEvent, getEvents, getPastEvents, getVideos, positionRank } from '@/lib/cms';
 import { asset, posterSrcSet } from '@/lib/asset';
 import { fmtDate, fmtMoney, fmtTime, fmtWeekday } from '@/lib/format';
@@ -399,13 +399,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <h2 id="ep-title" className="mono mb-6 text-[11px] uppercase tracking-[0.2em] text-faint">
               Партнёры турнира
             </h2>
-            <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius)] border border-line bg-line sm:grid-cols-3 lg:grid-cols-4">
-              {e.partners.map((p) => (
-                <li key={p} className="flex min-h-[6.5rem] items-center justify-center bg-abyss-2 p-5 text-center">
-                  <PartnerLogo name={p} className="h-10" caption />
-                </li>
-              ))}
-            </ul>
+            <PartnersStrip names={e.partners} size="h-12" />
             {e.sources && (
               <p className="mt-8 text-[13px] text-faint">
                 Источники:{' '}

@@ -5,7 +5,7 @@ import { asset } from '@/lib/asset';
  * Логотип партнёра или спонсора; если файла нет — название тем же «весом», что и логотипы.
  * В покое — монохром, на наведении — фирменные цвета.
  */
-export function PartnerLogo({ name, logo = partnerLogos[name], className = 'h-9', caption }: { name: string; logo?: string; className?: string; caption?: boolean }) {
+export function PartnerLogo({ name, logo = partnerLogos[name], className = 'h-9', caption, vivid }: { name: string; logo?: string; className?: string; caption?: boolean; vivid?: boolean }) {
   if (logo) {
     const img = (
       <img
@@ -13,7 +13,7 @@ export function PartnerLogo({ name, logo = partnerLogos[name], className = 'h-9'
         alt={name}
         loading="lazy"
         decoding="async"
-        className={`w-auto max-w-[200px] object-contain opacity-75 transition-[filter,opacity] duration-300 [filter:grayscale(1)_brightness(1.3)] hover:opacity-100 hover:[filter:none] ${className}`}
+        className={`w-auto max-w-[200px] object-contain transition-[filter,opacity] duration-300 ${vivid ? 'opacity-95 [filter:brightness(1.15)_contrast(1.05)]' : 'opacity-75 [filter:grayscale(1)_brightness(1.3)] hover:opacity-100 hover:[filter:none]'} ${className}`}
       />
     );
     // у значков без надписи (belbet, Toyota…) — подпись снизу

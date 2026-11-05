@@ -1,5 +1,5 @@
 import Link from '@/components/ui/Link';
-import { PartnerLogo } from '@/components/ui/PartnerLogo';
+import { PartnersStrip } from '@/components/ui/PartnersStrip';
 import { LogoMark } from '@/components/brand/Logo';
 import { FightNightToggle } from '@/components/fx/Toggles';
 import { FollowLinks } from '@/components/ui/FollowLinks';
@@ -79,13 +79,7 @@ export function Footer() {
 
         <div className="mt-20 border-y border-line py-8">
           <p className="mono mb-6 text-[11px] uppercase tracking-[0.2em] text-faint">Партнёры лиги</p>
-          <ul className="flex flex-wrap items-center gap-x-10 gap-y-6">
-            {[partners.general.name, partners.tv.name, ...partners.list, ...partners.federations].map((p) => (
-              <li key={p} className="flex min-h-9 items-center">
-                <PartnerLogo name={p} className="h-9" caption />
-              </li>
-            ))}
-          </ul>
+          <PartnersStrip names={[partners.general.name, partners.tv.name, ...partners.list, ...partners.federations]} />
         </div>
 
         {/* гигантский словесный знак */}
