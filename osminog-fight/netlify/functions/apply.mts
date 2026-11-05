@@ -16,6 +16,8 @@
  * Без токена бота функция отвечает 503 — сайт тогда показывает запасной вариант (текст для Direct).
  */
 
+import { phoneOk } from '../../src/lib/phone.ts';
+
 type Kind = 'fighter' | 'partner' | 'rubaha' | 'contact' | 'merch';
 
 interface Spec {
@@ -124,7 +126,6 @@ function photoKind(b: Uint8Array): 'jpg' | 'png' | 'webp' | null {
 }
 
 const urlOk = (v: string) => /^https?:\/\/[^\s]+\.[^\s]{2,}$/i.test(v);
-const phoneOk = (v: string) => /^\+?[\d\s()\-]{7,25}$/.test(v) && v.replace(/\D/g, '').length >= 7;
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 
 async function turnstileOk(token: string, ip: string): Promise<boolean> {

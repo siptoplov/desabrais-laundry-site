@@ -11,7 +11,7 @@ import {
   type FormEvent,
   type ReactNode,
 } from "react";
-import { submitForm, shrinkPhoto, emailRe, phoneRe, urlRe } from "@/lib/forms";
+import { submitForm, shrinkPhoto, emailRe, phoneOk, urlRe } from "@/lib/forms";
 import { site } from "@/content/site";
 import { t } from "@/i18n";
 import { play } from "@/lib/sound";
@@ -52,7 +52,7 @@ function validate(f: FieldDef, v: string) {
         : t.forms.required;
   if (!v) return "";
   if (f.type === "email" && !emailRe.test(v)) return t.forms.email;
-  if (f.type === "tel" && !phoneRe.test(v)) return t.forms.phone;
+  if (f.type === "tel" && !phoneOk(v)) return t.forms.phone;
   if (f.type === "url" && !urlRe.test(v)) return t.forms.url;
   return "";
 }

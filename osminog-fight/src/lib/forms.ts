@@ -10,7 +10,7 @@ export type SubmitResult =
   | { ok: false; error: string };
 
 export const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-export const phoneRe = /^\+?[\d\s()-]{7,25}$/;
+export { phoneOk } from './phone';
 export const urlRe = /^https?:\/\/\S+\.\S+/;
 
 const ERRORS: Record<string, string> = {

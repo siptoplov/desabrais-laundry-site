@@ -88,7 +88,31 @@ foreach ($fields as $k => [$label, $max, $req]) {
     $v[$k] = $clean((string)($_POST[$k] ?? ''), $max);
     if ($req && $v[$k] === '') out(400, ['error' => 'required', 'field' => $k]);
 }
-$phoneOk = static fn($s) => preg_match('/^\+?[\d\s()\-]{7,25}$/', $s) && strlen(preg_replace('/\D/', '', $s)) >= 7;
+/* телефон: любой настоящий номер; белорусские — по формату; отсекаем 2222222222 и 1234567890 (логика как в src/lib/phone.ts) */
+$phoneOk = static function (string $v): bool {
+    $v = trim($v);
+    if (!preg_match('/^\+?[\d\s()\-]{7,25}$/', $v)) return false;
+    $d = preg_replace('/\D/', '', $v);
+    if ($v[0] !== '+' && preg_match('/^80\d{9}$/', $d)) $d = '375' . substr($d, 2);
+    $n = strlen($d);
+    if ($n < 9 || $n > 15) return false;
+    $nat = $d;
+    if (strncmp($d, '375', 3) === 0) {
+        if ($n !== 12) return false;
+        $nat = substr($d, 3);
+        if (!in_array(substr($nat, 0, 2), ['25', '29', '33', '44', '15', '16', '17', '21', '22', '23'], true)) return false;
+    } elseif ($v[0] !== '+' && $n < 10) return false;
+    if (count(array_unique(str_split($nat))) < 4) return false;
+    if (preg_match('/(\d)\1{4,}/', $nat)) return false;
+    $up = 1; $down = 1;
+    for ($i = 1; $i < strlen($nat); $i++) {
+        $a = (int)$nat[$i - 1]; $b = (int)$nat[$i];
+        $up = $b === $a + 1 ? $up + 1 : 1;
+        $down = $b === $a - 1 ? $down + 1 : 1;
+        if ($up >= 6 || $down >= 6) return false;
+    }
+    return true;
+};
 $emailOk = static fn($s) => (bool)preg_match('/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/', $s);
 if (!empty($v['video']) && !preg_match('~^https?://[^\s]+\.[^\s]{2,}$~i', $v['video'])) out(400, ['error' => 'video']);
 if (!empty($v['phone']) && !$phoneOk($v['phone'])) out(400, ['error' => 'phone']);
