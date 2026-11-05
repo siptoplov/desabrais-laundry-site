@@ -99,5 +99,5 @@ export function EdgeTentacles() {
     };
   }, []);
 
-  return <canvas ref={ref} className="pointer-events-none fixed inset-0 z-[60]" aria-hidden="true" />;
+  return <canvas ref={ref} className="pointer-events-none fixed inset-0 z-[5] opacity-80" aria-hidden="true" />;
 }

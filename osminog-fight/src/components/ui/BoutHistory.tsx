@@ -29,7 +29,7 @@ export function BoutHistory({ bouts }: { bouts: FighterBout[] }) {
                   opp.name
                 )}
               </span>
-              <Link href={`/events/${event.slug}/`} className="mono text-[11px] uppercase tracking-[0.14em] text-mute hover:text-ice">
+              <Link href={`/events/${event.slug}/`} className="mono inline-block py-1.5 text-[11px] uppercase tracking-[0.14em] text-mute hover:text-ice">
                 {meta.filter(Boolean).join(' · ')}
               </Link>
               {bout.result?.note && <span className="mt-1 text-[13px] text-faint">{bout.result.note}</span>}
@@ -48,7 +48,7 @@ export function BoutHistory({ bouts }: { bouts: FighterBout[] }) {
                 )}
               </span>
             ) : (
-              <Link href={`/events/${event.slug}/`} className="link-arrow order-4 text-mute md:justify-self-end">
+              <Link href={`/events/${event.slug}/`} className="link-arrow order-4 py-2 text-mute md:justify-self-end">
                 {event.status === 'upcoming' ? 'Кард турнира →' : 'О турнире →'}
               </Link>
             )}
@@ -70,7 +70,7 @@ export function StatsGrid({ f, bouts, st }: { f: Fighter; bouts: FighterBout[]; 
     ['Рекорд в карьере', recordStr(f), f.record && f.recordAsOf ? `на ${fmtShort(f.recordAsOf)}` : f.record ? 'по постеру лиги' : 'не опубликован'],
     ['Боёв в лиге', String(st.fights), fightsSub],
     ['Победы', String(st.wins), 'по итогам лиги'],
-    ['Поражения', String(st.losses), st.draws ? `ничьих: ${st.draws}` : 'по итогам лиги'],
+    ['Поражения', String(st.losses), st.draws ? `ничьих в лиге: ${st.draws} (в рекорд не входят)` : 'по итогам лиги'],
     ['В лиге с', st.first ? st.first.slice(0, 4) : '—', st.last && st.first !== st.last ? `последний бой ${fmtShort(st.last)}` : st.last ? fmtShort(st.last) : 'дебют впереди'],
     ['Просмотры боёв', st.views ? fmtViews(st.views) : '—', st.videos ? `${st.videos} ${plural(st.videos, ['запись', 'записи', 'записей'])} на YouTube` : 'записей пока нет'],
   ];
@@ -81,7 +81,7 @@ export function StatsGrid({ f, bouts, st }: { f: Fighter; bouts: FighterBout[]; 
           <div key={k} className="flex flex-col gap-1 bg-abyss-2 p-5">
             <dt className="label">{k}</dt>
             <dd className="display-upright text-[clamp(2rem,3.4vw,2.8rem)] leading-none">{v}</dd>
-            <dd className="mono text-[10px] uppercase tracking-[0.12em] text-faint">{sub}</dd>
+            <dd className="mono text-[11px] uppercase tracking-[0.12em] text-faint">{sub}</dd>
           </div>
         ))}
       </dl>
@@ -118,10 +118,10 @@ export function FighterAnalyticsPanel({ a, record }: { a: FighterAnalytics; reco
         <div className="flex flex-col gap-1">
           <span className="label">Доля побед</span>
           <span className="display-upright text-[clamp(2.2rem,3.6vw,3rem)] leading-none">{rate === null ? '—' : `${rate}%`}</span>
-          <span className="mono text-[10px] uppercase tracking-[0.12em] text-faint">
+          <span className="mono text-[11px] uppercase tracking-[0.12em] text-faint">
             {record && rt ? `по рекорду ${record.w}-${record.l}${record.d ? `-${record.d}` : ''}` : 'по известным итогам лиги'}
           </span>
-          {record && rt > 0 && a.winRate !== null && <span className="mono text-[10px] uppercase tracking-[0.12em] text-faint">в боях лиги: {a.winRate}%</span>}
+          {record && rt > 0 && a.winRate !== null && <span className="mono text-[11px] uppercase tracking-[0.12em] text-faint">в боях лиги: {a.winRate}%</span>}
         </div>
       </div>
       {/* как побеждает + серия */}

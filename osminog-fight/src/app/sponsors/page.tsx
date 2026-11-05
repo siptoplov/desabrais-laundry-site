@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { PageHero } from '@/components/ui/PageHero';
 import { Btn } from '@/components/ui/Btn';
 import { Stat } from '@/components/ui/Primitives';
-import { PartnerLogo } from '@/components/ui/PartnerLogo';
+import { PartnersStrip } from '@/components/ui/PartnersStrip';
 import { sponsorFormats } from '@/content/pages';
 import { partners, partnerWordmarks } from '@/content/site';
 import { sponsors, sponsorsReady, sponsorTiers, type Sponsor } from '@/content/sponsors';
@@ -79,6 +79,8 @@ export default function SponsorsPage() {
         const list = sponsors.filter((s) => s.tier === tier);
         const free = Math.max(0, slots - list.length);
         const size = sizes[tier];
+        // пока в уровне нет ни одного спонсора — не показываем пустые «места свободны»
+        if (!list.length) return null;
         return (
           <section key={tier} className="section-tight" aria-labelledby={`tier-${tier}`}>
             <div className="wrap">
@@ -107,35 +109,7 @@ export default function SponsorsPage() {
           <h2 id="partners-title" className="display t-3">
             Партнёры лиги
           </h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            {[partners.general, partners.tv].map((p) => (
-              <div key={p.name} className="panel flex flex-col gap-4 p-6 md:p-8">
-                <span className="mono text-[11px] uppercase tracking-[0.16em] text-faint">{p.role}</span>
-                <span className="flex min-h-14 items-center gap-4">
-                  <PartnerLogo name={p.name} className="h-12" />
-                  {!partnerWordmarks.has(p.name) && <span className="display-upright text-[clamp(1.6rem,3vw,2.4rem)] leading-none">{p.name}</span>}
-                </span>
-              </div>
-            ))}
-          </div>
-          <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius)] border border-line bg-line sm:grid-cols-3 lg:grid-cols-4">
-            {partners.list.map((p) => (
-              <li key={p} className="flex min-h-28 items-center justify-center bg-abyss-2 p-6 text-center">
-                <PartnerLogo name={p} className="h-12" caption />
-              </li>
-            ))}
-          </ul>
-          <div>
-            <p className="label mb-3">При поддержке</p>
-            <ul className="flex flex-wrap items-center gap-x-10 gap-y-6">
-              {partners.federations.map((f) => (
-                <li key={f} className="flex items-center gap-4">
-                  <PartnerLogo name={f} className="h-16" />
-                  <span className="max-w-[16rem] text-[14px] text-mute">{f}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <PartnersStrip names={[partners.general.name, partners.tv.name, ...partners.list, ...partners.federations]} size="lg" />
         </div>
       </section>
 

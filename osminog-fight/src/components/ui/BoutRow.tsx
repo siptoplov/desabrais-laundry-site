@@ -88,9 +88,9 @@ export function BoutRow({ bout, eventSlug, defaultOpen, vote = true }: { bout: B
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 px-3 py-4 sm:gap-3 sm:px-4 md:gap-6 md:px-6">
         <CornerCell c={red} side="red" winner={bout.result?.winner === 'red'} />
         <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls={id} className="group flex flex-col items-center gap-1 px-1 text-center">
-          <span className="mono hidden text-[10px] uppercase tracking-[0.16em] text-accent sm:block">{positionLabel[bout.position]}</span>
+          <span className="mono hidden text-[11px] uppercase tracking-[0.16em] text-accent sm:block">{positionLabel[bout.position]}</span>
           <span className="display-upright text-[26px] leading-none text-ice/60 transition-colors group-hover:text-ice md:text-[34px]">VS</span>
-          <span className="mono text-[10px] uppercase tracking-[0.12em] text-faint">
+          <span className="mono text-[11px] uppercase tracking-[0.12em] text-faint">
             {disciplines[bout.discipline].short}
             {bout.weightKg ? ` · ${String(bout.weightKg).replace('.', ',')}` : ''}
           </span>
@@ -182,7 +182,7 @@ function MiniCompare({ red, blue }: { red: ResolvedCorner; blue: ResolvedCorner 
       {rows.map(([k, x, y]) => (
         <div key={k} className="contents">
           <dd className="mono text-[14px] tabular tag-corner-red">{x}</dd>
-          <dt className="mono text-center text-[10px] uppercase tracking-[0.14em] text-faint">{k}</dt>
+          <dt className="mono text-center text-[11px] uppercase tracking-[0.14em] text-faint">{k}</dt>
           <dd className="mono text-right text-[14px] tabular tag-corner-blue">{y}</dd>
         </div>
       ))}

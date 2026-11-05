@@ -52,7 +52,7 @@ export function Header() {
             <LogoMark className="h-10 w-10 transition-transform duration-700 group-hover:rotate-[22.5deg]" />
             <span className="flex flex-col leading-none">
               <span className="display text-[28px] tracking-tight">Осьминог</span>
-              <span className="mono mt-1 hidden text-[9px] tracking-[0.32em] text-mute sm:block">FIGHT LEAGUE · С {site.since}</span>
+              <span className="mono mt-1 hidden text-[11px] tracking-[0.32em] text-mute sm:block">FIGHT LEAGUE · С {site.since}</span>
             </span>
           </Link>
 

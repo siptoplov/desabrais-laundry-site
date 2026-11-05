@@ -25,7 +25,7 @@ export function BottomBar() {
           <Link
             key={it.href}
             href={it.href}
-            className={`relative flex flex-col items-center gap-1 py-2.5 text-[11px] font-semibold uppercase tracking-[0.08em] ${i === 0 ? 'bg-blood/90 text-white' : active ? 'text-ice' : 'text-mute'}`}
+            className={`relative flex flex-col items-center gap-1 py-2.5 text-[11px] font-semibold uppercase tracking-[0.08em] ${i === 0 ? 'bg-[#c9182a] text-white' : active ? 'text-ice' : 'text-mute'}`}
             aria-current={active ? 'page' : undefined}
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">

@@ -10,7 +10,7 @@ export function PartnerLogo({ name, logo = partnerLogos[name], className = 'h-9'
     const img = (
       <img
         src={asset(logo)}
-        alt={name}
+        alt={caption && !partnerWordmarks.has(name) ? '' : name}
         loading="lazy"
         decoding="async"
         className={`w-auto max-w-[200px] object-contain transition-[filter,opacity] duration-300 ${vivid ? 'opacity-95 [filter:brightness(1.15)_contrast(1.05)]' : 'opacity-75 [filter:grayscale(1)_brightness(1.3)] hover:opacity-100 hover:[filter:none]'} ${className}`}
@@ -21,7 +21,7 @@ export function PartnerLogo({ name, logo = partnerLogos[name], className = 'h-9'
     return (
       <span className="flex flex-col items-center gap-2">
         {img}
-        <span className="mono text-[10px] uppercase tracking-[0.16em] text-faint">{name}</span>
+        <span className="mono text-[11px] uppercase tracking-[0.16em] text-faint">{name}</span>
       </span>
     );
   }

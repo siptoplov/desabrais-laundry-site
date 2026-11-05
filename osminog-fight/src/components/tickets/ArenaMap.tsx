@@ -268,7 +268,7 @@ export function ArenaMap({ event }: { event: FightEvent }) {
 
           {hover && (
             <div className="pointer-events-none absolute left-3 top-3 rounded border border-line bg-abyss/90 px-4 py-3 text-[13px] backdrop-blur" aria-hidden="true">
-              <p className="mono text-[10px] uppercase tracking-[0.14em]" style={{ color: zoneById.get(hover.zone)!.color }}>
+              <p className="mono text-[11px] uppercase tracking-[0.14em]" style={{ color: zoneById.get(hover.zone)!.color }}>
                 {zoneById.get(hover.zone)!.name}
               </p>
               <p className="display-upright text-[22px] leading-tight">

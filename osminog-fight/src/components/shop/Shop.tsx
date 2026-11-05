@@ -53,7 +53,7 @@ export function Shop({ products }: { products: Product[] }) {
               <div className="flex flex-1 flex-col gap-4 p-5">
                 <div>
                   <p className="label">{p.kind}</p>
-                  <h3 className="display-upright text-[28px] leading-tight">{p.name}</h3>
+                  <p className="display-upright text-[28px] leading-tight">{p.name}</p>
                   <p className="text-[14px] text-mute">{p.tagline}</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2" role="radiogroup" aria-label="Цвет">

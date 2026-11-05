@@ -112,7 +112,7 @@ export function FighterCatalog({ fighters }: { fighters: Fighter[] }) {
               </select>
             </div>
           </div>
-          <div className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1" role="group" aria-label="Фильтры">
+          <div className="no-scrollbar scroll-fade -mx-1 flex gap-2 overflow-x-auto px-1 pb-1 pr-10" role="group" aria-label="Фильтры">
             <Pill on={!d} onClick={() => setD('')}>
               Все стили
             </Pill>

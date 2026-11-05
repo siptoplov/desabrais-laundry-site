@@ -133,7 +133,7 @@ export function FanPicker({ fighters, events, current, favs = [], onPick, onClos
                   <span className="flex min-w-0 flex-col gap-0.5">
                     {f.firstName && <span className="truncate text-[12px] text-mute">{f.firstName}</span>}
                     <span className="display-upright truncate text-[20px] leading-none group-hover:text-accent">{f.lastName}</span>
-                    <span className="mono flex items-center gap-1.5 text-[10px] uppercase tracking-[0.1em] text-faint">
+                    <span className="mono flex items-center gap-1.5 text-[11px] uppercase tracking-[0.1em] text-faint">
                       <Flag code={f.country} />
                       {n} {plural(n, ['бой', 'боя', 'боёв'])}
                       {f.record ? ` · ${recordStr(f)}` : ''}

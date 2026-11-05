@@ -42,7 +42,7 @@ export default function ResultsPage() {
                 <table className="w-full min-w-[760px] border-collapse text-left">
                   <caption className="sr-only">Результаты {e.title}</caption>
                   <thead>
-                    <tr className="mono text-[10px] uppercase tracking-[0.16em] text-faint">
+                    <tr className="mono text-[11px] uppercase tracking-[0.16em] text-faint">
                       <th scope="col" className="py-3 pr-4 font-normal">
                         Бой
                       </th>

@@ -37,7 +37,7 @@ export function FightCardHub({ events }: { events: FightEvent[] }) {
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
       <div className="min-w-0">
-        <div className="no-scrollbar -mx-1 mb-8 flex gap-2 overflow-x-auto px-1" role="tablist" aria-label="Турниры">
+        <div className="no-scrollbar scroll-fade -mx-1 mb-8 flex gap-2 overflow-x-auto px-1 pr-10" role="tablist" aria-label="Турниры">
           {events.map((e) => (
             <button
               key={e.slug}
@@ -50,7 +50,7 @@ export function FightCardHub({ events }: { events: FightEvent[] }) {
               <span className="display-upright block text-[24px] leading-none">
                 {e.title} {e.collab && <span className="text-accent">{e.collab}</span>}
               </span>
-              <span className="mono text-[10px] uppercase tracking-[0.14em] text-faint">{e.date ? fmtDate(e.date, { day: 'numeric', month: 'short', year: 'numeric' }) : 'скоро'}</span>
+              <span className="mono text-[11px] uppercase tracking-[0.14em] text-faint">{e.date ? fmtDate(e.date, { day: 'numeric', month: 'short', year: 'numeric' }) : 'скоро'}</span>
             </button>
           ))}
         </div>

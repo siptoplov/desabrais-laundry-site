@@ -443,6 +443,25 @@
   /* вторая: тёмное стекло в хромированной окантовке, на наведении — серебро */
   .btn-ghost {
     --btn-fill: var(--cyan);
+    --btn-face: linear-gradient(180deg, rgb(54 54 62 / 0.92), rgb(24 24 28 / 0.96));
+    --btn-glow: drop-shadow(0 0 8px rgb(236 238 241 / 0.2));
+  }
+  /* портреты, вырезанные с афиш: затемняем края, чтобы не торчали обрывки надписей и логотипов, и мягко скрываем обрезанный лоб */
+  .portrait-clean::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(to bottom, rgb(6 6 7 / 0.96) 0, rgb(6 6 7 / 0.8) 10%, transparent 34%),
+      linear-gradient(to right, rgb(6 6 7 / 0.92), rgb(6 6 7 / 0.35) 14%, transparent 26%),
+      linear-gradient(to left, rgb(6 6 7 / 0.92), rgb(6 6 7 / 0.35) 14%, transparent 26%);
+  }
+  /* строки с прокруткой (фильтры): край затухает — видно, что есть продолжение */
+  .scroll-fade {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent);
   }
   .btn-ghost::after {
     backdrop-filter: blur(10px);
@@ -812,6 +831,40 @@
   .field-error {
     font-size: 13px;
     color: #ff7a83;
+  }
+  /* чекбокс в стиле сайта */
+  input[type='checkbox'] {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    flex: none;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 5px;
+    background: rgb(6 6 7 / 0.55);
+    display: inline-grid;
+    place-content: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  input[type='checkbox']:hover {
+    border-color: var(--ice);
+  }
+  input[type='checkbox']:checked {
+    background: var(--blood);
+    border-color: var(--blood);
+  }
+  input[type='checkbox']:checked::after {
+    content: '';
+    width: 6px;
+    height: 11px;
+    margin-top: -2px;
+    border: solid #fff;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+  }
+  input[type='checkbox']:focus-visible,
+  .sr-only:focus-visible + * {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
   select.input {
     appearance: none;

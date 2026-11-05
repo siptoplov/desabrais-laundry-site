@@ -135,7 +135,7 @@ export default function Home() {
           <div className="grid gap-5 md:grid-cols-4">
             {topVideos.map((v, i) => (
               <div key={v.id} className={`flex ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''}`} data-reveal="" style={{ ['--d' as string]: `${i * 0.06}s` }}>
-                <VideoCard v={v} big={i === 0} />
+                <VideoCard v={v} big={i === 0} fill={i === 0} />
               </div>
             ))}
           </div>

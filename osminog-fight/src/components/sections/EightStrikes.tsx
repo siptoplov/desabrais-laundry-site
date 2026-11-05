@@ -70,7 +70,7 @@ export function EightStrikes() {
               {steps.map((s, i) => (
                 <div
                   key={s.title}
-                  className="absolute inset-0 flex flex-col gap-5 transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)]"
+                  className="absolute inset-0 flex flex-col gap-5 transition-all duration-700 motion-reduce:transition-none ease-[cubic-bezier(.16,1,.3,1)]"
                   style={{ opacity: step === i ? 1 : 0, transform: `translateY(${step === i ? 0 : step > i ? -40 : 40}px)`, pointerEvents: step === i ? 'auto' : 'none' }}
                   aria-hidden={step !== i}
                 >

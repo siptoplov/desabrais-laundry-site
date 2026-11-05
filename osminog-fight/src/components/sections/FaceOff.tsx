@@ -141,7 +141,7 @@ export function FaceOff({ red, blue, bout, title, eventTitle, eventHref }: { red
                         </div>
                       </div>
                     </td>
-                    <th scope="row" className="mono w-[24%] px-2 text-center text-[10px] font-normal uppercase tracking-[0.14em] text-faint">
+                    <th scope="row" className="mono w-[24%] px-2 text-center text-[11px] font-normal uppercase tracking-[0.14em] text-faint">
                       {r.label}
                     </th>
                     <td className="w-[38%] align-middle">

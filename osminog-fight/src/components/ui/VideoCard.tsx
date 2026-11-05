@@ -11,12 +11,12 @@ import { fmtViews } from '@/lib/format';
 import { disciplines } from '@/content/site';
 import { getEvent } from '@/lib/cms';
 
-export function VideoCard({ v, big, showEvent = true }: { v: Video; big?: boolean; showEvent?: boolean }) {
+export function VideoCard({ v, big, fill, showEvent = true }: { v: Video; big?: boolean; fill?: boolean; showEvent?: boolean }) {
   const [play, setPlay] = useState(false);
   const ev = getEvent(v.event);
   return (
     <article className={`group relative flex h-full w-full flex-col overflow-hidden rounded-[var(--radius)] border border-line bg-abyss-2 ${big ? 'md:col-span-2 md:row-span-2' : ''}`}>
-      <div className={`relative aspect-video overflow-hidden bg-abyss ${big ? 'md:aspect-auto md:min-h-[20rem] md:flex-1' : ''}`}>
+      <div className={`relative aspect-video overflow-hidden bg-abyss ${fill ? 'md:aspect-auto md:min-h-[20rem] md:flex-1' : ''}`}>
         {play ? (
           <iframe
             className="absolute inset-0 h-full w-full"
@@ -36,10 +36,10 @@ export function VideoCard({ v, big, showEvent = true }: { v: Video; big?: boolea
             </span>
           </button>
         )}
-        {!play && v.views ? <span className="mono pointer-events-none absolute right-3 top-3 rounded bg-abyss/70 px-2 py-1 text-[10px] tracking-[0.1em] text-mute">{fmtViews(v.views)} просм.</span> : null}
+        {!play && v.views ? <span className="mono pointer-events-none absolute right-3 top-3 rounded bg-abyss/70 px-2 py-1 text-[11px] tracking-[0.1em] text-mute">{fmtViews(v.views)} просм.</span> : null}
       </div>
       <div className="flex flex-col gap-2 p-4">
-        <div className="mono flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] uppercase tracking-[0.16em] text-faint">
+        <div className="mono flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] uppercase tracking-[0.16em] text-faint">
           {showEvent && ev && (
             <span className="text-accent">
               {ev.title}
@@ -49,7 +49,7 @@ export function VideoCard({ v, big, showEvent = true }: { v: Video; big?: boolea
           {v.discipline && <span>{disciplines[v.discipline].label}</span>}
           {v.kind !== 'fight' && <span>{v.kind === 'interview' ? 'Интервью' : v.kind === 'ceremony' ? 'Церемония' : 'Закулисье'}</span>}
         </div>
-        <h3 className={`display-upright leading-[0.95] ${big ? 'text-[clamp(1.8rem,3vw,2.6rem)]' : 'text-[22px]'}`}>{v.title}</h3>
+        <p className={`display-upright leading-[0.95] ${big ? 'text-[clamp(1.8rem,3vw,2.6rem)]' : 'text-[22px]'}`}>{v.title}</p>
       </div>
     </article>
   );

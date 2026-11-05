@@ -24,7 +24,7 @@ export function WatchHub({ videos, events }: { videos: Video[]; events: FightEve
   return (
     <div>
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1" role="group" aria-label="Фильтр по турниру">
+        <div className="no-scrollbar scroll-fade -mx-1 flex gap-2 overflow-x-auto px-1 pr-10" role="group" aria-label="Фильтр по турниру">
           <button type="button" aria-pressed={!ev} onClick={() => setEv('')} className={`chip h-9 shrink-0 px-4 ${!ev ? 'chip-cyan' : 'hover:text-ice'}`}>
             Все турниры
           </button>
@@ -39,7 +39,7 @@ export function WatchHub({ videos, events }: { videos: Video[]; events: FightEve
           <input type="search" className="input min-h-[44px]" placeholder="Фамилия бойца…" value={q} onChange={(e) => setQ(e.target.value)} />
         </label>
       </div>
-      <div className="no-scrollbar -mx-1 mb-10 flex gap-2 overflow-x-auto px-1" role="group" aria-label="Фильтр по дисциплине и типу">
+      <div className="no-scrollbar scroll-fade -mx-1 mb-10 flex gap-2 overflow-x-auto px-1 pr-10" role="group" aria-label="Фильтр по дисциплине и типу">
         {usedDisc.map((x) => (
           <button key={x} type="button" aria-pressed={d === x} onClick={() => setD(d === x ? '' : x)} className={`chip h-9 shrink-0 px-4 ${d === x ? 'chip-cyan' : 'hover:text-ice'}`}>
             {disciplines[x].label}

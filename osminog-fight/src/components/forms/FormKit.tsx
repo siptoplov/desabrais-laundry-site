@@ -78,6 +78,7 @@ export function SmartForm({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>({ s: "idle" });
   const [token, setToken] = useState("");
+  const [fileNames, setFileNames] = useState<Record<string, string>>({});
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY;
   const tsRef = useRef<HTMLDivElement>(null);
 
@@ -218,7 +219,7 @@ export function SmartForm({
             {f.type === "checkbox" ? (
               <label
                 htmlFor={id}
-                className="flex cursor-pointer items-start gap-3 text-[14px] normal-case tracking-normal"
+                className="flex cursor-pointer items-start gap-3 !font-sans !text-[14px] !normal-case !tracking-normal !text-ice/90"
               >
                 <input
                   {...common}
@@ -237,12 +238,24 @@ export function SmartForm({
               </label>
             )}
             {f.type === "checkbox" ? null : f.type === "file" ? (
-              <input
-                {...common}
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                className="input file:mr-4 file:rounded file:border-0 file:bg-ice/10 file:px-3 file:py-2 file:text-ice"
-              />
+              <>
+                <label htmlFor={id} className="input !flex cursor-pointer items-center gap-4 !py-2 !normal-case !tracking-normal !text-[15px] hover:border-ice/60">
+                  <span className="btn btn-ghost btn-sm pointer-events-none">
+                    <span>Выбрать фото</span>
+                  </span>
+                  <span className="min-w-0 truncate text-mute">{fileNames[f.name] || "Файл не выбран"}</span>
+                </label>
+                <input
+                  {...common}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="sr-only"
+                  onChange={(e) => {
+                    common.onChange();
+                    setFileNames((x) => ({ ...x, [f.name]: e.target.files?.[0]?.name ?? "" }));
+                  }}
+                />
+              </>
             ) : f.type === "select" ? (
               <select {...common} defaultValue="">
                 <option value="" disabled>
@@ -303,7 +316,7 @@ export function SmartForm({
       <div className={`field ${compact ? "" : "md:col-span-2"}`}>
         <label
           htmlFor={`${kind}-consent`}
-          className="flex cursor-pointer items-start gap-3 text-[14px] normal-case tracking-normal"
+          className="flex cursor-pointer items-start gap-3 !font-sans !text-[14px] !normal-case !tracking-normal !text-ice/90"
         >
           <input
             id={`${kind}-consent`}

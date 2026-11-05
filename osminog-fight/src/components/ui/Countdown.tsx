@@ -72,7 +72,7 @@ export function Countdown({ date, since, size = 'xl', className = '' }: Props) {
                 >
                   {now === null ? '--' : i === 0 ? String(v).padStart(2, '0') : pad(v)}
                 </span>
-                <span className="mono mt-2 text-[10px] uppercase tracking-[0.2em] text-faint">{u}</span>
+                <span className="mono mt-2 text-[11px] uppercase tracking-[0.2em] text-faint">{u}</span>
               </div>
               {i < 3 && (
                 <span className="mono leading-none text-accent/60" style={{ fontSize: big ? 'clamp(2rem,4.4vw,4rem)' : '1.6rem' }} aria-hidden="true">

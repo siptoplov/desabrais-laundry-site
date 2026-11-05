@@ -9,7 +9,7 @@ import { getUpcoming } from '@/lib/cms';
 export function Footer() {
   const next = getUpcoming();
   return (
-    <footer className="relative overflow-hidden border-t border-line pb-28 pt-20 md:pb-10" aria-labelledby="footer-title">
+    <footer className="relative z-10 overflow-hidden border-t border-line pb-28 pt-20 md:pb-10" aria-labelledby="footer-title">
       <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(60% 50% at 50% 100%, var(--deep), transparent 70%)' }} aria-hidden="true" />
       <div className="wrap relative">
         <div className="grid gap-14 lg:grid-cols-[1.2fr_1fr]">
@@ -29,7 +29,7 @@ export function Footer() {
               <ul className="flex flex-col gap-2.5">
                 {nav.map((n) => (
                   <li key={n.href}>
-                    <Link href={n.href} className="text-mute transition-colors hover:text-ice">
+                    <Link href={n.href} className="inline-block py-1.5 text-mute transition-colors hover:text-ice">
                       {n.label}
                     </Link>
                   </li>
@@ -41,7 +41,7 @@ export function Footer() {
               <ul className="flex flex-col gap-2.5">
                 {navSecondary.map((n) => (
                   <li key={n.href}>
-                    <Link href={n.href} className="text-mute transition-colors hover:text-ice">
+                    <Link href={n.href} className="inline-block py-1.5 text-mute transition-colors hover:text-ice">
                       {n.label}
                     </Link>
                   </li>
@@ -52,12 +52,12 @@ export function Footer() {
               <p className="mono mb-4 text-[11px] uppercase tracking-[0.2em] text-faint">На связи</p>
               <ul className="flex flex-col gap-2.5">
                 <li>
-                  <a href={site.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-mute transition-colors hover:text-ice" title={site.socials.instagramHandle}>
+                  <a href={site.socials.instagram} target="_blank" rel="noopener noreferrer" className="inline-block py-1.5 text-mute transition-colors hover:text-ice" title={site.socials.instagramHandle}>
                     Instagram ↗
                   </a>
                 </li>
                 <li>
-                  <a href={site.socials.youtube} target="_blank" rel="noopener noreferrer" className="text-mute transition-colors hover:text-ice" title="Chinuk Gym">
+                  <a href={site.socials.youtube} target="_blank" rel="noopener noreferrer" className="inline-block py-1.5 text-mute transition-colors hover:text-ice" title="Chinuk Gym">
                     YouTube ↗
                   </a>
                 </li>

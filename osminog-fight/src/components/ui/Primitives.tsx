@@ -41,7 +41,7 @@ export function Flag({ code, withName }: { code: CountryCode; withName?: boolean
   const c = countries[code];
   return (
     <span className="inline-flex items-center gap-2">
-      <span className="mono inline-grid h-[18px] min-w-[26px] place-items-center rounded-[2px] border border-line px-1 text-[10px] tracking-[0.08em] text-mute" title={c.name}>
+      <span className="mono inline-grid h-[18px] min-w-[26px] place-items-center rounded-[2px] border border-line px-1 text-[11px] tracking-[0.08em] text-mute" title={c.name}>
         {code === 'XX' ? '—' : code}
       </span>
       {withName && code !== 'XX' && <span>{c.name}</span>}

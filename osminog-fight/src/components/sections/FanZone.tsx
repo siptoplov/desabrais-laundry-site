@@ -127,7 +127,7 @@ export function FanZone({ fighters, events, videos, compact = false }: { fighter
           <div className="relative flex h-full flex-col justify-between">
             <div className="flex items-center justify-between">
               <span className="display text-[24px] sm:text-[28px]">Осьминог</span>
-              <span className="mono text-[9px] uppercase tracking-[0.2em] text-mute sm:text-[10px]">Карта болельщика</span>
+              <span className="mono text-[11px] uppercase tracking-[0.2em] text-mute sm:text-[11px]">Карта болельщика</span>
             </div>
             <div className="flex items-end justify-between gap-4">
               <div className="flex min-w-0 flex-col gap-1">
@@ -137,18 +137,18 @@ export function FanZone({ fighters, events, videos, compact = false }: { fighter
                   <span className="mt-2 flex items-center gap-3">
                     <FighterAvatar f={fanF} className="h-14 w-11 shrink-0 overflow-hidden rounded-[5px] border border-ice/30 sm:h-[72px] sm:w-[58px]" text="text-[18px]" />
                     <span className="flex min-w-0 flex-col gap-0.5">
-                      <span className="mono flex items-center gap-1 text-[9px] uppercase tracking-[0.18em] text-faint">
+                      <span className="mono flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] text-faint">
                         <Heart on className="h-3 w-3" /> Мой боец
                       </span>
                       <span className="display-upright truncate text-[18px] leading-none group-hover:text-accent sm:text-[22px]">{fullName(fanF)}</span>
-                      <span className="mono text-[10px] uppercase tracking-[0.14em] text-mute">
+                      <span className="mono text-[11px] uppercase tracking-[0.14em] text-mute">
                         {fanF.record ? `рекорд ${recordStr(fanF)} · ` : ''}
                         {st.fights} {plural(st.fights, ['бой', 'боя', 'боёв'])} в лиге
                       </span>
                     </span>
                   </span>
                 ) : (
-                  <span className="mono mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-cyan/50 px-3 py-1.5 text-[9px] uppercase tracking-[0.16em] text-cyan sm:text-[10px]">
+                  <span className="mono mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-cyan/50 px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-cyan sm:text-[11px]">
                     <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" />
                     Нажмите — выберите бойца
                   </span>

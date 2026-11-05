@@ -168,6 +168,7 @@ export function Accordion({
             <h3>
               <button
                 type="button"
+                id={`${id}-btn`}
                 className="group flex w-full items-center justify-between gap-6 py-6 text-left"
                 aria-expanded={isOpen}
                 aria-controls={id}
@@ -189,6 +190,7 @@ export function Accordion({
             <div
               id={id}
               role="region"
+              aria-labelledby={`${id}-btn`}
               className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.16,1,.3,1)] ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
             >
               <div className="overflow-hidden" inert={!isOpen}>

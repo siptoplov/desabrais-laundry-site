@@ -34,7 +34,7 @@ export function FighterCard({ f, priority, size = 'md' }: { f: Fighter; priority
       data-cursor="view"
       data-cursor-label="Профиль"
     >
-      <div className={`relative ${size === 'sm' ? 'aspect-[4/5]' : 'aspect-[4/5]'} overflow-hidden`}>
+      <div className={`relative aspect-[4/5] overflow-hidden ${!f.photo && f.headshot ? 'portrait-clean' : ''}`}>
         {f.photo ? (
           <img
             src={asset(`${f.photo}-480.webp`)}
@@ -60,7 +60,7 @@ export function FighterCard({ f, priority, size = 'md' }: { f: Fighter; priority
           <path d="M0 30 C 6 20, 4 8, 14 2" stroke="currentColor" strokeWidth=".6" className="[stroke-dasharray:40] [stroke-dashoffset:40] transition-[stroke-dashoffset] duration-700 group-hover:[stroke-dashoffset:0]" />
           <path d="M100 95 C 94 105, 96 117, 86 123" stroke="currentColor" strokeWidth=".6" className="[stroke-dasharray:40] [stroke-dashoffset:40] transition-[stroke-dashoffset] duration-700 group-hover:[stroke-dashoffset:0]" />
         </svg>
-        <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+        <div className="absolute left-3 top-3 z-[2] flex flex-wrap gap-1.5">
           {f.badges?.slice(0, 2).map((b) => (
             <span key={b} className={`chip backdrop-blur ${b === 'champion' ? 'chip-cyan' : b === 'replacement' ? 'chip-blood' : 'bg-abyss/50'}`}>
               {badgeLabel[b]}
@@ -80,10 +80,10 @@ export function FighterCard({ f, priority, size = 'md' }: { f: Fighter; priority
               {f.weightKg ? `${String(f.weightKg).replace('.', ',')} кг` : ''}
             </span>
           </div>
-          <h3 className="display leading-[0.85]">
+          <p className="display leading-[0.85]">
             {f.firstName && <span className="block text-[clamp(1.1rem,1.8vw,1.5rem)] text-mute">{f.firstName}</span>}
             <span className="block text-[clamp(1.9rem,3.2vw,2.8rem)]">{f.lastName}</span>
-          </h3>
+          </p>
         </div>
       </div>
       <div className="flex items-center justify-between border-t border-line px-4 py-3">
@@ -110,9 +110,9 @@ export function EventCard({ e, big }: { e: FightEvent; big?: boolean }) {
           <span className="mono text-[11px] uppercase tracking-[0.16em] text-mute">{e.date ? fmtDate(e.date) : 'Дата — скоро'}</span>
           <span className={`chip ${e.status === 'upcoming' ? 'chip-blood' : ''}`}>{e.status === 'upcoming' ? 'Скоро' : 'Архив'}</span>
         </div>
-        <h3 className="display text-[clamp(2rem,3vw,2.8rem)] leading-[0.85]">
+        <p className="display text-[clamp(2rem,3vw,2.8rem)] leading-[0.85]">
           {e.title} {e.collab && <span className="text-accent">{e.collab}</span>}
-        </h3>
+        </p>
         <p className="text-[14px] text-mute">{e.tagline}</p>
         <p className="mono mt-auto text-[11px] uppercase tracking-[0.14em] text-faint">{[e.venue, e.city].filter(Boolean).join(' · ')}</p>
       </div>
@@ -158,7 +158,7 @@ export function NewsCard({ n, featured }: { n: NewsItem; featured?: boolean }) {
         <time dateTime={n.date} className="label">
           {fmtDate(n.date)}
         </time>
-        <h3 className={`display-upright leading-[0.9] transition-colors group-hover:text-accent ${featured ? 'text-[clamp(2rem,3.4vw,3rem)]' : 'text-[26px]'}`}>{n.title}</h3>
+        <p className={`display-upright leading-[0.9] transition-colors group-hover:text-accent ${featured ? 'text-[clamp(2rem,3.4vw,3rem)]' : 'text-[26px]'}`}>{n.title}</p>
         <p className="text-[15px] text-mute">{n.lead}</p>
       </div>
     </Link>
