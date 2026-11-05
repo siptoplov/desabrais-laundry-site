@@ -15,8 +15,8 @@ export function VideoCard({ v, big, showEvent = true }: { v: Video; big?: boolea
   const [play, setPlay] = useState(false);
   const ev = getEvent(v.event);
   return (
-    <article className={`group relative flex flex-col overflow-hidden rounded-[var(--radius)] border border-line bg-abyss-2 ${big ? 'md:col-span-2 md:row-span-2' : ''}`}>
-      <div className="relative aspect-video overflow-hidden bg-abyss">
+    <article className={`group relative flex h-full w-full flex-col overflow-hidden rounded-[var(--radius)] border border-line bg-abyss-2 ${big ? 'md:col-span-2 md:row-span-2' : ''}`}>
+      <div className={`relative aspect-video overflow-hidden bg-abyss ${big ? 'md:aspect-auto md:min-h-[20rem] md:flex-1' : ''}`}>
         {play ? (
           <iframe
             className="absolute inset-0 h-full w-full"
