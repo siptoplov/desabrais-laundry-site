@@ -247,19 +247,23 @@
   }
   /* контурный текст: заливка фоном и обводка «под заливку» — линии соседних букв не просвечивают друг сквозь друга */
   .text-outline {
-    -webkit-text-stroke: 2px var(--ice);
+    -webkit-text-stroke: 3px var(--ice);
     paint-order: stroke fill;
     color: var(--abyss);
-    letter-spacing: 0.012em;
+    letter-spacing: 0.035em;
   }
   /* то же поверх фото и постеров: заливка прозрачная */
   .text-outline-ghost {
-    -webkit-text-stroke: 1.5px var(--ice);
-    color: transparent;
+    -webkit-text-stroke: 3px var(--ice);
+    paint-order: stroke fill;
+    color: rgb(6 6 7 / 0.85);
   }
+  /* акцентный контур: заливка фоном прячет внутренние пересечения контуров шрифта (в А, Я, Ж, Ф) */
   .text-outline-accent {
-    -webkit-text-stroke: 1.5px var(--accent);
-    color: transparent;
+    -webkit-text-stroke: 3px var(--accent);
+    paint-order: stroke fill;
+    color: var(--abyss);
+    letter-spacing: 0.035em;
   }
   .glow-cyan {
     text-shadow: 0 0 24px rgb(236 238 241 / 0.55), 0 0 2px rgb(236 238 241 / 0.9);
