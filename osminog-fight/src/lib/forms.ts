@@ -72,7 +72,7 @@ export async function submitForm(
   for (const [k, v] of Object.entries(values)) fd.set(k, v);
   if (photo) fd.set("photo", photo);
   try {
-    const res = await fetch("/api/apply.php", { method: "POST", body: fd });
+    const res = await fetch((process.env.NEXT_PUBLIC_BASE_PATH || '') + '/api/apply.php', { method: "POST", body: fd });
     if (res.ok) return { ok: true, mode: "sent" };
     if (
       res.status === 503 ||

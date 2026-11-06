@@ -15,6 +15,7 @@ import { submitForm, shrinkPhoto, emailRe, phoneOk, urlRe } from "@/lib/forms";
 import { site } from "@/content/site";
 import { t } from "@/i18n";
 import { play } from "@/lib/sound";
+import { asset } from "@/lib/asset";
 
 export type FieldDef = {
   name: string;
@@ -332,7 +333,7 @@ export function SmartForm({
             Я согласен(на) на обработку моих персональных данных, в том числе их
             передачу организаторам через мессенджер Telegram, в соответствии с{" "}
             <a
-              href="/legal/privacy/"
+              href={asset("/legal/privacy/")}
               target="_blank"
               className="underline underline-offset-4 hover:text-ice"
             >
